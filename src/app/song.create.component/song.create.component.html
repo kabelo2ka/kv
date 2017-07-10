@@ -1,0 +1,124 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <!--<alert type="success">Welcome To Kasivibe! Share, comment and rate music.</alert>-->
+            <h3 class="text-center">Upload Song</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <br><br>
+
+            <form (ngSubmit)="onSongUpload(songUploadForm)" #songUploadForm="ngForm" autocomplete="off">
+
+                <accordion>
+
+                    <!--<accordion-group #artist>
+                        <div accordion-heading>
+                            <span class="badge bg-warning">1</span>
+                             Who's the Artist?
+                            <i class="pull-right float-xs-right glyphicon"
+                               [ngClass]="{'glyphicon-chevron-down': artist?.isOpen, 'glyphicon-chevron-right': !artist?.isOpen}"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="song_artist">Artist</label>
+                            &lt;!&ndash;<pre class="card card-block card-header">Model: {{selected | json}}</pre>&ndash;&gt;
+                            <input type="text" id="song_artist" class="form-control" name="artist"
+                                   (focus)="getArtistNames()"
+                                   (input)="getArtistNames()"
+                                   [(ngModel)]="selected"
+                                   [typeahead]="artists"
+                                   typeaheadOptionField="name"
+                                   typeaheadMinLength="0"
+                                   autocomplete="off"
+                                   spellcheck="false">
+                        </div>
+                    </accordion-group>-->
+
+
+                    <accordion-group #album [isOpen]="true">
+                        <div accordion-heading>
+                            <span class="badge bg-success">1</span>
+                            Choose Album
+                            <i class="pull-right float-xs-right glyphicon"
+                               [ngClass]="{'glyphicon-chevron-down': album?.isOpen, 'glyphicon-chevron-right': !album?.isOpen}"></i>
+                        </div>
+                        <!--<div class="radio">
+                            <label>
+                                <input type="radio" name="album_id" ngModel [value]="0"
+                                       required
+                                       checked>
+                                Miscellaneous
+                            </label>
+                        </div>-->
+                        <div class="radio" *ngFor="let album of albums">
+                            <label>
+                                <input type="radio" name="album_id" [value]="album.id" ngModel required> {{ album.name
+                                }}
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input #new type="radio" name="album_id" value="create" ngModel required>
+                                Create New Album
+                            </label>
+                        </div>
+                        <div class="form-group"
+                             *ngIf="new.checked">
+                            <input type="text" id="song_album" class="form-control" name="album_name" ngModel required
+                                   placeholder="Name">
+                        </div>
+                    </accordion-group>
+
+
+                    <accordion-group #upload_song>
+                        <div accordion-heading>
+                            <span class="badge bg-primary">2</span>
+                            Upload Song
+                            <i class="pull-right float-xs-right glyphicon"
+                               [ngClass]="{'glyphicon-chevron-down': upload_song?.isOpen, 'glyphicon-chevron-right': !upload_song?.isOpen}"></i>
+                        </div>
+
+                        <div class="form-group required">
+                            <label for="song_name" class="control-label">Title</label>
+                            <input type="text" id="song_name" class="form-control" name="name" ngModel required>
+                        </div>
+                        <div class="form-group required">
+                            <label for="song_genre" class="control-label">Genre</label>
+                            <select id="song_genre" class="form-control" name="genre_id" ngModel>
+                                <option value="0" disabled selected>Select...</option>
+                                <option *ngFor="let genre of genres" value="{{ genre.id }}">{{ genre.name }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group required">
+                            <label for="song_name" class="control-label">Upload audio File</label>
+                            <input #fileInput type="file" accept=".mp3,.wav,.ogg" name="file">
+                            <!--<p class="help-block text-muted">Only mp3, wav and ogg file formats are allowed.</p>-->
+                        </div>
+                        <h3 *ngIf="audio_file">{{audio_file}}</h3>
+                        <div class="checkbox">
+                            <label>
+                                <input #show_more_info type="checkbox">
+                                Add More Info
+                            </label>
+                        </div>
+                        <div *ngIf="show_more_info.checked" class="more-info-fields">
+                            <div class="form-group">
+                                <label for="song_lyrics">Lyrics</label>
+                                <textarea id="song_lyrics" rows="5" class="form-control" name="lyrics"
+                                          ngModel></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success" [disabled]="!songUploadForm.valid">Upload song
+                        </button>
+
+                    </accordion-group>
+                </accordion>
+
+
+            </form>
+
+
+        </div>
+    </div>
+</div>

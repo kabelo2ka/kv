@@ -1,0 +1,67 @@
+<div id="audio-container">
+    <div id="audio-col-1">
+        <div class="audio-album-cover hidden-xs">
+            <img *ngIf="song.album.image" style="width: 64px;height: 64px;"
+                 src="{{song.album.image}}" alt="{{song.name}}">
+        </div>
+        <div class="audio-player">
+            <div class="seek-container">
+                <input #seekControler id="seek" type="range" min="0" max="100" step="0.01" [(value)]="audio_seek_value"
+                       (change)="setSeek(seekControler.value)"
+                       (input)="setSeek(seekControler.value)">
+                <!--<progress class="audio-progress-played" max="100" [value]="audio_progress_played"><span>{{ audio_progress_played }}</span>%
+                    played
+                </progress>
+                <progress class="audio-progress-buffer" max="100" [value]="audio_buffered_value"><span>{{ audio_buffered_value }}</span>%
+                    buffered
+                </progress>-->
+                <div class="web-footer-progress-indicator" [ngStyle]="{'width': audio_buffered_value+'%'}"></div>
+                <div class="web-footer-progress" [ngStyle]="{'width': audio_progress_played+'%'}"></div>
+            </div>
+            <div *ngIf="song.user" class="audio-info">
+                <p class="audio-title strong">{{ song.name }}</p>
+                <p *ngIf="song.user.artist_name" class="audio-meta text-muted text-small">
+                    <em>By {{ song.user.artist_name }}</em>
+                </p>
+                <p *ngIf="!song.user.artist_name" class="audio-meta text-muted text-small">
+                    <em>Uploaded by {{ song.user.username }}</em>
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div id="audio-col-2" class="audio-controls">
+        <!--<a (click)="play()" class="button" id="play" title="Play song"><i class="fa fa-play" aria-hidden="true"></i></a>-->
+        <a *ngIf="!isPlaying" (click)="play()" class="button" title="Play song">
+            <i class="fa fa-play" aria-hidden="true"></i>
+        </a>
+        <a *ngIf="isPlaying" (click)="pause()" class="button" title="Pause song">
+            <i class="fa fa-pause" aria-hidden="true"></i>
+        </a>
+    </div>
+    <div id="audio-col-3">
+        <ul class="list-inline list-unstyled audio-controls">
+            <li class=""><span id="current_time">{{ audio_progress_time }}</span></li>
+            <li class="" tooltip="Like this song.">
+                <span (click)="likeSong(song.id)" class="kv-like-btn" [ngClass]="{'liked':song.is_liked}">
+                    <i class="fa fa-thumbs-up"></i>
+                </span>
+            </li>
+            <li [ngClass]="info_panel_visible?'active':''" class="control" id="info-panel-trigger"
+                (click)="hideInfoPanel()"><span>INFO</span></li>
+            <li class="control hidden-xs"><span><i class="fa fa-repeat"></i></span></li>
+            <li class="control hidden-xs" id="volume">
+                <span (click)="setMute()">
+                    <i *ngIf="!mute" class="fa fa-volume-up"></i>
+                    <i *ngIf="mute" class="fa fa-volume-off"></i>
+                </span>
+                <input #volumeControler type="range" min="0" max="100" step="1" class="plyr__volume"
+                       (change)="setVolume(volumeControler.value)"
+                       (input)="setVolume(volumeControler.value)"
+                       [(value)]="audio_volume_value">
+            </li>
+        </ul>
+
+
+    </div>
+</div>

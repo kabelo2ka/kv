@@ -1,1 +1,302 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+    height: 100%;
+}
+
+body {
+    /*margin-top: 70px;*/
+    height: 100%;
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 13px;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Lato', Arial, sans-serif;
+}
+
+a, .a {
+    cursor: pointer;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #5b8813;
+    border-color: #4c6f13;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #4c6f13;
+    border-color: #4c6f13;
+}
+
+.btn-primary.active, .btn-primary:active, .open > .dropdown-toggle.btn-primary {
+    color: #fff !important;
+    background-color: #3e5813 !important;
+    border-color: #4c6f13 !important;
+    outline: none !important;
+}
+
+.btn-primary.focus, .btn-primary:focus {
+    color: #fff;
+    background-color: #5b8813;
+    border-color: #4c6f13;
+    outline: none;
+}
+
+a:hover, a:focus, a {
+    color: #5b8813;
+}
+
+.list-group-item {
+    border-left: 0;
+    border-right: 0;
+    background: none;
+}
+
+.list-group-item:first-child, .list-group-item:last-child {
+    border-radius: 0;
+}
+
+a.list-group-item:hover, button.list-group-item:hover, a.list-group-item:focus, button.list-group-item:focus {
+    text-decoration: none;
+    color: #888888;
+    background-color: #333333;
+}
+
+.nav-tabs > li > a {
+    border-radius: 0;
+    padding: 10px;
+}
+
+.nav-tabs a, .nav-pills a, .breadcrumb a, .pager a {
+    color: #888;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color: transparent;
+    border: 1px solid #282828;
+    border-bottom-color: rgb(33, 33, 33);
+    color: #ffffff;
+
+    cursor: default;
+}
+
+.tab-content {
+    padding-top: 10px;
+}
+
+.form-control {
+    border-radius: 0;
+    color: #333333;
+}
+
+.form-group.required .control-label:after {
+    margin-left: 2px;
+    content: "*";
+    color: #bb0000;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin: 2px 0 0;
+    margin-top: 1px \9;
+    line-height: normal;
+}
+
+.badge.bg-primary {
+    background-color: #2a9fd6 !important;
+    color: #ffffff !important;
+}
+
+.badge.bg-success {
+    background-color: #77b300 !important;
+    color: #ffffff !important;
+}
+
+.badge.bg-info {
+    background-color: #9933cc !important;
+    color: #ffffff !important;
+}
+
+.badge.bg-danger {
+    background-color: #cc0000 !important;
+    color: #ffffff !important;
+}
+
+.badge.bg-warning {
+    background-color: #ff8800 !important;
+    color: #ffffff !important;
+}
+
+.panel-title .badge {
+    margin-right: 5px;
+}
+
+.panel-group .panel {
+    border-radius: 0;
+}
+
+.panel-default {
+    border: none;
+    border-bottom: 1px solid #171916;
+}
+
+.panel-default > .panel-heading {
+    color: #888888;
+    background-color: #2c2c2c;
+}
+
+.modal-content {
+    border-radius: 0;
+}
+
+.slimscroll-bar {
+    border: 1px solid #444444;
+    border-radius: 4px !important;
+}
+
+.kv-pad-md {
+    padding: 0 15px;
+}
+
+.slimscroll-wrapper {
+    width: 100% !important;
+}
+
+.player {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    border-radius: 3px;
+    padding: 5px 0;
+}
+
+.button {
+    font-size: 32px;
+    color: #fafafa;
+}
+
+#play {
+
+}
+
+#pause {
+
+}
+
+input {
+    display: none \9 !important;
+}
+
+input:focus, input:active {
+    outline: none !important;
+}
+
+.kv-color-default {
+    color: #cccccc;
+}
+
+.kv-color-default:hover, .kv-color-default.active {
+    color: #ffffff;
+}
+
+.item .opacity {
+    background-color: rgba(23, 25, 22, 0.75);
+}
+
+.item-overlay {
+    position: absolute;
+    display: none;
+    z-index: 1;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+
+.item-overlay.active, .item:hover .item-overlay {
+    display: block;
+}
+
+.item .center {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    left: 0;
+}
+
+.padder-v {
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.pos-rlt {
+    position: relative;
+}
+
+.pos-rlt > a {
+    position: relative;
+    display: block;
+    padding-top: 100%;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.pos-rlt > a > img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.i-2x {
+    font-size: 2em;
+}
+
+.i-4x {
+    font-size: 4em;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.ng-busy-backdrop {
+    background: #171916;
+    opacity: .6;
+}
+
+
+
+
+
+
+
+
+.kv-like-btn {
+    transition: transform .2s linear 0s;
+    display: inline-block;
+    transform: scale(1);
+    font-size: 120%;
+    cursor: pointer;
+}
+.kv-like-btn:active {
+    transform: scale(1.6);
+    color: #77b300;
+}
+.kv-like-btn.liked:active {
+    transform: scale(1.6);
+    color: #ffffff;
+}
+li.kv-active {
+    background-color: #212121;
+    border-color: #282828;
+}
+.liked {
+    color: #77b300;
+}

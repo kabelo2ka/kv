@@ -19,6 +19,9 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "assets/bootstrap/dist/css/bootstrap.min.css",
+        "assets/font-awesome/css/font-awesome.min.css",
+        "assets/angular2-busy/busy.css",
         "styles.css"
       ],
       "scripts": [],

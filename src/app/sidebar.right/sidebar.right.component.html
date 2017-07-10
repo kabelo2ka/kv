@@ -1,0 +1,54 @@
+<div class="kv-pad-md padder-v">
+    <tabset #staticTabs>
+        <tab heading="LYRICS">
+            <div class="kv-text-wrap" *ngIf="song">{{ song.lyrics }}</div>
+            <em *ngIf="!song">Coming soon...</em>
+        </tab>
+        <tab heading="ARTIST">
+            <div *ngIf="song">
+                {{ song.user.artist_name }}
+            </div>
+        </tab>
+        <tab heading="ALBUM">
+            <div *ngIf="song">
+                <div>
+                    <img *ngIf="song.album.image" style="width: 100%;"
+                         src="{{song.album.image}}" alt="{{song.name}}">
+                </div>
+                <h4 *ngIf="song.album">{{ song.album.name }}</h4>
+            </div>
+        </tab>
+        <tab heading="COMMENTS" active="true">
+            <div class="comments">
+                <div *ngIf="song" class="comments-wrapper">
+                    <ul *ngIf="song.comments" class="list-unstyled">
+                        <li *ngFor="let comment of song.comments" class="comment">
+                            <a routerLink="users/{{ comment.author.id }}" class="avatar-wrapper">
+                                <img src="{{ comment.author.avatar }}" alt="Avatar of {{ comment.author.username }}" width="24px">
+                            </a>
+                            <div class="info">
+                                <div class="comment-header">
+                                    <h5>
+                                        <a class="profileLink" routerLink="users/{{ comment.author.id }}">{{ comment.author.username }}</a>
+                                        <span class="text-muted text-sm"> &middot; <small>{{ comment.created_at_ago }}</small></span>
+                                    </h5>
+                                </div>
+                                <div class="text-nowrap comment-body">{{ comment.body }}</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <em *ngIf="!song.comments">No comments yet...</em>
+                </div>
+                <form (ngSubmit)="onComment(commentForm)" #commentForm="ngForm">
+                    <div class="form-group">
+                        <textarea name="body" [(ngModel)]="comment.body" placeholder="Comment here..." rows="2" class="form-control" required></textarea>
+                    </div>
+                    <p *ngIf="errors.error" class="alert alert-danger">
+                        {{ errors.error }}
+                    </p>
+                    <button class="btn btn-success btn-sm" type="submit" [disabled]="!commentForm.valid">Comment</button>
+                </form>
+            </div>
+        </tab>
+    </tabset>
+</div>

@@ -1,0 +1,45 @@
+<div *ngIf="is_modal_shown" [config]="{ show: true, backdrop: 'static' }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+     class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Login</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="onSignIn(signinForm)" #signinForm="ngForm">
+                    <p *ngIf="errors.error" class="alert alert-danger">
+                        {{ errors.error }}
+                    </p>
+                    <div [ngClass]="errors.email?'has-error':''" class="form-group">
+                        <input type="email" class="form-control" placeholder="Email" name="email" ngModel required>
+                        <div *ngIf="errors.email" class="help-block">
+                            <ul class="list-unstyled">
+                                <li *ngFor="let error of errors.email">
+                                    {{ error }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div [ngClass]="errors.password?'has-error':''" class="form-group">
+                        <input type="password" class="form-control" placeholder="Password" name="password" ngModel
+                               required>
+                        <div *ngIf="errors.password" class="help-block">
+                            <ul class="list-unstyled">
+                                <li *ngFor="let error of errors.password">
+                                    {{ error }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <a class="pull-right text-muted">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-success" [disabled]="!signinForm.valid">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

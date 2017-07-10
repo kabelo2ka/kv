@@ -1,0 +1,38 @@
+.kv_music_bars {
+    position: relative;
+    display: inline-block;
+}
+
+.kv_music_bars .kv_music_bar {
+    width: 15%;
+    position: absolute;
+    bottom: 0;
+    display: inline-block;
+    box-sizing: border-box;
+    transition: all .3s linear 0s;
+}
+
+.kv_music_bars .kv_music_bar:first-of-type {
+    left: 0;
+    height: 60%;
+}
+
+.kv_music_bars .kv_music_bar:nth-of-type(2) {
+    left: 20%;
+    height: 45%;
+}
+
+.kv_music_bars .kv_music_bar:nth-of-type(3) {
+    left: 40%;
+    height: 90%;
+}
+
+.kv_music_bars .kv_music_bar:nth-of-type(4) {
+    left: 60%;
+    height: 60%;
+}
+
+.kv_music_bars .kv_music_bar:nth-of-type(5) {
+    left: 80%;
+    height: 40%;
+}

@@ -1,0 +1,34 @@
+<div [ngBusy]="loading" class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Albums</h3>
+        </div>
+    </div>
+    <div class="row album_cont">
+
+
+        <div *ngFor="let album of albums; let i = index" class="col-xs-6 col-md-3">
+            <div class="item">
+                <div class="pos-rlt">
+                    <div class="item-overlay opacity">
+                        <div class="center text-center" style="margin-top: -22px;">
+                            <a routerLink="/albums/{{ album.id }}" ><i class="fa fa-play-circle kv-color-default i-4x"></i></a>
+                        </div>
+                    </div>
+                    <a ><img src="{{ album.image }}" alt="no album" class="img-responsive full-width"></a>
+                </div>
+                <div class="padder-v">
+                    <div><a routerLink="/albums/{{ album.id }}" class="text-ellipsis h6"> {{ album.name }} </a></div>
+                    <div>
+                        <a routerLink="/users/{{ album.user.id }}" class="text-ellipsis text-xs text-muted">
+                            <span *ngIf="album.user.artist_name">By {{ album.user.artist_name }}</span>
+                            <span *ngIf="! album.user.artist_name">Created by {{ album.user.username }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

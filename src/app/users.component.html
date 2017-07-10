@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="users list-group">
+                <li class="list-group-item" *ngFor="let user of users"
+                    [class.selected]="user === selectedUser"
+                    (click)="onSelect(user)">
+                    <span class="badge">{{user.id}}</span> {{user.username}} - {{user.email}}
+                </li>
+            </ul>
+            <ul>
+                <!--<li *ngIf="meta.paging.links.previous != undefined"><a>Previous</a></li>-->
+                <!--<li *ngIf="meta.paging.links.next != undefined"><a>Next</a></li>-->
+            </ul>
+        </div>
+    </div>
+</div>
+

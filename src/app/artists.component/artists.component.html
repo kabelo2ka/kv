@@ -1,0 +1,30 @@
+<div [ngBusy]="loading" class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Artists</h3>
+        </div>
+    </div>
+    <div class="row album_cont">
+
+
+        <div *ngFor="let artist of artists; let i = index" class="col-xs-6 col-md-3">
+            <div class="item">
+                <div class="pos-rlt">
+                    <div class="item-overlay opacity">
+                        <div class="center text-center" style="margin-top: -22px;">
+                            <a routerLink="/artists/{{ artist.id }}"><i class="fa fa-search kv-color-default i-4x"></i></a>
+                        </div>
+                    </div>
+                    <a><img src="{{ artist.avatar }}" alt="no album" class="img-responsive full-width"></a>
+                </div>
+                <div class="padder-v">
+                    <div>
+                        <a routerLink="/artists/{{ artist.id }}" class="text-ellipsisd h6">{{ artist.artist_name }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

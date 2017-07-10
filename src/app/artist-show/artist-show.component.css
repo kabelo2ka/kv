@@ -1,0 +1,49 @@
+.img-cover-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: .05;
+}
+
+
+
+
+
+
+#profile-body {
+    display: flex;
+    flex-grow: 1;
+}
+
+#profile-col-1 {
+    /*background: lightgreen;*/
+    order: 1;
+    flex: 0 0 250px;
+    max-height: calc(100vh - 115px);
+    border-right: 1px solid #323231;
+}
+
+#profile-col-2 {
+    /*background: skyblue;*/
+    flex-grow: 1;
+    order: 2;
+}
+
+
+.wrapper {
+    padding: 15px;
+}
+
+.m-t {
+    margin-top: 15px;
+}
+.m-t-sm {
+    margin-top: 10px;
+}
+.m-b {
+    margin-bottom: 15px;
+}
+.m-b {
+    margin-bottom: 10px;
+}

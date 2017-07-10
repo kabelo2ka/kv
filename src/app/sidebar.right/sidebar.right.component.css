@@ -1,0 +1,37 @@
+.kv-text-wrap {
+    white-space: pre-line;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Comments Styles*/
+.comments-wrapper li.comment{
+    border-bottom: 1px solid #282828;
+    padding: 10px 0;
+    display: flex;
+}
+.comments-wrapper li.comment>.info{
+    padding: 0 10px;
+    flex: 1;
+}
+.comments-wrapper .comment-header h5{
+    font-size: 14px;
+    margin: 0;
+}
+.comments-wrapper .comment-header a.profileLink{
+    font-weight: bold;
+}
+.comment-body {
+    white-space: pre-wrap;
+}

@@ -1,0 +1,30 @@
+<div [ngBusy]="loading">
+    <div *ngIf="album">
+        <img src="{{ album.image }}"  class="img-cover-bg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="h3">{{ album.name }}</h1><br>
+
+                    <ul *ngIf="album.songs" class="list-group">
+
+                        <li *ngFor="let song of album.songs; let i = index" class="list-group-item">
+                            <div class="kv-col-cont">
+                                <!--<div class="kv-col-1">{{ song.id }}</div>-->
+                                <div class="kv-col-2 h6">
+                                    <div class="kv-media-image-overlay play_song" (click)="playSong(song)"
+                                         attr.data-src="{{song.file_name}}">
+                                        <span class="song_item_count">{{ i+1 }}</span>
+                                        <span class="a"> {{ song.name }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

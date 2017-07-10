@@ -8,4 +8,5 @@ if (environment.production) {
   enableProdMode();
 }
 
+//noinspection TypeScriptValidateTypes
 platformBrowserDynamic().bootstrapModule(AppModule);
