@@ -61,7 +61,7 @@ export class SongService {
 
     deleteSong(id: number) {
         let options = new RequestOptions({headers: this.headers});
-        return this.http.delete(this.SONGS_URL, ['id', id])
+        return this.http.delete(this.SONGS_URL + '/' + id, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
