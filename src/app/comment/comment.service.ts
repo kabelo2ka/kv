@@ -43,7 +43,8 @@ export class CommentService {
     }
 
     deleteComment(id: number) {
-        return this.http.delete(this.COMMENTS_URL, ['id', id])
+        const options = new RequestOptions({headers: this.headers});
+        return this.http.delete(this.COMMENTS_URL + '/' + id, options)
             .map(this.extractData)
             .catch(this.handleError);
     }

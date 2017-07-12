@@ -1,12 +1,12 @@
 import {Component, ElementRef, OnChanges, OnInit, ViewChild} from "@angular/core";
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 import {Http} from "@angular/http";
 import {AuthService} from "../auth/authService";
 import {AlbumService} from "../albums/album.service.component";
-import {Song} from "../songs.component/song";
+//import {Song} from "../songs.component/song";
 import {SongService} from "../songs.component/song.service";
-import {Music} from "../providers/Music";
+import {Music, Song} from "../data-model";
 
 
 @Component({
@@ -53,6 +53,7 @@ export class SongCreateComponent implements OnInit, OnChanges {
 
     audio_file: any = "";
 
+
     constructor(private http: Http,
                 private authService: AuthService,
                 private albumService: AlbumService,
@@ -68,7 +69,7 @@ export class SongCreateComponent implements OnInit, OnChanges {
 
     createForm() {
         this.musicForm = this.fb.group({
-            album_id: 'create',
+            album_id: ['create', Validators.required],
             album_name: '', // Only when album_id=create
             songs: this.fb.array([]),
         });
@@ -89,16 +90,26 @@ export class SongCreateComponent implements OnInit, OnChanges {
     setSongs(songs: Song[]) {
         const songFGs = songs.map(song => this.fb.group(song));
         const songFormArray = this.fb.array(songFGs);
-        this.musicForm.setControl('songsss', songFormArray);
+        this.musicForm.setControl('songs', songFormArray);
     }
 
     addSong() {
-        this.songs.push(this.fb.group(new Song))
+        const songGroup = {
+            name: ['', Validators.required],
+            genre_id: ['', Validators.required],
+            file_name: ['', Validators.required],
+            lyrics: ''
+        };
+        this.songs.push(this.fb.group(songGroup))
+    }
+
+    removeSong(index: number) {
+        this.songs.removeAt(index);
     }
 
     onSubmit() {
         this.music = this.prepareSaveMusic();
-        this.songService.saveMusic();//.subscribe(/* error handling */);
+        this.songService.saveMusic(this.music);//.subscribe(/* error handling */);
         this.ngOnChanges();
     }
 
@@ -107,15 +118,15 @@ export class SongCreateComponent implements OnInit, OnChanges {
         const formModel = this.musicForm.value;
 
         // deep copy of form model songs
-        const songsDeepCopy: Song[] = formModel.musicForm.map(
+        const songsDeepCopy: Song[] = formModel.songs.map(
             (song: Song) => Object.assign({}, song)
         );
 
         // return new `Music` object containing a combination of original music value(s)
         // and deep copies of changed form model values
         const saveMusic: Music = {
-            album_id: this.music.album_id,
-            album_name: this.music.album_name,
+            album_id: formModel.album_id,
+            album_name: formModel.album_name,
             // songs: formModel.songs // <-- bad!
             songs: songsDeepCopy,
         };
@@ -161,7 +172,7 @@ export class SongCreateComponent implements OnInit, OnChanges {
 
     getUserAlbums() {
         this.albumService.getUserAlbums(null).subscribe(
-            res => {
+            (res: any) => {
                 this.albums = res.data;
 
                 console.log(this.albums);

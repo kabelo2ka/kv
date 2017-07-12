@@ -26,8 +26,8 @@ export class UserService {
     }
 
     getUsers(): Observable<User[]> {
-        //noinspection TypeScriptUnresolvedFunction
-        return this.http.get(this.usersUrl, this.headers)
+        let options = new RequestOptions({headers: this.headers});
+        return this.http.get(this.usersUrl, options)
             .map(this.extractData)
             .catch(this.handleError);
     }

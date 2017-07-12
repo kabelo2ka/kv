@@ -22,14 +22,14 @@
                         <!--Choose album radio button element-->
                         <div class="radio" *ngFor="let album of albums">
                             <label>
-                                <input type="radio" formControlName="album_id" [value]="album.id" required>
+                                <input type="radio" formControlName="album_id" [value]="album.id">
                                 {{ album.name }}
                             </label>
                         </div>
                         <!--New album radio button element-->
                         <div class="radio">
                             <label>
-                                <input #new type="radio" formControlName="album_id" value="create" required>
+                                <input #new type="radio" formControlName="album_id" value="create">
                                 Create New Album
                             </label>
                         </div>
@@ -54,7 +54,11 @@
                         <div formArrayName="songs">
                             <div *ngFor="let song of songs.controls; let i=index" [formGroupName]="i">
                                 <!-- The repeated songs template -->
-                                <h5>Song #{{i + 1}}</h5>
+                                <h5>Song #{{i + 1}}
+                                    <button class="btn btn-xs btn-default pull-right" (click)="removeSong(i)"><i
+                                            class="fa fa-remove"></i> Delete
+                                    </button>
+                                </h5>
                                 <!--Title text element-->
                                 <div class="form-group required has-error has-feedback">
                                     <label for="song_name" class="control-label">Title</label>
@@ -102,7 +106,8 @@
                             <!-- End of the repeated songs template -->
                             <button (click)="addSong()" type="button">Add a Song</button>
                         </div>
-                        <p>musicForm value: {{ musicForm.value | json}}</p>
+                        <br>
+                        <pre>musicForm value: {{ musicForm.value | json}}</pre>
                         <h4>Name change log</h4>
                         <div *ngFor="let name of nameChangeLog">{{name}}</div>
 
@@ -111,9 +116,7 @@
                         <button type="submit" class="btn btn-success"
                                 [disabled]="musicForm.pristine">Upload
                         </button>
-                        <button type="reset" (click)="revert()"
-                                [disabled]="musicForm.pristine" class="btn btn-danger">Revert
-                        </button>
+                        <button type="reset" (click)="revert()" class="btn btn-default">Revert</button>
                     </accordion-group>
                 </accordion>
 
