@@ -9,33 +9,9 @@
         <div class="col-md-offset-3 col-md-6">
             <br><br>
 
-            <form (ngSubmit)="onSongUpload(songUploadForm)" #songUploadForm="ngForm" autocomplete="off">
+            <form [formGroup]="musicForm" (ngSubmit)="onSubmit()" novalidate>
 
                 <accordion>
-
-                    <!--<accordion-group #artist>
-                        <div accordion-heading>
-                            <span class="badge bg-warning">1</span>
-                             Who's the Artist?
-                            <i class="pull-right float-xs-right glyphicon"
-                               [ngClass]="{'glyphicon-chevron-down': artist?.isOpen, 'glyphicon-chevron-right': !artist?.isOpen}"></i>
-                        </div>
-                        <div class="form-group">
-                            <label for="song_artist">Artist</label>
-                            &lt;!&ndash;<pre class="card card-block card-header">Model: {{selected | json}}</pre>&ndash;&gt;
-                            <input type="text" id="song_artist" class="form-control" name="artist"
-                                   (focus)="getArtistNames()"
-                                   (input)="getArtistNames()"
-                                   [(ngModel)]="selected"
-                                   [typeahead]="artists"
-                                   typeaheadOptionField="name"
-                                   typeaheadMinLength="0"
-                                   autocomplete="off"
-                                   spellcheck="false">
-                        </div>
-                    </accordion-group>-->
-
-
                     <accordion-group #album [isOpen]="true">
                         <div accordion-heading>
                             <span class="badge bg-success">1</span>
@@ -43,35 +19,30 @@
                             <i class="pull-right float-xs-right glyphicon"
                                [ngClass]="{'glyphicon-chevron-down': album?.isOpen, 'glyphicon-chevron-right': !album?.isOpen}"></i>
                         </div>
-                        <!--<div class="radio">
-                            <label>
-                                <input type="radio" name="album_id" ngModel [value]="0"
-                                       required
-                                       checked>
-                                Miscellaneous
-                            </label>
-                        </div>-->
+                        <!--Choose album radio button element-->
                         <div class="radio" *ngFor="let album of albums">
                             <label>
-                                <input type="radio" name="album_id" [value]="album.id" ngModel required> {{ album.name
-                                }}
+                                <input type="radio" formControlName="album_id" [value]="album.id" required>
+                                {{ album.name }}
                             </label>
                         </div>
+                        <!--New album radio button element-->
                         <div class="radio">
                             <label>
-                                <input #new type="radio" name="album_id" value="create" ngModel required>
+                                <input #new type="radio" formControlName="album_id" value="create" required>
                                 Create New Album
                             </label>
                         </div>
+                        <!--New album name text element-->
                         <div class="form-group"
                              *ngIf="new.checked">
-                            <input type="text" id="song_album" class="form-control" name="album_name" ngModel required
+                            <input type="text" id="song_album" class="form-control" formControlName="album_name"
+                                   required
                                    placeholder="Name">
                         </div>
                     </accordion-group>
 
-
-                    <accordion-group #upload_song>
+                    <accordion-group #upload_song [isOpen]="true">
                         <div accordion-heading>
                             <span class="badge bg-primary">2</span>
                             Upload Song
@@ -79,39 +50,70 @@
                                [ngClass]="{'glyphicon-chevron-down': upload_song?.isOpen, 'glyphicon-chevron-right': !upload_song?.isOpen}"></i>
                         </div>
 
-                        <div class="form-group required">
-                            <label for="song_name" class="control-label">Title</label>
-                            <input type="text" id="song_name" class="form-control" name="name" ngModel required>
-                        </div>
-                        <div class="form-group required">
-                            <label for="song_genre" class="control-label">Genre</label>
-                            <select id="song_genre" class="form-control" name="genre_id" ngModel>
-                                <option value="0" disabled selected>Select...</option>
-                                <option *ngFor="let genre of genres" value="{{ genre.id }}">{{ genre.name }}</option>
-                            </select>
-                        </div>
-                        <div class="form-group required">
-                            <label for="song_name" class="control-label">Upload audio File</label>
-                            <input #fileInput type="file" accept=".mp3,.wav,.ogg" name="file">
-                            <!--<p class="help-block text-muted">Only mp3, wav and ogg file formats are allowed.</p>-->
-                        </div>
-                        <h3 *ngIf="audio_file">{{audio_file}}</h3>
-                        <div class="checkbox">
-                            <label>
-                                <input #show_more_info type="checkbox">
-                                Add More Info
-                            </label>
-                        </div>
-                        <div *ngIf="show_more_info.checked" class="more-info-fields">
-                            <div class="form-group">
-                                <label for="song_lyrics">Lyrics</label>
-                                <textarea id="song_lyrics" rows="5" class="form-control" name="lyrics"
-                                          ngModel></textarea>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-success" [disabled]="!songUploadForm.valid">Upload song
-                        </button>
 
+                        <div formArrayName="songs">
+                            <div *ngFor="let song of songs.controls; let i=index" [formGroupName]="i">
+                                <!-- The repeated songs template -->
+                                <h5>Song #{{i + 1}}</h5>
+                                <!--Title text element-->
+                                <div class="form-group required has-error has-feedback">
+                                    <label for="song_name" class="control-label">Title</label>
+                                    <input type="text" id="song_name" class="form-control" formControlName="name"
+                                           required>
+                                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                    <span class="help-block">The Title field is required.</span>
+                                </div>
+                                <!--Genre select element-->
+                                <div class="form-group required has-error has-feedback">
+                                    <label for="song_genre" class="control-label">Genre</label>
+                                    <select id="song_genre" class="form-control" formControlName="genre_id">
+                                        <option value="0" selected>Select...</option>
+                                        <option *ngFor="let genre of genres" [value]="genre.id">{{ genre.name }}
+                                        </option>
+                                    </select>
+                                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                    <span class="help-block">The Genre field is required.</span>
+                                </div>
+                                <!--Audio File input element-->
+                                <div class="form-group required has-error">
+                                    <label for="file_name" class="control-label">Audio File</label>
+                                    <input id="file_name" type="file" accept=".mp3,.wav,.ogg"
+                                           formControlName="file_name">
+                                    <span class="help-block">An audio file is required.<br>
+                                    Only mp3, wav and ogg file formats are allowed.</span>
+                                </div>
+                                <h3 *ngIf="audio_file">{{audio_file}}</h3>
+                                <div class="checkbox">
+                                    <label>
+                                        <input #show_more_info type="checkbox">
+                                        Add More Info
+                                    </label>
+                                </div>
+                                <!--Lyrics textarea element-->
+                                <div *ngIf="show_more_info.checked" class="more-info-fields">
+                                    <div class="form-group">
+                                        <label for="song_lyrics">Lyrics</label>
+                                        <textarea id="song_lyrics" rows="5" class="form-control"
+                                                  formControlName="lyrics"></textarea>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                            <!-- End of the repeated songs template -->
+                            <button (click)="addSong()" type="button">Add a Song</button>
+                        </div>
+                        <p>musicForm value: {{ musicForm.value | json}}</p>
+                        <h4>Name change log</h4>
+                        <div *ngFor="let name of nameChangeLog">{{name}}</div>
+
+
+                        <!--Form submit Button-->
+                        <button type="submit" class="btn btn-success"
+                                [disabled]="musicForm.pristine">Upload
+                        </button>
+                        <button type="reset" (click)="revert()"
+                                [disabled]="musicForm.pristine" class="btn btn-danger">Revert
+                        </button>
                     </accordion-group>
                 </accordion>
 

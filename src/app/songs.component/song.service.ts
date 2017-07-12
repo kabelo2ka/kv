@@ -100,5 +100,9 @@ export class SongService {
         return Observable.throw(errMsg);
     }
 
+    saveMusic() {
+
+    }
+
 
 }

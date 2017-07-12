@@ -1,21 +1,28 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {BrowserModule} from "@angular/platform-browser";
+import {NgModule} from "@angular/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
-import {AuthModule} from './auth/auth.module';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpModule} from "@angular/http";
+import {AuthModule} from "./auth/auth.module";
 
-import {routing} from './app.routing';
-import { JwtHelper } from 'angular2-jwt';
-
+import {routing} from "./app.routing";
+import {JwtHelper} from "angular2-jwt";
 // import {AlertModule, ModalModule, TabsModule} from 'ng2-bootstrap';
-import {AlertModule, ModalModule, TabsModule, BsDropdownModule, AccordionModule, TypeaheadModule, TooltipModule} from 'ngx-bootstrap';
-import {SlimScrollModule} from 'ng2-slimscroll';
-import {BusyModule, BusyConfig} from "angular2-busy";
+import {
+    AccordionModule,
+    AlertModule,
+    BsDropdownModule,
+    ModalModule,
+    TabsModule,
+    TooltipModule,
+    TypeaheadModule
+} from "ngx-bootstrap";
+import {SlimScrollModule} from "ng2-slimscroll";
+import {BusyModule} from "angular2-busy";
 
 
-import {AppComponent} from './app.component';
-import {AppService} from  './app.service';
+import {AppComponent} from "./app.component";
+import {AppService} from "./app.service";
 import {UserService} from "./user.component/user.service";
 import {UserProfileComponent} from "./user.component/user-profile.component";
 import {UserEditProfileComponent} from "./user.component/user-edit-profile.component";
@@ -33,18 +40,18 @@ import {AudioVisualizationComponent} from "./audio-visualization.component/audio
 import {AudioService} from "./audio/audio.service";
 import {FileUploadComponent} from "./file-upload.component";
 import {ArtistService} from "./artists.component/artist.service";
-import {ArtistsComponent} from './artists.component/artists.component';
-import {GenresComponent} from './genres/genres.component';
-import {AlbumsComponent} from './albums/albums.component';
+import {ArtistsComponent} from "./artists.component/artists.component";
+import {GenresComponent} from "./genres/genres.component";
+import {AlbumsComponent} from "./albums/albums.component";
 import {AlbumService} from "./albums/album.service.component";
-import {ArtistShowComponent} from './artist-show/artist-show.component';
-import {AlbumShowComponent} from './album-show/album-show.component';
-import {SignupComponent} from './signup/signup.component';
-import {SigninComponent} from './signin/signin.component';
-import {SongEditComponent} from './song-edit/song-edit.component';
+import {ArtistShowComponent} from "./artist-show/artist-show.component";
+import {AlbumShowComponent} from "./album-show/album-show.component";
+import {SignupComponent} from "./signup/signup.component";
+import {SigninComponent} from "./signin/signin.component";
+import {SongEditComponent} from "./song-edit/song-edit.component";
 import {SongService} from "./songs.component/song.service";
 import {AudioAPIWrapper} from "./audio/audio-api-wrapper";
-import { TestsComponent } from './tests/tests.component';
+import {TestsComponent} from "./tests/tests.component";
 
 
 @NgModule({
@@ -92,6 +99,7 @@ import { TestsComponent } from './tests/tests.component';
         BsDropdownModule.forRoot(),
         AccordionModule.forRoot(),
         TooltipModule.forRoot(),
+        ReactiveFormsModule,
         SlimScrollModule,
         BrowserModule,
         FormsModule,

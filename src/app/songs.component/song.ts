@@ -1,12 +1,13 @@
 export class Song {
-    id: number;
+    id?: number;
     name: string;
-    user: any;
+    user?: any;
     file_name: string;
-    lyrics: string;
-    genre: any;
-    album: any;
-    artists: any[];
+    lyrics?: string;
+    genre_id?: string;
+    genre?: any;
+    album?: any;
+    artists?: any[];
     plays_count?: number;
     likes?: any[];
     likes_count?: number;
