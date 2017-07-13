@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {TabsetComponent} from 'ng2-bootstrap';
+import {TabsetComponent} from 'ngx-bootstrap';
 import {AudioService} from "../audio/audio.service";
 import {NgForm} from "@angular/forms";
 import {CommentService} from "../comment/comment.service";
