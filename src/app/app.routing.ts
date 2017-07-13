@@ -15,6 +15,7 @@ import {AlbumShowComponent} from "./album-show/album-show.component";
 import {AuthGuard} from "./auth-guard.service";
 import {SongEditComponent} from "./song-edit/song-edit.component";
 import {TestsComponent} from "./tests/tests.component";
+import {SongComponent} from "./song/song.component";
 
 const appRoutes: Routes = <Routes>[
     {
@@ -37,6 +38,10 @@ const appRoutes: Routes = <Routes>[
     {
         path: 'songs/create',
         component: SongCreateComponent
+    },
+    {
+        path: 'songs/:id',
+        component: SongComponent
     },
     {
         path: 'songs/:id/edit',

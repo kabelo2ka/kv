@@ -27,7 +27,7 @@
                             </div>
                             <div class="kv-media-content">
                                 <div>
-                                    <h6>{{ song.name }}</h6>
+                                    <h6><a routerLink="/songs/{{ song.id }}" class="kv-color-default">{{ song.name }}</a></h6>
                                     <div>
                                         <small *ngIf="song.user.artist_name">By {{ song.user.artist_name }}</small>
                                         <small *ngIf="! song.user.artist_name && !song.is_admin">Uploaded by {{

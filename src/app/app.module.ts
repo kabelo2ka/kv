@@ -52,6 +52,7 @@ import {SongEditComponent} from "./song-edit/song-edit.component";
 import {SongService} from "./songs.component/song.service";
 import {AudioAPIWrapper} from "./audio/audio-api-wrapper";
 import {TestsComponent} from "./tests/tests.component";
+import { SongComponent } from './song/song.component';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import {TestsComponent} from "./tests/tests.component";
         SigninComponent,
         SongEditComponent,
         TestsComponent,
+        SongComponent,
     ],
     imports: [
         BrowserAnimationsModule,

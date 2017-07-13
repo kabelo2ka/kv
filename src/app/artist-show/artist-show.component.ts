@@ -15,20 +15,20 @@ export class ArtistShowComponent implements OnInit {
     loading: Subscription;
     artist: any;
     auth_user: any;
-    constructor(
-        private artistService: ArtistService,
-        private activatedRoute: ActivatedRoute,
-        private audioService: AudioService,
-        private authService: AuthService,
-        private appService: AppService
-    ){}
+
+    constructor(private artistService: ArtistService,
+                private activatedRoute: ActivatedRoute,
+                private audioService: AudioService,
+                private authService: AuthService,
+                private appService: AppService) {
+    }
 
     ngOnInit() {
         this.activatedRoute.params.subscribe((params: Params) => {
-            let $id = params['id'];
+            let id = params['id'];
             // Load artists
-            this.loading = this.artistService.getArtist($id).subscribe(
-                res => this.artist = res.data
+            this.loading = this.artistService.getArtist(id).subscribe(
+                (res:any) => this.artist = res.data
             )
         });
         // Get and set authenticated user
@@ -38,9 +38,9 @@ export class ArtistShowComponent implements OnInit {
     }
 
     /*
-    * Play song
-    */
-    playSong(song: any){
+     * Play song
+     */
+    playSong(song: any) {
         this.audioService.setStatus('play');
         this.audioService.setActiveSong(song);
         this.appService.setRightPanelVisible(true);

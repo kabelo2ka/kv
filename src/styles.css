@@ -297,6 +297,9 @@ li.kv-active {
     background-color: #212121;
     border-color: #282828;
 }
+.kv-text-wrap {
+    white-space: pre-line;
+}
 .liked {
     color: #77b300;
 }

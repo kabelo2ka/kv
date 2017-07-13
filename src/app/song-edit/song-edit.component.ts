@@ -51,7 +51,7 @@ export class SongEditComponent implements OnInit {
         this.activatedRoute.params.subscribe((params: Params) => {
             let $id = params['id'];
             this.loading = this.songService.getSong($id).subscribe(
-                (res) => {
+                (res: any) => {
                     this.song = res.data;
                     this.old_song = res.data;
                 }
