@@ -154,7 +154,7 @@ export class AuthService {
                 token => {
                     // Get the expiry time to generate
                     // a delay in milliseconds
-                    let now: number = new Date().valueOf();
+                    let now: number = Date.now();
                     let jwtExp: number = this.jwtHelper.decodeToken(token).exp;
                     let exp: Date = new Date(0);
                     exp.setUTCSeconds(jwtExp);

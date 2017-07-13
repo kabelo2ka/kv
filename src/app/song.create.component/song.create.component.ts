@@ -1,5 +1,7 @@
-import {Component, ElementRef, OnChanges, OnInit, ViewChild} from "@angular/core";
+import {Component, ElementRef, EventEmitter, OnChanges, OnInit, ViewChild} from "@angular/core";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+
+import {UploadOutput, UploadInput, UploadFile, humanizeBytes} from 'ngx-uploader';
 
 import {Http} from "@angular/http";
 import {AuthService} from "../auth/authService";
@@ -54,6 +56,13 @@ export class SongCreateComponent implements OnInit, OnChanges {
     audio_file: any = "";
 
 
+    formData: FormData;
+    files: UploadFile[];
+    uploadInput: EventEmitter<UploadInput>;
+    humanizeBytes: Function;
+    dragOver: boolean;
+
+
     constructor(private http: Http,
                 private authService: AuthService,
                 private albumService: AlbumService,
@@ -61,16 +70,31 @@ export class SongCreateComponent implements OnInit, OnChanges {
                 private fb: FormBuilder) {
         this.createForm();
         this.logNameChange();
+
+        this.files = []; // local uploading files array
+        this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
+        this.humanizeBytes = humanizeBytes;
     }
 
     ngOnInit() {
         this.getUserAlbums();
+        // @todo troubleshoot validate album_name when album_id=create
+        this.musicForm.get('album_id').valueChanges.subscribe(
+            value => {
+                if (value == 'create') {
+                    this.musicForm.get('album_name').setValidators([Validators.required]);
+                } else {
+                    this.musicForm.get('album_name').clearValidators();
+                }
+                this.musicForm.get('album_name').updateValueAndValidity();
+            }
+        );
     }
 
     createForm() {
         this.musicForm = this.fb.group({
             album_id: ['create', Validators.required],
-            album_name: '', // Only when album_id=create
+            album_name: ['', Validators.required], // Only when album_id=create
             songs: this.fb.array([]),
         });
     }
@@ -105,6 +129,8 @@ export class SongCreateComponent implements OnInit, OnChanges {
 
     removeSong(index: number) {
         this.songs.removeAt(index);
+        //@todo remove audio file from upload queue
+        this.files = this.files.filter(file => file.fileIndex !== index);
     }
 
     onSubmit() {
@@ -144,15 +170,10 @@ export class SongCreateComponent implements OnInit, OnChanges {
         );
     }
 
-
     /*onSongUpload(form: NgForm) {
      let audio_file: File = this.el.nativeElement.files[0];
      let formData: FormData = new FormData();
      formData.append('file', audio_file);
-     formData.append('name', form.value.name); // Song title
-     formData.append('album_id', form.value.album_id);
-     formData.append('genre_id', form.value.genre_id);
-     formData.append('lyrics', form.value.lyrics);
      if (form.value.album_id === 'create')
      formData.append('album_name', form.value.album_name);
 
@@ -171,7 +192,7 @@ export class SongCreateComponent implements OnInit, OnChanges {
      }*/
 
     getUserAlbums() {
-        this.albumService.getUserAlbums(null).subscribe(
+        this.albumService.getUserAlbums().subscribe(
             (res: any) => {
                 this.albums = res.data;
 
@@ -184,6 +205,61 @@ export class SongCreateComponent implements OnInit, OnChanges {
     setAudioFile(event) {
         this.audio_file = event;
     }
+
+
+    startUpload(): void {  // manually start uploading
+        const event: UploadInput = {
+            type: 'uploadAll',
+            url: '/upload',
+            method: 'POST',
+            data: {foo: 'bar'},
+            concurrency: 1 // set sequential uploading of files with concurrency 1
+        };
+        this.uploadInput.emit(event);
+    }
+
+    onUploadOutput(output: UploadOutput): void {
+        console.log(output); // lets output to see what's going on in the console
+
+        if (output.type === 'allAddedToQueue') { // when all files added in queue
+            // uncomment this if you want to auto upload files when added
+            // const event: UploadInput = {
+            //   type: 'uploadAll',
+            //   url: '/upload',
+            //   method: 'POST',
+            //   data: { foo: 'bar' },
+            //   concurrency: 0
+            // };
+            // this.uploadInput.emit(event);
+        } else if (output.type === 'addedToQueue') {
+            this.files.push(output.file); // add file to array when added
+        } else if (output.type === 'uploading') {
+            // update current data in files array for uploading file
+            const index = this.files.findIndex(file => file.id === output.file.id);
+            this.files[index] = output.file;
+            this.musicForm.get('file_name').setValue(output.file.id);
+        } else if (output.type === 'removed') {
+            // remove file from array when removed
+            this.files = this.files.filter((file: UploadFile) => file !== output.file);
+        } else if (output.type === 'dragOver') { // drag over event
+            this.dragOver = true;
+        } else if (output.type === 'dragOut') { // drag out event
+            this.dragOver = false;
+        } else if (output.type === 'drop') { // on drop event
+            this.dragOver = false;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

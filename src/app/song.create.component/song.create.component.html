@@ -37,7 +37,6 @@
                         <div class="form-group"
                              *ngIf="new.checked">
                             <input type="text" id="song_album" class="form-control" formControlName="album_name"
-                                   required
                                    placeholder="Name">
                         </div>
                     </accordion-group>
@@ -45,7 +44,7 @@
                     <accordion-group #upload_song [isOpen]="true">
                         <div accordion-heading>
                             <span class="badge bg-primary">2</span>
-                            Upload Song
+                            Add Songs
                             <i class="pull-right float-xs-right glyphicon"
                                [ngClass]="{'glyphicon-chevron-down': upload_song?.isOpen, 'glyphicon-chevron-right': !upload_song?.isOpen}"></i>
                         </div>
@@ -79,10 +78,18 @@
                                     <span class="help-block">The Genre field is required.</span>
                                 </div>
                                 <!--Audio File input element-->
-                                <div class="form-group required has-error">
-                                    <label for="file_name" class="control-label">Audio File</label>
+                                <div class="form-group has-error">
+                                    <!-- <label for="file_name" class="control-label">Audio File</label>
                                     <input id="file_name" type="file" accept=".mp3,.wav,.ogg"
-                                           formControlName="file_name">
+                                           formControlName="file_name">-->
+                                    <label class="upload-button btn btn-primary" style="margin-right: 10px">
+                                        <input type="file" ngFileSelect
+                                               (uploadOutput)="onUploadOutput($event)"
+                                               [uploadInput]="uploadInput">
+                                        Choose Audio File
+                                    </label>
+                                    <input type="hidden" name="fileHidden" formControlName="file_name"/>
+                                    <span *ngIf="files[i]"> {{ files[i].name }} <i class="fa fa-check text-success"></i></span>
                                     <span class="help-block">An audio file is required.<br>
                                     Only mp3, wav and ogg file formats are allowed.</span>
                                 </div>
@@ -104,19 +111,19 @@
                                 <hr>
                             </div>
                             <!-- End of the repeated songs template -->
-                            <button (click)="addSong()" type="button">Add a Song</button>
+                            <button (click)="addSong()" class="btn btn-xs btn-default" type="button">+ Add a Song
+                            </button>
                         </div>
                         <br>
+                        <pre>Queued Files: {{files | json}}</pre>
                         <pre>musicForm value: {{ musicForm.value | json}}</pre>
-                        <h4>Name change log</h4>
-                        <div *ngFor="let name of nameChangeLog">{{name}}</div>
-
+                        <pre>Form Status: {{ musicForm.status | json}}</pre>
 
                         <!--Form submit Button-->
                         <button type="submit" class="btn btn-success"
-                                [disabled]="musicForm.pristine">Upload
+                                [disabled]="musicForm.invalid">Upload
                         </button>
-                        <button type="reset" (click)="revert()" class="btn btn-default">Revert</button>
+                        <!--<button type="reset" (click)="revert()" class="btn btn-default">Revert</button>-->
                     </accordion-group>
                 </accordion>
 
