@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output, ViewChild} from '@angular/core';
 import {Song} from "../songs.component/song";
 import {Subscription} from "rxjs";
 import {SongService} from "../songs.component/song.service";
 import {Params, ActivatedRoute} from "@angular/router";
+import {User} from "../user.component/user";
+import {AuthService} from "../auth/authService";
 
 class Res {
     data: any;
@@ -16,13 +18,18 @@ class Res {
 })
 
 export class SongComponent implements OnInit {
+    @ViewChild('comments') comments;
+    commentBody: string = '';
 
     loading: Subscription;
     song: Song;
+    user: User;
+
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private songService: SongService
+        private songService: SongService,
+        private authService: AuthService
     )
     {}
 
@@ -34,6 +41,9 @@ export class SongComponent implements OnInit {
                 (res:Res) => this.song = res.data
             );
         });
+        this.authService.user$.subscribe(
+            res => this.user = res
+        );
     }
 
     getSong(id: number){
@@ -41,5 +51,11 @@ export class SongComponent implements OnInit {
             (res:Res) => this.song = res.data
         );
     }
+
+    onComment(){
+        this.comments.onComment(this.commentBody, this.user);
+    }
+
+
 
 }

@@ -1,5 +1,5 @@
 <div [ngBusy]="loading" class="container-fluid">
-    <div class="row full-header">
+    <div *ngIf="song" class="row full-header">
         <section class="profile-header">
             <div class="col-md-8 col-md-offset-2 profile-header-inner">
 
@@ -54,7 +54,7 @@
     </div>
 
 
-<section class="content-wrapper">
+<section  *ngIf="song" class="content-wrapper">
     <div class="row">
         <div class="col-md-8 col-lg-offset-2">
             <div class="row">
@@ -63,83 +63,7 @@
                     <div class="lyrics-container">
                         <h2 class="h4 bottom-border">Lyrics</h2>
                         <div class="lyrics-content kv-text-wrap">
-                            Mm, mm oh
-
-                            I don't understand
-                            You look just like the man
-                            In the picture by our bed
-                            The suspense is pounding and clouding up my head
-                            I'm checking your clothes
-                            And you wear the same size shoe
-                            You sleep in his spot and your driving his car
-                            But I don't know just who you are
-
-                            There's a stranger in my house
-                            It took a while to figure out
-                            There's no way you can say who you say you are
-                            You got to be someone else
-                            Because he wouldn't touch me like that
-                            And he wouldn't treat me like you do (you do)
-                            He would adore he, he wouldn't ignore me
-                            So I am convinced that there's a stranger in my house
-
-                            Now show who you are
-                            Don't see your shadow around when you walk
-                            Your leaving no kisses
-                            Goodbye with no words
-                            If these walls could talk
-                            They would have nothing to tell
-
-                            So what could it be
-                            Is there someone imitating me
-                            Could she be taking my place
-                            Look me in the face
-                            And tell me that I am wrong when I say
-
-                            There's a stranger in my house
-                            It took a while to figure out
-                            There is no way you can say who you say you are
-                            You got to be someone else
-                            Because he wouldn't touch me like that
-                            And he wouldn't treat me like you do (you do)
-                            He would adore he, he wouldn't ignore me
-                            So I am convinced that there's a
-
-                            Stranger in my house
-
-                            Pop quiz
-                            Tell me where we first kissed
-                            Tell me where my spot is
-                            Tell me if I like it, love it
-                            Or could it be
-                            That the stranger is me
-                            Have I changed so drastically
-                            Is it I want more then me
-                            And you remain the same
-
-                            There's a stranger in my house
-                            It took a while to figure out
-
-                            It took a while to figure out
-                            You can't be who you say you are
-                            You got to be someone else
-                            Because he wouldn't touch me like that
-                            And he wouldn't treat me like you do
-                            He would adore he, he wouldn't ignore me
-                            So I am convinced that there's a stranger in my house
-
-                            Woo
-
-                            There's a stranger in my house
-                            It took a while to figure out
-
-                            It took a while to figure out
-                            You can't be who you say you are
-                            You got to be someone else
-                            Because he wouldn't touch me like that
-                            And he wouldn't treat me like you do
-                            He would adore he, he wouldn't ignore me
-                            So I am convinced that there's a stranger in my house
+                            {{ song.lyrics }}
                         </div>
                     </div>
 
@@ -150,28 +74,19 @@
                                 <img class="img-rounded" width="50" height="50" src="https://thumbnailer.mixcloud.com/unsafe/60x60/tmp/7/5/c/5/ec81-2b3c-4c65-ad9b-4b5d38b7ca6f" alt="">
                             </div>
                             <div class="comment-content">
-                                <form action="">
-                                    <div class="form-group">
-                                        <textarea class="form-control" placeholder='What do you think of RAGE "REDDY" mix?'></textarea>
-                                    </div>
-                                    <div class="comment-actions pull-right">
-                                        <button type="submit" class="btn btn-success">Comment</button>
-                                    </div>
-                                </form>
+                                <div class="form-group">
+                                    <textarea [(ngModel)]="commentBody" class="form-control" placeholder='What do you think of RAGE "REDDY" mix?'></textarea>
+                                </div>
+                                <div class="comment-actions pull-right">
+                                    <button (click)="onComment()" type="submit" class="btn btn-success">Comment</button>
+                                </div>
                             </div>
                         </div>
 
-                        <ul class="comments-wrapper list-unstyled">
-                            <li class="comment-wrapper">
-                                <div class="comment-avatar">
-                                    <img class="img-rounded" width="50" height="50" src="https://thumbnailer.mixcloud.com/unsafe/60x60/tmp/7/5/c/5/ec81-2b3c-4c65-ad9b-4b5d38b7ca6f" alt="">
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-header"><a href=""><strong>Kabelo2ka</strong></a> &middot; <span class="text-muted">3 minutes ago</span></div>
-                                    <div class="comment-body">Nice Old School feeling</div>
-                                </div>
-                            </li>
-                        </ul>
+                        <app-comments #comments
+                                      [parent]="song">
+                        </app-comments>
+
                     </div>
                 </div>
                 

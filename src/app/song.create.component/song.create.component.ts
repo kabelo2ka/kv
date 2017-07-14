@@ -119,7 +119,7 @@ export class SongCreateComponent implements OnInit, OnChanges {
 
         // deep copy of form model songs
         const songsDeepCopy: Song[] = formModel.songs.map(
-            (song: Song) => Object.assign({}, song)
+            (song: Song) => (<any>Object).assign({}, song)
         );
 
         // return new `Music` object containing a combination of original music value(s)

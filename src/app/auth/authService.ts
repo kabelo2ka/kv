@@ -48,8 +48,6 @@ export class AuthService {
             (response: Response) => {
                 this.is_logged_in.next(true);
                 this.user.next(response.json().user);
-                // Schedule a token refresh
-                this.scheduleRefresh();
                 const token = response.json().token;
                 const base64Url = token.split('.')[1];
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
@@ -59,6 +57,8 @@ export class AuthService {
             tokenData => {
                 localStorage.setItem('token', tokenData.token);
                 localStorage.setItem('refresh_token', tokenData.token);
+                // Schedule a token refresh
+                this.scheduleRefresh();
             }
 
         );

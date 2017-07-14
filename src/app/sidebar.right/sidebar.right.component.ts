@@ -1,7 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {TabsetComponent} from 'ngx-bootstrap';
 import {AudioService} from "../audio/audio.service";
-import {NgForm} from "@angular/forms";
 import {CommentService} from "../comment/comment.service";
 import {AuthService} from "../auth/authService";
 
@@ -9,7 +8,6 @@ import {AuthService} from "../auth/authService";
 @Component({
     selector: 'right-sidebar',
     templateUrl: './sidebar.right.component.html',
-    //template: '<h1>{{title}}</h1><h2>{{hero}} details!</h2>',
     styleUrls: ['./sidebar.right.component.css'],
     providers: [CommentService]
 })
@@ -57,7 +55,7 @@ export class RightSidebarComponent {
 
     onComment() {
         this.comment.author = this.user;
-        this.song.comments.push(Object.assign({}, this.comment));
+        this.song.comments.push((<any>Object).assign({}, this.comment));
         this.commentService.addComment(this.comment, this.song.id).subscribe(
             () => {
                 //@todo Reset form after a successful comment

@@ -198,22 +198,3 @@ h2.h4.bottom-border {
 }
 
 
-/**-- Comments --**/
-.comment-wrapper {
-    display: flex;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-.comment-avatar {
-    margin-right: 30px;
-}
-.comment-content {
-    flex: 1;
-}
-.comment-header {
-    margin: 5px 0;
-}
-.comment-body {
-    white-space: pre-wrap;
-}
-/**-End Comments-**/
