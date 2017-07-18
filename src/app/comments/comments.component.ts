@@ -1,5 +1,4 @@
-import {Component, OnInit, Input} from "@angular/core";
-import {AuthService} from "../auth/authService";
+import {Component, Input, OnInit} from "@angular/core";
 import {CommentService} from "../comment/comment.service";
 
 
@@ -17,9 +16,7 @@ export class CommentsComponent implements OnInit {
     public comment: any;
     errors: any;
 
-    constructor(private authService: AuthService,
-                private commentService: CommentService
-    ){
+    constructor(private commentService: CommentService) {
         this.comment = {
             id: 0,
             body: '',
@@ -33,19 +30,12 @@ export class CommentsComponent implements OnInit {
 
     onComment(body, author) {
         this.prepareComment(body, author);
-        /*this.commentService.addComment(this.comment, this.parent.id).subscribe(
-            () => {
-                //@todo Reset form after a successful comment
-                this.comment.body = '';
-            },
-            errors => this.errors = errors
-        );*/
+        return this.commentService.addComment(this.comment, this.parent.id);
     }
 
     prepareComment(body, author) {
         this.comment.body = body;
         this.comment.author = author;
-        console.log(this.comment);
         this.parent.comments.unshift((<any>Object).assign({}, this.comment));
     }
 

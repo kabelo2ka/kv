@@ -19,7 +19,7 @@ import {
 } from "ngx-bootstrap";
 import {SlimScrollModule} from "ng2-slimscroll";
 import {BusyModule} from "angular2-busy";
-
+import {NgUploaderModule} from "ngx-uploader";
 
 import {AppComponent} from "./app.component";
 import {AppService} from "./app.service";
@@ -52,8 +52,8 @@ import {SongEditComponent} from "./song-edit/song-edit.component";
 import {SongService} from "./songs.component/song.service";
 import {AudioAPIWrapper} from "./audio/audio-api-wrapper";
 import {TestsComponent} from "./tests/tests.component";
-import { SongComponent } from './song/song.component';
-import { CommentsComponent } from './comments/comments.component';
+import {SongComponent} from "./song/song.component";
+import {CommentsComponent} from "./comments/comments.component";
 
 
 @NgModule({
@@ -105,6 +105,7 @@ import { CommentsComponent } from './comments/comments.component';
         TooltipModule.forRoot(),
         ReactiveFormsModule,
         SlimScrollModule,
+        NgUploaderModule,
         BrowserModule,
         FormsModule,
         HttpModule,

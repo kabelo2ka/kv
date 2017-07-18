@@ -14,8 +14,6 @@
                             <div class="kv-media-image">
                                 <img *ngIf="song.album" style="width: 64px;height: 64px;"
                                      src="{{song.album.image}}" alt="{{song.name}}">
-                                <!--<div class="kv-media-image-overlay play_song" (click)="playSong(song)"
-                                attr.data-src="{{song.file_name}}">-->
                                 <div class="kv-media-image-overlay">
                                     <i *ngIf="!isActiveSong(song) || (isActiveSong(song) && is_paused)"
                                        (click)="playSong(song)"
@@ -38,6 +36,12 @@
                                     <div>
                                         <small *ngIf="song.plays_count == 1">{{ song.plays_count }} Play &middot; </small>
                                         <small *ngIf="song.plays_count != 1">{{ song.plays_count }} Plays &middot; </small>
+                                        <small *ngIf="song.comments.length  == 1">{{ song.comments.length }} Comment
+                                            &middot;
+                                        </small>
+                                        <small *ngIf="song.comments.length  != 1">{{ song.comments.length }} Comments
+                                            &middot;
+                                        </small>
                                         <small *ngIf="song.likes_count == 1">{{ song.likes_count }} Like</small>
                                         <small *ngIf="song.likes_count != 1">{{ song.likes_count }} Likes</small>
                                         <small *ngIf="song.is_liked"> &middot; <span
@@ -47,7 +51,8 @@
                                 <div class="controls pull-right">
                                     <span *ngIf="isActiveSong(song)" class="is-activated">
                                         <i *ngIf="loading_song" class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-                                        <app-audio-visualization *ngIf="!loading_song"></app-audio-visualization>
+                                        <app-audio-visualization
+                                                [ngStyle]="{'display':(loading_song || is_paused)?'none':'block'}"></app-audio-visualization>
                                     </span>
                                     <a *ngIf="song.is_admin" routerLink="/songs/{{ song.id }}/edit"
                                        class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Edit</a>

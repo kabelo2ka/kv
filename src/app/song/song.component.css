@@ -109,10 +109,25 @@ h2.h4.bottom-border {
     height: inherit;
 }
 
-.play-button .loading-icon, .play-button .pause-icon {
+.play-button .loading-icon,
+.play-button .pause-icon {
     display: none;
 }
 
+.play-button.loading-state .loading-icon,
+.play-button.pause-state .pause-icon {
+    display: block;
+}
+
+.play-button.loading-state .play-icon,
+.play-button.loading-state .pause-icon {
+    display: none;
+}
+
+.play-button.pause-state .loading-icon,
+.play-button.pause-state .play-icon {
+    display: none;
+}
 
 .play-button-wrap .play-icon,
 .play-button-wrap .pause-icon,

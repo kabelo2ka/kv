@@ -1,10 +1,12 @@
-import {Component, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {Song} from "../songs.component/song";
 import {Subscription} from "rxjs";
 import {SongService} from "../songs.component/song.service";
-import {Params, ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Params} from "@angular/router";
 import {User} from "../user.component/user";
 import {AuthService} from "../auth/authService";
+import {AudioService} from "../audio/audio.service";
+import {AudioAPIWrapper} from "../audio/audio-api-wrapper";
 
 class Res {
     data: any;
@@ -24,12 +26,17 @@ export class SongComponent implements OnInit {
     loading: Subscription;
     song: Song;
     user: User;
+    private loading_song: boolean;
 
+    is_paused: boolean = false;
+    isPlaying: boolean = false;
 
     constructor(
         private activatedRoute: ActivatedRoute,
         private songService: SongService,
-        private authService: AuthService
+        private authService: AuthService,
+        private audioService: AudioService,
+        private audioApiWrapper: AudioAPIWrapper
     )
     {}
 
@@ -37,12 +44,37 @@ export class SongComponent implements OnInit {
         this.activatedRoute.params.subscribe((params: Params) => {
             let id = params['id'];
             // Load Song
-            this.loading = this.songService.getSong(id).subscribe(
-                (res:Res) => this.song = res.data
-            );
+            this.getSong(id);
         });
         this.authService.user$.subscribe(
             res => this.user = res
+        );
+        // Get audio status play | pause | stop
+        this.audioService.status$.subscribe(
+            status => {
+                if (status === 'play') {
+                    this.isPlaying = true;
+                } else if (status === 'pause') {
+                    this.isPlaying = false;
+                } else if (status === 'stop') {
+                    this.isPlaying = false;
+                }
+            }
+        );
+        this.audioApiWrapper.bindAudioEvent('canplaythrough').subscribe(
+            () => this.loading_song = false
+        );
+        this.audioApiWrapper.bindAudioEvent('play').subscribe(
+            () => {
+                this.is_paused = false;
+                this.loading_song = false;
+            }
+        );
+        this.audioApiWrapper.bindAudioEvent('pause').subscribe(
+            () => this.is_paused = true
+        );
+        this.audioApiWrapper.bindAudioEvent('ended').subscribe(
+            () => this.is_paused = false
         );
     }
 
@@ -53,9 +85,22 @@ export class SongComponent implements OnInit {
     }
 
     onComment(){
-        this.comments.onComment(this.commentBody, this.user);
+        this.comments.onComment(this.commentBody, this.user).subscribe(
+            () => {
+                this.commentBody = '';
+            }
+        );
     }
 
+    playSong() {
+        this.loading_song = true;
+        this.audioService.setActiveSong(this.song);
+        this.audioService.setStatus('play');
+    }
 
+    pauseSong() {
+        this.audioService.setStatus('pause');
+        this.audioApiWrapper.pause();
+    }
 
 }

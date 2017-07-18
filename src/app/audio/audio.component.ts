@@ -15,6 +15,7 @@ import {AudioAPIWrapper} from "./audio-api-wrapper";
 
 export class AudioComponent {
     song: any;
+    songCopy: any;
     src = "";
 
     audio_progress_time: string = '00:00';
@@ -47,8 +48,13 @@ export class AudioComponent {
         // Get active Song - song that will be played
         this.audioService.active_song_selected$.subscribe(
             active_song => {
+                this.songCopy = this.song;
                 this.song = active_song;
-                this.load(this.song.url).play();
+                if (this.song.id === this.songCopy.id) {
+                    this.play();
+                } else {
+                    this.load(this.song.url).play();
+                }
             }
         );
 

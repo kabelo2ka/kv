@@ -19,9 +19,9 @@ import * as io from "socket.io-client";
 
 
 export class SongsComponent implements OnInit {
-    is_playing: boolean;
-    is_paused: boolean;
-    has_ended: boolean;
+    isPlaying: boolean = false;
+    is_paused: boolean = false;
+    has_ended: boolean = false;
     loading_song: boolean = true;
 
     errorMessage: string;
@@ -59,29 +59,35 @@ export class SongsComponent implements OnInit {
                 let songToModify = this.songs.find(song => song.id === song.id);
                 if (songToModify) {
                     this.activeSong = song;
-                    //console.log(song);
                 }
             }
         );
-        this.audioApiWrapper.bindAudioEvent('canplaythrough').subscribe(
-            () => {
-                this.loading_song = false;
+        // Get audio status play | pause | stop
+        this.audioService.status$.subscribe(
+            status => {
+                if (status === 'play') {
+                    this.isPlaying = true;
+                } else if (status === 'pause') {
+                    this.isPlaying = false;
+                } else if (status === 'stop') {
+                    this.isPlaying = false;
+                }
             }
+        );
+        this.audioApiWrapper.bindAudioEvent('loadedmetadata').subscribe(
+            () => this.loading_song = false
         );
         this.audioApiWrapper.bindAudioEvent('play').subscribe(
             () => {
                 this.is_paused = false;
+                //this.loading_song = false;
             }
         );
         this.audioApiWrapper.bindAudioEvent('pause').subscribe(
-            () => {
-                this.is_paused = true;
-            }
+            () => this.is_paused = true
         );
         this.audioApiWrapper.bindAudioEvent('ended').subscribe(
-            () => {
-                this.is_paused = false;
-            }
+            () => this.is_paused = false
         );
         this.socket = io(this.SOCKET_URL).connect();
         Observable.fromEvent(this.socket, 'songs-channel:App\\Events\\UserPlayedSong').subscribe(
@@ -101,7 +107,7 @@ export class SongsComponent implements OnInit {
 
     getSongs() {
         this.loading = this.songService.getSongs(null).subscribe(
-            res => {
+            (res: any) => {
                 this.songs = res.data;
                 //this.meta = res.meta;
             },
@@ -112,6 +118,7 @@ export class SongsComponent implements OnInit {
 
     playSong(song: any) {
         this.loading_song = true;
+        this.is_paused = true;
         this.setActiveSong(song);
         this.isPlayingSong(song);
         this.audioService.setStatus('play');
