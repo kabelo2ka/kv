@@ -90,7 +90,7 @@ export class AudioComponent {
 
         // Post play to server after 5 seconds
         this.audioApiWrapper.bindAudioEvent('play').subscribe(
-            () => setTimeout(()=> this.songService.postPlay(this.song.id), 5000)
+            () => setTimeout(() => this.songService.postPlay(this.song.id).subscribe(), 5000)
         );
 
         // Stop song when song ends (Resets song's duration)

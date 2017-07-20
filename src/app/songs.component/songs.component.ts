@@ -90,7 +90,7 @@ export class SongsComponent implements OnInit {
             () => this.is_paused = false
         );
         this.socket = io(this.SOCKET_URL).connect();
-        Observable.fromEvent(this.socket, 'songs-channel:App\\Events\\UserPlayedSong').subscribe(
+        Observable.fromEvent(this.socket, 'songs:App\\Events\\UserPlayedSong').subscribe(
             (res: any) => {
                 let songToModify = this.songs.find(song => song.id === res.song_id);
                 if (songToModify) {

@@ -54,6 +54,7 @@ import {AudioAPIWrapper} from "./audio/audio-api-wrapper";
 import {TestsComponent} from "./tests/tests.component";
 import {SongComponent} from "./song/song.component";
 import {CommentsComponent} from "./comments/comments.component";
+import {SocketService} from "./socket.service";
 
 
 @NgModule({
@@ -114,6 +115,7 @@ import {CommentsComponent} from "./comments/comments.component";
     ],
     providers: [
         AppService,
+        SocketService,
         UserService,
         AuthService,
         JwtHelper,

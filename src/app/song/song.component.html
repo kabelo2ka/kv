@@ -84,7 +84,10 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="unseen-comments text-center">
+                            <span *ngIf="unseenComments!==1">{{ unseenCommentsCount }} new comments.
+                            <a href="#">Show comments</a></span>
+                        </div>
                         <app-comments #comments
                                       [parent]="song">
                         </app-comments>

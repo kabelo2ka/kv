@@ -7,6 +7,7 @@ import {User} from "../user.component/user";
 import {AuthService} from "../auth/authService";
 import {AudioService} from "../audio/audio.service";
 import {AudioAPIWrapper} from "../audio/audio-api-wrapper";
+import {SocketService} from "../socket.service";
 
 class Res {
     data: any;
@@ -25,6 +26,9 @@ export class SongComponent implements OnInit {
 
     loading: Subscription;
     song: Song;
+    connection;
+    unseenComments: any = [];
+    unseenCommentsCount: number = 0;
     user: User;
     private loading_song: boolean;
 
@@ -34,6 +38,7 @@ export class SongComponent implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
         private songService: SongService,
+        private socketService: SocketService,
         private authService: AuthService,
         private audioService: AudioService,
         private audioApiWrapper: AudioAPIWrapper
@@ -46,6 +51,7 @@ export class SongComponent implements OnInit {
             // Load Song
             this.getSong(id);
         });
+
         this.authService.user$.subscribe(
             res => this.user = res
         );
@@ -61,6 +67,12 @@ export class SongComponent implements OnInit {
                 }
             }
         );
+        // Subscribe to song comments channel
+        this.connection = this.socketService.getComments().subscribe(res => {
+            this.unseenComments.unshift((<any>Object).assign({}, res));
+            this.unseenCommentsCount++;
+            console.log(res);
+        });
         this.audioApiWrapper.bindAudioEvent('canplaythrough').subscribe(
             () => this.loading_song = false
         );
@@ -101,6 +113,10 @@ export class SongComponent implements OnInit {
     pauseSong() {
         this.audioService.setStatus('pause');
         this.audioApiWrapper.pause();
+    }
+
+    ngOnDestroy() {
+        this.connection.unsubscribe();
     }
 
 }

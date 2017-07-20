@@ -212,4 +212,8 @@ h2.h4.bottom-border {
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-
+/* Comments */
+.unseen-comments {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.08);
+}
