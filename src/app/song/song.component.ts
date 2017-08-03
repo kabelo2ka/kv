@@ -68,10 +68,11 @@ export class SongComponent implements OnInit {
             }
         );
         // Subscribe to song comments channel
-        this.connection = this.socketService.getComments().subscribe(res => {
-            this.unseenComments.unshift((<any>Object).assign({}, res));
+        this.connection = this.socketService.getComments().subscribe((res: any) => {
+            //this.unseenComments.unshift((<any>Object).assign({}, res));
+            this.song.comments.unshift((<any>Object).assign({}, res.comment));
             this.unseenCommentsCount++;
-            console.log(res);
+            console.log(res.comment);
         });
         this.audioApiWrapper.bindAudioEvent('canplaythrough').subscribe(
             () => this.loading_song = false
