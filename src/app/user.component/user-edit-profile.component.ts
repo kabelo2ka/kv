@@ -19,9 +19,11 @@ export class UserEditProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.user = this.authService.getUser().subscribe(
+        /*this.user = this.authService.getAuthUser().subscribe(
             user => this.user = user
-        );
+        );*/
+        // Get Logged in user
+        this.user = this.authService.getAuthUser();
     }
 
     saveUser(form) {

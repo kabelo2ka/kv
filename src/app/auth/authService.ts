@@ -48,6 +48,7 @@ export class AuthService {
             (response: Response) => {
                 this.is_logged_in.next(true);
                 this.user.next(response.json().user);
+                localStorage.setItem('authUser', JSON.stringify(response.json().user));
                 const token = response.json().token;
                 const base64Url = token.split('.')[1];
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
@@ -93,13 +94,14 @@ export class AuthService {
         return tokenNotExpired();
     }
 
-    getUser(){
-        return this.user;
+    getAuthUser(){
+        return JSON.parse(localStorage.getItem('AuthUser'));
     }
 
     logout(){
         localStorage.removeItem('token');
         localStorage.removeItem('refresh_token');
+        localStorage.removeItem('authUser');
         this.is_logged_in.next(false);
         // Unschedule the token refresh
         this.unscheduleRefresh();
