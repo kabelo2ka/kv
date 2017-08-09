@@ -32,8 +32,12 @@ export class SongComponent implements OnInit {
     user: User;
     private loading_song: boolean;
 
+    // Song status
     is_paused: boolean = false;
     isPlaying: boolean = false;
+
+    // User status
+    isLogged = false;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -41,9 +45,8 @@ export class SongComponent implements OnInit {
         private socketService: SocketService,
         private authService: AuthService,
         private audioService: AudioService,
-        private audioApiWrapper: AudioAPIWrapper
-    )
-    {}
+        private audioApiWrapper: AudioAPIWrapper,) {
+    }
 
     ngOnInit() {
         this.activatedRoute.params.subscribe((params: Params) => {
@@ -52,9 +55,13 @@ export class SongComponent implements OnInit {
             this.getSong(id);
         });
 
+        // Get authenticated user
         this.authService.user$.subscribe(
-            res => this.user = res
+            user => {
+                this.user = user;
+            }
         );
+
         // Get audio status play | pause | stop
         this.audioService.status$.subscribe(
             status => {
@@ -70,9 +77,9 @@ export class SongComponent implements OnInit {
         // Subscribe to song comments channel
         this.connection = this.socketService.getComments().subscribe((res: any) => {
             //this.unseenComments.unshift((<any>Object).assign({}, res));
-            this.song.comments.unshift((<any>Object).assign({}, res.comment));
+            this.song.comments.unshift(res.comment);
             this.unseenCommentsCount++;
-            console.log(res.comment);
+            console.log(res.comment[0]);
         });
         this.audioApiWrapper.bindAudioEvent('canplaythrough').subscribe(
             () => this.loading_song = false
@@ -95,6 +102,10 @@ export class SongComponent implements OnInit {
         this.loading = this.songService.getSong(id).subscribe(
             (res:Res) => this.song = res.data
         );
+    }
+
+    loggedIn() {
+        return this.authService.loggedIn();
     }
 
     onComment(){

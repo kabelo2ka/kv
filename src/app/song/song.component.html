@@ -71,8 +71,9 @@
                     <div class="comments-container">
                         <h2 class="h4 bottom-border">Comments</h2>
                         <div class="add-comment comment-wrapper">
-                            <div class="comment-avatar">
-                                <img class="img-rounded" width="50" height="50" src="{{user.avatar}}" alt="">
+                            <div class="comment-avatar" *ngIf="loggedIn()">
+                                <img class="img-rounded" width="50" height="50" *ngIf="user" src="{{ user.avatar }}"
+                                     alt="">
                             </div>
                             <div class="comment-content">
                                 <div class="form-group">
@@ -84,10 +85,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="unseen-comments text-center">
+                        <!--<div class="unseen-comments text-center">
                             <span *ngIf="unseenComments!==1">{{ unseenCommentsCount }} new comments.
                             <a href="#">Show comments</a></span>
-                        </div>
+                        </div>-->
                         <app-comments #comments
                                       [parent]="song">
                         </app-comments>

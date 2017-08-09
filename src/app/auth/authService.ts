@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {Http, Headers, Response} from "@angular/http";
-import { tokenNotExpired, AuthHttp, JwtHelper } from 'angular2-jwt';
+import {Headers, Http, Response} from "@angular/http";
+import {AuthHttp, JwtHelper, tokenNotExpired} from "angular2-jwt";
 import {Observable, Subject} from "rxjs";
-import 'rxjs/Rx';
+import "rxjs/Rx";
 
 
 @Injectable()
@@ -86,16 +86,12 @@ export class AuthService {
         return localStorage.getItem('token');
     }
 
-    isLoggedIn(){
-        return this.is_logged_in;
-    }
-
     loggedIn() {
-        return tokenNotExpired();
+        return tokenNotExpired('token');
     }
 
     getAuthUser(){
-        return JSON.parse(localStorage.getItem('AuthUser'));
+        return JSON.parse(localStorage.getItem('authUser'));
     }
 
     logout(){
