@@ -26,7 +26,7 @@ form.search-bar {
 
 @media screen and (max-width: 479px) {
     .navbar-inverse {
-        background-color: #ff2021;
+        background-color: red;
         border-color: #080808;
     }
     .navbar-header {

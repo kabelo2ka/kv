@@ -23,12 +23,12 @@
 
             </div>
             <div class="nav navbar-nav navbar-right header-btn">
-                <div *ngIf="!is_logged_in">
+                <div *ngIf="!authService.loggedIn()">
                     <button class="btn btn-default btn-sm" (click)="showSignInModal()">Log In</button>
                     <small class="text-muted"> Or</small>
                     <button class="btn btn-primary btn-sm" (click)="showSignUpModal()">Sign Up</button>
                 </div>
-                <div *ngIf="is_logged_in">
+                <div *ngIf="authService.loggedIn()">
                     <div class="profile_icon btn-group" dropdown>
                         <button dropdownToggle class="btn btn-link btn-sm dropdown-toggle">
                             <img width="30px" src="{{ user.avatar }}" alt="Avatar of {{ user.username }} "> &nbsp;
@@ -37,7 +37,7 @@
                             <span class="caret"></span>
                         </button>
                         <ul *dropdownMenu class="dropdown-menu" role="menu">
-                            <li><a href="javascript:void(0)" (click)="gotoUserEditProfilePage()">Edit Profile</a></li>
+                            <li><a href="javascript:void(0)" (click)="gotoSettingsPage()">Settings</a></li>
                             <li class="divider dropdown-divider"></li>
                             <li><a href="javascript:void(0)" (click)="OnLogout()">Log Out</a></li>
                         </ul>

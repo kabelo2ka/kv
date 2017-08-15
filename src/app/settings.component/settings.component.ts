@@ -1,16 +1,16 @@
 import {Component, OnInit} from "@angular/core";
 
-import {UserService} from "./user.service";
+import {UserService} from "../user.component/user.service";
 import {AuthService} from "../auth/authService";
 
 
 @Component({
-    templateUrl: './user-edit-profile.component.html',
+    templateUrl: './settings.component.html',
 
 })
 
 
-export class UserEditProfileComponent implements OnInit {
+export class SettingsComponent implements OnInit {
 
     user: any;
 
@@ -19,15 +19,14 @@ export class UserEditProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        /*this.user = this.authService.getAuthUser().subscribe(
-            user => this.user = user
-        );*/
         // Get Logged in user
         this.user = this.authService.getAuthUser();
     }
 
-    saveUser(form) {
+    saveUser() {
+        this.userService.updateUser(this.user).subscribe((res: any) => {
 
+        });
     }
 
 }

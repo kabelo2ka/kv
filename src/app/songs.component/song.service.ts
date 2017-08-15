@@ -1,15 +1,12 @@
-import {Injectable} from '@angular/core';
-import {Headers, Http, Response, RequestOptions} from '@angular/http';
-import {AuthHttp} from 'angular2-jwt';
+import {Injectable} from "@angular/core";
+import {Headers, Http, RequestOptions, Response} from "@angular/http";
+import {AuthHttp} from "angular2-jwt";
 
-import 'rxjs/add/operator/toPromise';
+import "rxjs/add/operator/toPromise";
 
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-
-import {Song} from './song';
-import {Meta} from "../meta";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/catch";
+import "rxjs/add/operator/map";
 import {AuthService} from "../auth/authService";
 import {Subject} from "rxjs";
 
@@ -61,7 +58,7 @@ export class SongService {
 
     updateSong(song){
         let options = new RequestOptions({headers: this.headers});
-        return this.http.patch(this.SONGS_URL + '/' + song.id, song, options)
+        return this.authHttp.patch(this.SONGS_URL + '/' + song.id, song, options)
             .map(this.extractData)
             .catch(this.handleError);
     }

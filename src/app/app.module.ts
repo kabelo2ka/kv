@@ -25,7 +25,7 @@ import {AppComponent} from "./app.component";
 import {AppService} from "./app.service";
 import {UserService} from "./user.component/user.service";
 import {UserProfileComponent} from "./user.component/user-profile.component";
-import {UserEditProfileComponent} from "./user.component/user-edit-profile.component";
+import {SettingsComponent} from "./settings.component/settings.component";
 import {AuthService} from "./auth/authService";
 import {HeaderComponent} from "./header/header.component";
 import {LeftSidebarComponent} from "./sidebar.left/sidebar.left.component";
@@ -55,13 +55,14 @@ import {TestsComponent} from "./tests/tests.component";
 import {SongComponent} from "./song/song.component";
 import {CommentsComponent} from "./comments/comments.component";
 import {SocketService} from "./socket.service";
+import {AuthGuard} from "./auth-guard.service";
 
 
 @NgModule({
     declarations: [
         AppComponent,
         UserProfileComponent,
-        UserEditProfileComponent,
+        SettingsComponent,
         HeaderComponent,
         LeftSidebarComponent,
         RightSidebarComponent,
@@ -115,6 +116,7 @@ import {SocketService} from "./socket.service";
     ],
     providers: [
         AppService,
+        AuthGuard,
         SocketService,
         UserService,
         AuthService,

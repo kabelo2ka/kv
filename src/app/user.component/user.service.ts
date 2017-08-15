@@ -1,20 +1,21 @@
-import {Injectable} from '@angular/core';
-import {Headers, Http, Response, RequestOptions} from '@angular/http';
+import {Injectable} from "@angular/core";
+import {Headers, Http, RequestOptions, Response} from "@angular/http";
 
-import 'rxjs/add/operator/toPromise';
+import "rxjs/add/operator/toPromise";
 
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/catch";
+import "rxjs/add/operator/map";
 
-import {User} from './user';
-import {Meta} from "../meta";
+import {User} from "./user";
+import {AuthHttp} from "angular2-jwt";
+import {AuthService} from "../auth/authService";
 
 
 @Injectable()
 export class UserService {
 
-    USER_PROFILE_URL = 'http://www.kasivibe.com/api/v1/users';
+    USER_URL = 'http://www.kasivibe.com/api/v1/users';
 
     private headers = new Headers({
         'Content-Type': 'application/json',
@@ -22,7 +23,9 @@ export class UserService {
     private usersUrl = 'http://kasivibe/api/v1/users?fields=id,username,email';
     // URL to web api
 
-    constructor(private http: Http) {
+    constructor(private http: Http,
+                public authHttp: AuthHttp,
+                public authService: AuthService,) {
     }
 
     getUsers(): Observable<User[]> {
@@ -33,19 +36,22 @@ export class UserService {
     }
 
     getUserById(id) {
-        return this.http.get(this.USER_PROFILE_URL + '/' + id, {
+        return this.http.get(this.USER_URL + '/' + id, {
             headers: new Headers({
                 'X-Requested-With': 'XMLHttpRequest'
             })
         })
     }
 
-    addUser(user): Observable<User> {
+    updateUser(user) {
         let options = new RequestOptions({headers: this.headers});
-
-        return this.http.post(this.usersUrl, user, options)
-            .map(this.extractData)
-            .catch(this.handleError);
+        return this.authHttp.patch(this.USER_URL, user, options)
+            .map((res: Response) => {
+                let body = res.json();
+                // Update "authUser" local storage
+                this.authService.saveAuthUserToLocalStorage(body.data);
+                return body.data || {};
+            }).catch(this.handleError);
     }
 
     private extractData(res: Response) {

@@ -1,10 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {Subscription} from "rxjs";
 import {ActivatedRoute, Params} from "@angular/router";
-import {ArtistService} from "../artists.component/artist.service";
-import {AuthService} from "../auth/authService";
 import {SongService} from "../songs.component/song.service";
-import {NgForm} from "@angular/forms";
 
 @Component({
     selector: 'app-song-edit',
@@ -62,13 +59,10 @@ export class SongEditComponent implements OnInit {
     onSongSave(){
         this.songService.updateSong(this.song).subscribe(
             (res:any) => {
-
+                console.log('uploaded', res);
             }
         );
     }
 
-    getSelected(genre_id){
-
-    }
 
 }

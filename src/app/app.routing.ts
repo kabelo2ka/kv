@@ -1,12 +1,9 @@
-import {ModuleWithProviders} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-
-import {UsersComponent} from "./users.component";
+import {ModuleWithProviders} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./home/home.component";
 import {SongsComponent} from "./songs.component/songs.component";
 import {SongCreateComponent} from "./song.create.component/song.create.component";
 import {UserProfileComponent} from "./user.component/user-profile.component";
-import {UserEditProfileComponent} from "./user.component/user-edit-profile.component";
 import {AlbumsComponent} from "./albums/albums.component";
 import {GenresComponent} from "./genres/genres.component";
 import {ArtistsComponent} from "./artists.component/artists.component";
@@ -16,6 +13,7 @@ import {AuthGuard} from "./auth-guard.service";
 import {SongEditComponent} from "./song-edit/song-edit.component";
 import {TestsComponent} from "./tests/tests.component";
 import {SongComponent} from "./song/song.component";
+import {SettingsComponent} from "./settings.component/settings.component";
 
 const appRoutes: Routes = <Routes>[
     {
@@ -23,8 +21,8 @@ const appRoutes: Routes = <Routes>[
         component: HomeComponent
     },
     {
-        path: 'users/edit',
-        component: UserEditProfileComponent,
+        path: 'settings',
+        component: SettingsComponent,
         canActivate: [AuthGuard]
     },
     {

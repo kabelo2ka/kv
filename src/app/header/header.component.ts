@@ -1,9 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 
-import {Router, ActivatedRoute, Params} from '@angular/router';
-
-
-import {NgForm} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../auth/authService";
 import {Subscription} from "rxjs/Subscription";
 import {AppService} from "../app.service";
@@ -41,6 +38,11 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
 
+        // Get from cache (local storage) before reloading user data | can delete
+        if (this.authService.loggedIn()) {
+            this.user = this.authService.getAuthUser();
+        }
+
         this.authService.is_logged_in$.subscribe(
             is_logged_in => {
                 this.is_logged_in = is_logged_in;
@@ -71,8 +73,8 @@ export class HeaderComponent implements OnInit {
         this.appService.setMobileSearchVisible(visible);
     }
 
-    gotoUserEditProfilePage() {
-        this.router.navigate(['/users/edit']);
+    gotoSettingsPage() {
+        this.router.navigate(['/settings']);
     }
 
     public showSignInModal(): void {

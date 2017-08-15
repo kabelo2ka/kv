@@ -3,6 +3,7 @@ import {Headers, Http, Response} from "@angular/http";
 import {AuthHttp, JwtHelper, tokenNotExpired} from "angular2-jwt";
 import {Observable, Subject} from "rxjs";
 import "rxjs/Rx";
+import {User} from "../user.component/user";
 
 
 @Injectable()
@@ -48,7 +49,7 @@ export class AuthService {
             (response: Response) => {
                 this.is_logged_in.next(true);
                 this.user.next(response.json().user);
-                localStorage.setItem('authUser', JSON.stringify(response.json().user));
+                this.saveAuthUserToLocalStorage(response.json().user);
                 const token = response.json().token;
                 const base64Url = token.split('.')[1];
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
@@ -92,6 +93,10 @@ export class AuthService {
 
     getAuthUser(){
         return JSON.parse(localStorage.getItem('authUser'));
+    }
+
+    public saveAuthUserToLocalStorage(user: User) {
+        localStorage.setItem('authUser', JSON.stringify(user));
     }
 
     logout(){
@@ -191,9 +196,5 @@ export class AuthService {
             }
         ).catch(this.handleError);
     }
-
-
-
-
 
 }

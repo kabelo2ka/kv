@@ -10,8 +10,8 @@
                 </div>
                 <div class="form-group required">
                     <label for="song_genre" class="control-label">Genre</label>
-                    <select id="song_genre" class="form-control" name="genre_id" ngModel>
-                        <option *ngFor="let genre of genres"  [value]="genre.id"  {{ song.genre_id == genre.id ? 'Selected' }}>{{ genre.name }}</option>
+                    <select id="song_genre" class="form-control" name="genre_id" [(ngModel)]="song.genre_id" required>
+                        <option *ngFor="let genre of genres" [ngValue]="genre.id">{{ genre.name }}</option>
                     </select>
                 </div>
                 <div class="form-group">
