@@ -37,10 +37,13 @@
                 <footer class="header-actions">
                     <ul class="list-inline">
                         <li>
-                            <button class="btn btn-sm btn-inverse"><i class="icon-like"></i> Like</button>
+                            <button (click)="likeSong()" class="btn btn-sm btn-inverse">
+                                <span *ngIf="!song.is_liked"><i class="icon-like"></i> Like</span>
+                                <span *ngIf="song.is_liked">Unlike</span>
+                            </button>
                         </li>
                         <li>
-                            <button class="btn btn-sm btn-inverse"><i class="icon-bubble"></i> Comment</button>
+                            <a href="" class="btn btn-sm btn-inverse"><i class="icon-bubble"></i> Comment</a>
                         </li>
                         <li>
                             <button class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> Share</button>

@@ -59,6 +59,13 @@ export class SongService {
             .catch(this.handleError);
     }
 
+    updateSong(song){
+        let options = new RequestOptions({headers: this.headers});
+        return this.http.patch(this.SONGS_URL + '/' + song.id, song, options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     deleteSong(id: number) {
         let options = new RequestOptions({headers: this.headers});
         return this.http.delete(this.SONGS_URL + '/' + id, options)

@@ -3,7 +3,7 @@
         <div class="col-md-6">
             <h3>Edit Song</h3>
 
-            <form *ngIf="song" (ngSubmit)="onSongSave(songEditForm)" #songEditForm="ngForm" autocomplete="off">
+            <form *ngIf="song" (ngSubmit)="onSongSave()" #songEditForm="ngForm" autocomplete="off">
                 <div class="form-group required">
                     <label for="song_name" class="control-label">Title</label>
                     <input type="text" id="song_name" class="form-control" name="name" [(ngModel)]="song.name" required>
@@ -11,11 +11,10 @@
                 <div class="form-group required">
                     <label for="song_genre" class="control-label">Genre</label>
                     <select id="song_genre" class="form-control" name="genre_id" ngModel>
-                        <option value="0" disabled selected>Select...</option>
-
+                        <option *ngFor="let genre of genres"  [value]="genre.id"  {{ song.genre_id == genre.id ? 'Selected' }}>{{ genre.name }}</option>
                     </select>
                 </div>
-                <div class="form-group required">
+                <div class="form-group">
                     <label for="song_name" class="control-label">Upload Audio File</label>
                     <input #fileInput type="file" accept=".mp3,.wav,.ogg" name="file">
                     <!--<p class="help-block text-muted">Only mp3, wav and ogg file formats are allowed.</p>-->
@@ -25,7 +24,7 @@
                     <textarea id="song_lyrics" rows="10" class="form-control" name="lyrics"
                               [(ngModel)]="song.lyrics"></textarea>
                 </div>
-                <button type="submit" class="btn btn-success" [disabled]="!songEditForm.valid">Save changes
+                <button type="submit" class="btn btn-success" [disabled]="!songEditForm.valid">Save
                 </button>
             </form>
         </div>

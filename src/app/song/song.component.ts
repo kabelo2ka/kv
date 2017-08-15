@@ -127,6 +127,20 @@ export class SongComponent implements OnInit {
         this.audioApiWrapper.pause();
     }
 
+    likeSong(){
+        this.songService.likeSong(this.song.id).subscribe(
+            (res:any) => {
+                if( res.data === 'Liked' ){
+                    this.song.likes_count += 1;
+                    this.song.is_liked = true;
+                }else{
+                    this.song.likes_count -= 1;
+                    this.song.is_liked = false;
+                }
+            }
+        );
+    }
+
     ngOnDestroy() {
         this.connection.unsubscribe();
     }

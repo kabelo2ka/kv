@@ -59,7 +59,15 @@ export class SongEditComponent implements OnInit {
         });
     }
 
-    onSongSave(form: NgForm){
+    onSongSave(){
+        this.songService.updateSong(this.song).subscribe(
+            (res:any) => {
+
+            }
+        );
+    }
+
+    getSelected(genre_id){
 
     }
 
