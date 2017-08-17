@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
     public is_sign_in_modal_shown: boolean = false;
     public is_sign_up_modal_shown: boolean = false;
     left_mobile_menu_visible: boolean = false;
-    mobile_search_visible: boolean = false;
+
 
     is_logged_in: boolean = false;
 
@@ -57,20 +57,11 @@ export class HeaderComponent implements OnInit {
             }
         );
 
-        // Mobile Search
-        this.appService.mobile_search_visible$.subscribe(res => {
-            this.mobile_search_visible = res;
-        });
 
     }
 
     mobileMenu(visible: boolean){
         this.appService.setLeftMobileMenuVisible(visible);
-    }
-
-    mobileSearch(visible: boolean){
-        this.mobile_search_visible = visible;
-        this.appService.setMobileSearchVisible(visible);
     }
 
     gotoSettingsPage() {

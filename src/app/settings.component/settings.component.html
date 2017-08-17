@@ -31,10 +31,12 @@
                     <label>Artist Name</label>
                     <input name="artist_name" [(ngModel)]="user.artist_name" type="text" class="form-control" required>
                 </div>
-                <button type="submit" [disabled]="!editUserProfileForm.valid || savingProfile" class="btn btn-default">
-                    Save
+                <button type="submit" [disabled]="!editUserProfileForm.valid || savingProfile" class="btn btn-success">
+                    <i *ngIf="savingProfile" class="fa fa-spinner fa-pulse fa-fw"></i> Save
                 </button>
             </form>
         </div>
     </div>
 </div>
+
+<app-notification-toast></app-notification-toast>

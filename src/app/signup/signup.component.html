@@ -24,7 +24,7 @@
             </div>
           </div>
           <div [ngClass]="{'has-error':errors.email}" class="form-group">
-            <input type="email" class="form-control" placeholder="Email address" name="email" ngModel required>
+              <input type="email" class="form-control" placeholder="Email Address" name="email" ngModel required>
             <div *ngIf="errors.email" class="help-block">
               <ul class="list-unstyled">
                 <li *ngFor="let error of errors.email">
@@ -34,7 +34,8 @@
             </div>
           </div>
           <div [ngClass]="{'has-error':errors.password}" class="form-group">
-            <input type="password" class="form-control" placeholder="New password" name="password" ngModel minlength="8" required>
+              <input type="password" class="form-control" placeholder="New Password" name="password" ngModel
+                     minlength="8" required>
             <div *ngIf="errors.password" class="help-block">
               <ul class="list-unstyled">
                 <li *ngFor="let error of errors.password">
@@ -43,7 +44,9 @@
               </ul>
             </div>
           </div>
-          <button type="submit" class="btn btn-success" [disabled]="!signupForm.valid">Create New Account</button>
+            <button type="submit" class="btn btn-success" [disabled]="!signupForm.valid || signingUp">
+                <i *ngIf="signingUp" class="fa fa-spinner fa-pulse fa-fw"></i> Create New Account
+            </button>
         </form>
       </div>
     </div>

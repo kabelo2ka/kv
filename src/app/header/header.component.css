@@ -18,12 +18,6 @@
     text-decoration: none;
 }
 
-form.search-bar {
-    display: inline-block;
-    margin-left: 20px;
-    width: 290px;
-}
-
 @media screen and (max-width: 479px) {
     .navbar-inverse {
         background-color: red;
@@ -43,38 +37,5 @@ form.search-bar {
     }
     .toggle-menu:active, .toggle-search:active {
         background-color: #e00000;
-    }
-
-    form.search-bar {
-        position: absolute;
-        z-index: 999;
-        border: none;
-        box-shadow: none;
-        margin: 0;
-        padding: 0;
-        display: none;
-        width: 100%;
-        background: #ffffff;
-    }
-    form.search-bar.active {
-        display: flex;
-    }
-    form.search-bar input.search-input {
-        background-color: #e4e4e4;
-        height: 68px;
-        border: none;
-        margin: 0;
-        flex: 1;
-    }
-    form.search-bar input.search-input:focus {
-        outline: 0;
-        box-shadow: none;
-    }
-    form.search-bar .close-search {
-        height: 68px;
-        line-height: 68px;
-        padding: 0 20px;
-        color: #666666;
-        font-size: 27px;
     }
 }

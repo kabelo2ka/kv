@@ -20,6 +20,7 @@ import {
 import {SlimScrollModule} from "ng2-slimscroll";
 import {BusyModule} from "angular2-busy";
 import {NgUploaderModule} from "ngx-uploader";
+import {SimpleNotificationsModule} from "angular2-notifications";
 
 import {AppComponent} from "./app.component";
 import {AppService} from "./app.service";
@@ -56,6 +57,8 @@ import {SongComponent} from "./song/song.component";
 import {CommentsComponent} from "./comments/comments.component";
 import {SocketService} from "./socket.service";
 import {AuthGuard} from "./auth-guard.service";
+import {NotificationToastComponent} from "./notification-toast/notification-toast.component";
+import {SearchComponent} from "./search/search.component";
 
 
 @NgModule({
@@ -85,6 +88,8 @@ import {AuthGuard} from "./auth-guard.service";
         TestsComponent,
         SongComponent,
         CommentsComponent,
+        NotificationToastComponent,
+        SearchComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -98,6 +103,7 @@ import {AuthGuard} from "./auth-guard.service";
          wrapperClass: 'my-class'
          })
          )*/,
+        SimpleNotificationsModule.forRoot(),
         AlertModule.forRoot(),
         ModalModule.forRoot(),
         TabsModule.forRoot(),

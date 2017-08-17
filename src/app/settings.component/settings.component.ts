@@ -2,6 +2,8 @@ import {Component, OnInit} from "@angular/core";
 
 import {UserService} from "../user.component/user.service";
 import {AuthService} from "../auth/authService";
+import {NotificationsService} from "angular2-notifications/dist";
+import {Subscription} from "rxjs";
 
 
 @Component({
@@ -11,11 +13,13 @@ import {AuthService} from "../auth/authService";
 
 
 export class SettingsComponent implements OnInit {
+    savingProfile: Subscription;
 
     user: any;
 
     constructor(private authService: AuthService,
-                private userService: UserService) {
+                private userService: UserService,
+                private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
@@ -24,9 +28,11 @@ export class SettingsComponent implements OnInit {
     }
 
     saveUser() {
-        this.userService.updateUser(this.user).subscribe((res: any) => {
-
-        });
+        this.savingProfile = this.userService.updateUser(this.user).subscribe(
+            (res: any) => this.notificationService.success('Success', 'Profile updated!'),
+            (error) => this.notificationService.error('Error', error),
+            () => this.savingProfile = null
+        );
     }
 
 }

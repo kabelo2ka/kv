@@ -1,9 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {ModalDirective} from "ngx-bootstrap";
 import {NgForm} from "@angular/forms";
 import {AuthService} from "../auth/authService";
 import {AppService} from "../app.service";
 import {Subscription} from "rxjs";
+import {NotificationsService} from "angular2-notifications/dist";
 
 @Component({
     selector: 'app-signup',
@@ -13,11 +14,14 @@ import {Subscription} from "rxjs";
 export class SignupComponent implements OnInit {
     @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
     private subscription: Subscription;
+    signingUp: Subscription;
     public is_modal_shown: boolean = false;
 
     errors: any;
 
-    constructor(private authService: AuthService, private appService: AppService) {
+    constructor(private authService: AuthService,
+                private appService: AppService,
+                private notificationService: NotificationsService,) {
         this.errors = {
             error: null,
             username: null,
@@ -45,12 +49,16 @@ export class SignupComponent implements OnInit {
     }
 
     onSignUp(form: NgForm) {
-        this.authService.signUp(form.value.username, form.value.email, form.value.password).subscribe(
+        this.signingUp = this.authService.signUp(form.value.username, form.value.email, form.value.password).subscribe(
             () => {
-                //console.log(res);
                 this.autoShownModal.hide();
+                this.notificationService.success('Hello :-)', 'Your account has been created!');
             },
-            errors => this.errors = errors.json()
+            errors => {
+                this.errors = errors.json();
+                this.signingUp = null
+            },
+            () => this.signingUp = null
         )
     }
 

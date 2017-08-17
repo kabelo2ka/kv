@@ -83,7 +83,7 @@
                                     <input id="file_name" type="file" accept=".mp3,.wav,.ogg"
                                            formControlName="file_name">-->
                                     <label class="upload-button btn btn-primary" style="margin-right: 10px">
-                                        <input type="file" ngFileSelect
+                                        <input type="file" ngFileSelect style="display: none"
                                                (uploadOutput)="onUploadOutput($event)"
                                                [uploadInput]="uploadInput">
                                         Choose Audio File

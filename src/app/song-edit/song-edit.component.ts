@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Subscription} from "rxjs";
 import {ActivatedRoute, Params} from "@angular/router";
 import {SongService} from "../songs.component/song.service";
+import {NotificationsService} from "angular2-notifications/dist";
 
 @Component({
     selector: 'app-song-edit',
@@ -11,6 +12,7 @@ import {SongService} from "../songs.component/song.service";
 })
 export class SongEditComponent implements OnInit {
     loading: Subscription;
+    savingSong: Subscription;
     songUploadForm;
     old_song: any;
     song: any;
@@ -42,6 +44,7 @@ export class SongEditComponent implements OnInit {
     constructor(
         private songService: SongService,
         private activatedRoute: ActivatedRoute,
+        private notificationService: NotificationsService,
     ){}
 
     ngOnInit() {
@@ -57,10 +60,10 @@ export class SongEditComponent implements OnInit {
     }
 
     onSongSave(){
-        this.songService.updateSong(this.song).subscribe(
-            (res:any) => {
-                console.log('uploaded', res);
-            }
+        this.savingSong = this.songService.updateSong(this.song).subscribe(
+            (res: any) => this.notificationService.success('Success', 'Song updated!'),
+            error => this.notificationService.error('Success', error),
+            () => this.savingSong = null
         );
     }
 

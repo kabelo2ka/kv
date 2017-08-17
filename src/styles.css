@@ -324,3 +324,14 @@ li.kv-active {
     white-space: pre-wrap;
 }
 /**-End Comments-**/
+
+/**-- Simple Notification --**/
+.simple-notification-wrapper.top {
+    top: 70px !important;
+}
+
+.simple-notification-wrapper.bottom {
+    bottom: 75px !important;
+}
+
+/**-End Simple Notification-**/

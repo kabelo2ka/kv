@@ -43,7 +43,8 @@ const appRoutes: Routes = <Routes>[
     },
     {
         path: 'songs/:id/edit',
-        component: SongEditComponent
+        component: SongEditComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'albums',

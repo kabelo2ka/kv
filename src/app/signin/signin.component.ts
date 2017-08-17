@@ -1,9 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {ModalDirective} from "ngx-bootstrap";
 import {NgForm} from "@angular/forms";
 import {AuthService} from "../auth/authService";
 import {AppService} from "../app.service";
 import {Subscription} from "rxjs";
+import {NotificationsService} from "angular2-notifications/dist";
 
 @Component({
     selector: 'app-signin',
@@ -13,11 +14,14 @@ import {Subscription} from "rxjs";
 export class SigninComponent implements OnInit {
     @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
     private subscription: Subscription;
+    signingIn: Subscription;
     public is_modal_shown: boolean = false;
 
     errors: any;
 
-    constructor(private authService: AuthService, private appService: AppService) {
+    constructor(private authService: AuthService,
+                private appService: AppService,
+                private notificationService: NotificationsService,) {
         this.errors = {
             error: null,
             email: null,
@@ -44,12 +48,16 @@ export class SigninComponent implements OnInit {
     }
 
     onSignIn(form: NgForm) {
-        this.authService.signIn(form.value.email, form.value.password).subscribe(
+        this.signingIn = this.authService.signIn(form.value.email, form.value.password).subscribe(
             () => {
-                //console.log(token_data);
                 this.autoShownModal.hide();
+                this.notificationService.success('Hello :-)', 'You are logged in.');
             },
-            errors => this.errors = errors.json()
+            errors => {
+                this.errors = errors.json();
+                this.signingIn = null
+            },
+            () => this.signingIn = null
         )
     }
 

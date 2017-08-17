@@ -37,9 +37,13 @@
                     <div class="form-group">
                         <a class="pull-right text-muted">Forgot Password?</a>
                     </div>
-                    <button type="submit" class="btn btn-success" [disabled]="!signinForm.valid">Login</button>
+                    <button type="submit" class="btn btn-success" [disabled]="!signinForm.valid || signingIn">
+                        <i *ngIf="signingIn" class="fa fa-spinner fa-pulse fa-fw"></i> Login
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<app-notification-toast></app-notification-toast>
