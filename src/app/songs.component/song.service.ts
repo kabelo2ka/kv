@@ -43,6 +43,12 @@ export class SongService {
             .catch(this.handleError);
     }
 
+    searchSongs(query: string) {
+        return this.http.get(this.SONGS_URL + '/search?q=' + query)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     addSong(song) {
         let options = new RequestOptions({headers: this.headers});
         return this.http.post(this.SONGS_URL, song, options)

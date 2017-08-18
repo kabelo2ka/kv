@@ -32,22 +32,22 @@
     </div>
     <div id="audio-col-2" class="audio-controls">
         <!--<a (click)="play()" class="button" id="play" title="Play song"><i class="fa fa-play" aria-hidden="true"></i></a>-->
-        <a *ngIf="!isPlaying" (click)="play()" class="button" title="Play song">
-            <i class="fa fa-play" aria-hidden="true"></i>
-        </a>
-        <a *ngIf="isPlaying" (click)="pause()" class="button" title="Pause song">
-            <i class="fa fa-pause" aria-hidden="true"></i>
-        </a>
+        <span *ngIf="!isPlaying" (click)="play()" class="button" title="Play song">
+            <i class="icon-control-play" aria-hidden="true"></i>
+        </span>
+        <span *ngIf="isPlaying" (click)="pause()" class="button" title="Pause song">
+            <i class="icon-control-pause" aria-hidden="true"></i>
+        </span>
     </div>
     <div id="audio-col-3">
         <ul class="list-inline list-unstyled audio-controls">
             <li class=""><span id="current_time">{{ audio_progress_time }}</span></li>
             <li class="" tooltip="Like this song.">
-                <span (click)="likeSong(song.id)" class="kv-like-btn" [ngClass]="{'liked':song.is_liked}">
+                <span (click)="likeSong(song.id)" class="kv-like-btn hidden-xs" [ngClass]="{'liked':song.is_liked}">
                     <i class="fa fa-thumbs-up"></i>
                 </span>
             </li>
-            <li [ngClass]="info_panel_visible?'active':''" class="control" id="info-panel-trigger"
+            <li [ngClass]="info_panel_visible?'active':''" class="control hidden-xs" id="info-panel-trigger"
                 (click)="hideInfoPanel()"><span>INFO</span></li>
             <li class="control hidden-xs"><span><i class="fa fa-repeat"></i></span></li>
             <li class="control hidden-xs" id="volume">

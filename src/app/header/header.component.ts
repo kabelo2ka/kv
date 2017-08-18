@@ -9,7 +9,6 @@ import {AppService} from "../app.service";
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
-    //template: '<h1>{{title}}</h1><h2>{{hero}} details!</h2>',
     styleUrls: ['./header.component.css'],
     providers: []
 })

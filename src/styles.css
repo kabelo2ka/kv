@@ -230,6 +230,9 @@ input:focus, input:active {
     padding-top: 15px;
 }
 
+.no-margin {
+    margin: 0;
+}
 .pos-rlt {
     position: relative;
 }
@@ -333,5 +336,11 @@ li.kv-active {
 .simple-notification-wrapper.bottom {
     bottom: 75px !important;
 }
-
 /**-End Simple Notification-**/
+
+/**-- Type Ahead --**/
+typeahead-container.dropdown, typeahead-container.dropdown .dropdown-menu {
+    width: 100%;
+}
+
+/**-End Type Ahead -**/

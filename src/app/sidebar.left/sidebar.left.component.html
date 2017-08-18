@@ -3,13 +3,16 @@
     <section>
         <h2 class="h5">Kasi music</h2>
         <ul class="list-unstyled side-menu">
-            <li><a routerLink="/"><i class="fa fa-home text-info"></i> Home</a></li>
-            <li><a routerLink="/songs" routerLinkActive="active"><i class="fa fa-headphones text-warning"></i>
-                All songs</a>
+            <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i
+                    class="icon-home text-info"></i> Home</a></li>
+            <li><a routerLink="/songs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i
+                    class="icon-earphones text-warning"></i>
+                Songs</a>
             </li>
-            <li><a routerLink="/albums" routerLinkActive="active"><i class="fa fa-play-circle text-primary"></i> Albums</a>
+            <li><a routerLink="/albums" routerLinkActive="active"><i class="icon-picture text-primary"></i> Albums</a>
             </li>
-            <li><a routerLink="/artists" routerLinkActive="active"><i class="fa fa-microphone text-danger"></i> &nbsp;Artists</a>
+            <li><a routerLink="/artists" routerLinkActive="active"><i class="icon-microphone text-danger"></i>
+                Artists</a>
             <!--</li>
             <li><a routerLink="/genres" routerLinkActive="active"><i class="fa fa-music text-success"></i> Genres</a>
             </li>-->
@@ -29,7 +32,7 @@
     <section>
         <h2 class="h5">My Uploads</h2>
         <ul class="list-unstyled side-menu">
-            <li><a routerLink="/songs/create" routerLinkActive="active"><i class="fa fa-plus-circle text-success"></i>
+            <li><a routerLink="/songs/create" routerLinkActive="active"><i class="icon-cloud-upload text-success"></i>
                 Upload Song</a></li>
         </ul>
     </section>
