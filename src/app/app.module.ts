@@ -59,6 +59,7 @@ import {SocketService} from "./socket.service";
 import {AuthGuard} from "./auth-guard.service";
 import {NotificationToastComponent} from "./notification-toast/notification-toast.component";
 import {SearchComponent} from "./search/search.component";
+import {NotificationsComponent} from "./notifications/notifications.component";
 
 
 @NgModule({
@@ -90,6 +91,7 @@ import {SearchComponent} from "./search/search.component";
         CommentsComponent,
         NotificationToastComponent,
         SearchComponent,
+        NotificationsComponent,
     ],
     imports: [
         BrowserAnimationsModule,

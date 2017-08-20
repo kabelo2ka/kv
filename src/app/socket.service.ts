@@ -10,7 +10,7 @@ export class SocketService {
     private socket;
 
     /**
-     * Get Comments
+     * Subscribe to Comments
      *
      * @returns {Observable}
      */
@@ -18,6 +18,23 @@ export class SocketService {
         return new Observable(observer => {
             this.socket = io(this.SOCKET_URL);
             this.socket.on('songs:App\\Events\\UserCommented', (data) => {
+                observer.next(data);
+            });
+            return () => {
+                this.socket.disconnect();
+            };
+        });
+    }
+
+    /**
+     * Subscribe to notifications
+     *
+     * @returns {Observable}
+     */
+    getNotifications() {
+        return new Observable(observer => {
+            this.socket = io(this.SOCKET_URL);
+            this.socket.on('songs:Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', (data) => {
                 observer.next(data);
             });
             return () => {

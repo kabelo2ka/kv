@@ -18,6 +18,10 @@
     text-decoration: none;
 }
 
+.profile_icon button {
+    padding: 0;
+}
+
 @media screen and (max-width: 479px) {
     .navbar-inverse {
         background-color: red;

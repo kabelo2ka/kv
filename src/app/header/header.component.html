@@ -25,6 +25,7 @@
                     <button class="btn btn-primary btn-sm" (click)="showSignUpModal()">Sign Up</button>
                 </div>
                 <div *ngIf="authService.loggedIn()">
+                    <app-notifications></app-notifications>
                     <div class="profile_icon btn-group" dropdown>
                         <button dropdownToggle class="btn btn-link btn-sm dropdown-toggle">
                             <img width="30px" src="{{ user.avatar }}" alt="Avatar of {{ user.username }} "> &nbsp;

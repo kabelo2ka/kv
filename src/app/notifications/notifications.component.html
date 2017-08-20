@@ -1,0 +1,26 @@
+<div class="btn-group" dropdown (onShown)="onShown()" (onHidden)="onHidden()" (isOpenChange)="isOpenChange()">
+    <button class="notification-btn btn btn-link btn-sm" href dropdownToggle (click)="false">
+        <i class="icon-bell"></i>
+        <span *ngIf="notifications.length > 0"
+              class="notification-btn-count badge bg-danger">{{ notifications.length }}</span>
+    </button>
+    <div *dropdownMenu class="dropdown-menu">
+        <ul *ngIf="notifications.length > 0" class="list-unstyled">
+            <li *ngFor="let notification of notifications">
+                <a class="dropdown-item" routerLink="/songs/{{ notification.song.id }}">
+                    <div>
+                        <div><strong>{{ notification.author.username }}</strong> has commented on <strong>{{
+                            notification.song.name }}</strong></div>
+                        <div class="text-muted small"><i class="icon-clock"></i> {{ notification.comment.created_at_ago
+                            }}
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <div *ngIf="!notifications.length" class="empty">No activities</div>
+        <div class="view-all">
+            <a href>View all notifications</a>
+        </div>
+    </div>
+</div>
