@@ -1,0 +1,36 @@
+<span (click)="mobileSearch(true)" class="toggle-search visible-xs"><i class="fa fa-search"></i></span>
+<form class="search-bar" [ngClass]="{'active': mobile_search_visible}" autocomplete="off">
+    <div class="input-group">
+        <input [(ngModel)]="typeheadModel"
+               [typeahead]="dataSource"
+               (typeaheadLoading)="changeTypeaheadLoading($event)"
+               (typeaheadNoResults)="changeTypeaheadNoResults($event)"
+               (typeaheadOnSelect)="typeaheadOnSelect($event)"
+               typeaheadOptionsLimit="7"
+               typeaheadOptionField="name"
+               typeaheadWaitMs="300"
+               [optionsListTemplate]="myCustomListTemplate"
+               [typeaheadItemTemplate]="customItemTemplate"
+               type="text" name="query" class="search-input form-control" placeholder="Search" autocomplete="off">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button">
+                <i *ngIf="typeaheadLoading" class="fa fa-spinner fa-pulse"></i>
+                <i *ngIf="!typeaheadLoading" class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+    <span (click)="mobileSearch(false)" class="close-search visible-xs"><i class="fa fa-close"></i></span>
+</form>
+
+
+<div *ngIf="typeaheadNoResults===true" style="display: inline-block; margin-left: 35px;">
+    <i class="glyphicon glyphicon-remove"></i> No Results Found
+</div>
+
+
+<template #customItemTemplate let-model="item" let-index="index">
+    <div>
+        <h6 class="no-margin">{{ model.name }}</h6>
+        <small>- By {{ model.user.artist_name }}</small>
+    </div>
+</template>
