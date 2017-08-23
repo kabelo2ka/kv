@@ -1,15 +1,6 @@
-import {Component, ElementRef, EventEmitter, OnChanges, OnInit, ViewChild} from "@angular/core";
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-
-import {UploadOutput, UploadInput, UploadFile, humanizeBytes} from 'ngx-uploader';
-
-import {Http} from "@angular/http";
-import {AuthService} from "../auth/authService";
-import {AlbumService} from "../albums/album.service.component";
-//import {Song} from "../songs.component/song";
-import {SongService} from "../songs.component/song.service";
+import {Component, OnInit, EventEmitter, } from "@angular/core";
 import {Music, Song} from "../data-model";
-
+import { UploadOutput, UploadInput, UploadFile, humanizeBytes } from 'ngx-uploader';
 
 @Component({
     selector: 'songs-upload',
@@ -18,15 +9,17 @@ import {Music, Song} from "../data-model";
 })
 
 
-export class SongCreateComponent implements OnInit, OnChanges {
-    music: Music;
+export class SongCreateComponent implements OnInit{
 
-    musicForm: FormGroup;
-    nameChangeLog: string[] = [];
+    formData: FormData;
+    files: UploadFile[];
+    uploadInput: EventEmitter<UploadInput>;
+    humanizeBytes: Function;
+    dragOver: boolean;
 
 
-    selected: string;
-    albums: any[] = [];
+    albums: any[];
+
 
     genres = [
         {
@@ -51,176 +44,22 @@ export class SongCreateComponent implements OnInit, OnChanges {
         }
     ];
 
-    @ViewChild('fileInput') el: ElementRef;
 
-    audio_file: any = "";
+    constructor(
 
-
-    formData: FormData;
-    files: UploadFile[];
-    uploadInput: EventEmitter<UploadInput>;
-    humanizeBytes: Function;
-    dragOver: boolean;
-
-
-    constructor(private http: Http,
-                private authService: AuthService,
-                private albumService: AlbumService,
-                private songService: SongService,
-                private fb: FormBuilder) {
-        this.createForm();
-        this.logNameChange();
-
+    ){
         this.files = []; // local uploading files array
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
         this.humanizeBytes = humanizeBytes;
     }
 
-    ngOnInit() {
-        this.getUserAlbums();
-        // @todo troubleshoot validate album_name when album_id=create
-        this.musicForm.get('album_id').valueChanges.subscribe(
-            value => {
-                if (value == 'create') {
-                    this.musicForm.get('album_name').setValidators([Validators.required]);
-                } else {
-                    this.musicForm.get('album_name').clearValidators();
-                }
-                this.musicForm.get('album_name').updateValueAndValidity();
-            }
-        );
-    }
+    ngOnInit(): void{
 
-    createForm() {
-        this.musicForm = this.fb.group({
-            album_id: ['create', Validators.required],
-            album_name: ['', Validators.required], // Only when album_id=create
-            songs: this.fb.array([]),
-        });
-    }
-
-    ngOnChanges() {
-        this.musicForm.reset({
-            album_id: this.music.album_id,
-            album_name: this.music.album_name,
-        });
-        this.setSongs(this.music.songs);
-    }
-
-    get songs(): FormArray {
-        return this.musicForm.get('songs') as FormArray;
-    }
-
-    setSongs(songs: Song[]) {
-        const songFGs = songs.map(song => this.fb.group(song));
-        const songFormArray = this.fb.array(songFGs);
-        this.musicForm.setControl('songs', songFormArray);
-    }
-
-    addSong() {
-        const songGroup = {
-            name: ['', Validators.required],
-            genre_id: ['', Validators.required],
-            file_name: ['', Validators.required],
-            lyrics: ''
-        };
-        this.songs.push(this.fb.group(songGroup))
-    }
-
-    removeSong(index: number) {
-        this.songs.removeAt(index);
-        //@todo remove audio file from upload queue
-        this.files = this.files.filter(file => file.fileIndex !== index);
-    }
-
-    onSubmit() {
-        this.music = this.prepareSaveMusic();
-        this.songService.saveMusic(this.music);//.subscribe(/* error handling */);
-        this.ngOnChanges();
     }
 
 
-    prepareSaveMusic(): Music {
-        const formModel = this.musicForm.value;
-
-        // deep copy of form model songs
-        const songsDeepCopy: Song[] = formModel.songs.map(
-            (song: Song) => (<any>Object).assign({}, song)
-        );
-
-        // return new `Music` object containing a combination of original music value(s)
-        // and deep copies of changed form model values
-        const saveMusic: Music = {
-            album_id: formModel.album_id,
-            album_name: formModel.album_name,
-            // songs: formModel.songs // <-- bad!
-            songs: songsDeepCopy,
-        };
-        return saveMusic;
-    }
-
-    revert() {
-        this.ngOnChanges();
-    }
-
-    logNameChange() {
-        const nameControl = this.musicForm.get('album_id');
-        nameControl.valueChanges.forEach(
-            (value: string) => this.nameChangeLog.push(value)
-        );
-    }
-
-    /*onSongUpload(form: NgForm) {
-     let audio_file: File = this.el.nativeElement.files[0];
-     let formData: FormData = new FormData();
-     formData.append('file', audio_file);
-     if (form.value.album_id === 'create')
-     formData.append('album_name', form.value.album_name);
-
-     let headers = new Headers();
-     headers.append('Accept', 'application/json');
-     headers.append('X-Requested-With', 'XMLHttpRequest');
-     let options = new RequestOptions({headers: headers});
-     this.http.post('http://www.kasivibe.com/api/v1/song?token=' + this.authService.getToken(), formData, options)
-     .map(res => res.json())
-     .catch(error => Observable.throw(error))
-     .subscribe(
-     data => console.log('success'),
-     error => console.log(error)
-     )
-
-     }*/
-
-    getUserAlbums() {
-        this.albumService.getUserAlbums().subscribe(
-            (res: any) => {
-                this.albums = res.data;
-
-                console.log(this.albums);
-            }
-        );
-    }
-
-
-    setAudioFile(event) {
-        this.audio_file = event;
-    }
-
-
-    startUpload(): void {  // manually start uploading
-        const event: UploadInput = {
-            type: 'uploadAll',
-            url: '/upload',
-            method: 'POST',
-            data: {foo: 'bar'},
-            concurrency: 1 // set sequential uploading of files with concurrency 1
-        };
-        this.uploadInput.emit(event);
-    }
 
     onUploadOutput(output: UploadOutput): void {
-        console.log(output); // lets output to see what's going on in the console
-
         if (output.type === 'allAddedToQueue') { // when all files added in queue
             // uncomment this if you want to auto upload files when added
             // const event: UploadInput = {
@@ -231,35 +70,48 @@ export class SongCreateComponent implements OnInit, OnChanges {
             //   concurrency: 0
             // };
             // this.uploadInput.emit(event);
-        } else if (output.type === 'addedToQueue') {
-            this.files.push(output.file); // add file to array when added
-        } else if (output.type === 'uploading') {
+        } else if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') { // add file to array when added
+            this.files.push(output.file);
+        } else if (output.type === 'uploading' && typeof output.file !== 'undefined') {
             // update current data in files array for uploading file
-            const index = this.files.findIndex(file => file.id === output.file.id);
+            const index = this.files.findIndex(file => typeof output.file !== 'undefined' && file.id === output.file.id);
             this.files[index] = output.file;
-            this.musicForm.get('file_name').setValue(output.file.id);
         } else if (output.type === 'removed') {
             // remove file from array when removed
             this.files = this.files.filter((file: UploadFile) => file !== output.file);
-        } else if (output.type === 'dragOver') { // drag over event
+        } else if (output.type === 'dragOver') {
             this.dragOver = true;
-        } else if (output.type === 'dragOut') { // drag out event
+        } else if (output.type === 'dragOut') {
             this.dragOver = false;
-        } else if (output.type === 'drop') { // on drop event
+        } else if (output.type === 'drop') {
             this.dragOver = false;
         }
     }
 
 
+    startUpload(): void {
+        const event: UploadInput = {
+            type: 'uploadAll',
+            url: 'http://ngx-uploader.com/upload',
+            method: 'POST',
+            data: { foo: 'bar' },
+            concurrency: this.formData.concurrency
+        };
 
+        this.uploadInput.emit(event);
+    }
 
+    cancelUpload(id: string): void {
+        this.uploadInput.emit({ type: 'cancel', id: id });
+    }
 
+    removeFile(id: string): void {
+        this.uploadInput.emit({ type: 'remove', id: id });
+    }
 
-
-
-
-
-
+    removeAllFiles(): void {
+        this.uploadInput.emit({ type: 'removeAll' });
+    }
 
 
 }

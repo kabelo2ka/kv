@@ -21,6 +21,15 @@
         </tab>
         <tab heading="COMMENTS" active="true">
             <div class="comments">
+                <form (ngSubmit)="onComment(commentForm)" #commentForm="ngForm">
+                    <div class="form-group">
+                        <textarea name="body" [(ngModel)]="comment.body" placeholder="Comment here..." rows="2" class="form-control" required></textarea>
+                    </div>
+                    <p *ngIf="errors.error" class="alert alert-danger">
+                        {{ errors.error }}
+                    </p>
+                    <button class="btn btn-success btn-sm" type="submit" [disabled]="!commentForm.valid">Comment</button>
+                </form>
                 <div *ngIf="song" class="comments-wrapper">
                     <ul *ngIf="song.comments" class="list-unstyled">
                         <li *ngFor="let comment of song.comments" class="comment">
@@ -40,15 +49,6 @@
                     </ul>
                     <em *ngIf="!song.comments">No comments yet...</em>
                 </div>
-                <form (ngSubmit)="onComment(commentForm)" #commentForm="ngForm">
-                    <div class="form-group">
-                        <textarea name="body" [(ngModel)]="comment.body" placeholder="Comment here..." rows="2" class="form-control" required></textarea>
-                    </div>
-                    <p *ngIf="errors.error" class="alert alert-danger">
-                        {{ errors.error }}
-                    </p>
-                    <button class="btn btn-success btn-sm" type="submit" [disabled]="!commentForm.valid">Comment</button>
-                </form>
             </div>
         </tab>
     </tabset>
