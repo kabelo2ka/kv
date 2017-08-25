@@ -8,7 +8,6 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import {Song} from './song';
 import {Meta} from "../meta";
 import {AuthService} from "../auth/authService";
 

@@ -1,6 +1,7 @@
 import {Component, OnInit, EventEmitter, } from "@angular/core";
 import {Music, Song} from "../data-model";
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes } from 'ngx-uploader';
+import {FormGroup, FormControl} from "@angular/forms";
 
 @Component({
     selector: 'songs-upload',
@@ -17,6 +18,7 @@ export class SongCreateComponent implements OnInit{
     humanizeBytes: Function;
     dragOver: boolean;
 
+    musicFormGroup: FormGroup;
 
     albums: any[];
 
@@ -54,28 +56,31 @@ export class SongCreateComponent implements OnInit{
     }
 
     ngOnInit(): void{
-
+        this.musicFormGroup = new FormGroup({
+            name: new FormControl()
+        });
     }
 
 
 
     onUploadOutput(output: UploadOutput): void {
         if (output.type === 'allAddedToQueue') { // when all files added in queue
-            // uncomment this if you want to auto upload files when added
-            // const event: UploadInput = {
-            //   type: 'uploadAll',
-            //   url: '/upload',
-            //   method: 'POST',
-            //   data: { foo: 'bar' },
-            //   concurrency: 0
-            // };
-            // this.uploadInput.emit(event);
-        } else if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') { // add file to array when added
-            this.files.push(output.file);
+            // Auto upload files when added
+            const event: UploadInput = {
+                type: 'uploadFile',
+                url: 'http://www.kasivibe.com/api/v1/songs/upload',
+                method: 'POST',
+                data: { foo: 'bar' },
+                concurrency: 1
+            };
+            this.uploadInput.emit(event);
+        } else if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') {
+            // add file to array when added
+            this.files[0] = output.file;
         } else if (output.type === 'uploading' && typeof output.file !== 'undefined') {
             // update current data in files array for uploading file
-            const index = this.files.findIndex(file => typeof output.file !== 'undefined' && file.id === output.file.id);
-            this.files[index] = output.file;
+            /*const index = this.files.findIndex(file => typeof output.file !== 'undefined' && file.id === output.file.id);
+            this.files[index] = output.file;*/
         } else if (output.type === 'removed') {
             // remove file from array when removed
             this.files = this.files.filter((file: UploadFile) => file !== output.file);
@@ -86,19 +91,6 @@ export class SongCreateComponent implements OnInit{
         } else if (output.type === 'drop') {
             this.dragOver = false;
         }
-    }
-
-
-    startUpload(): void {
-        const event: UploadInput = {
-            type: 'uploadAll',
-            url: 'http://ngx-uploader.com/upload',
-            method: 'POST',
-            data: { foo: 'bar' },
-            concurrency: this.formData.concurrency
-        };
-
-        this.uploadInput.emit(event);
     }
 
     cancelUpload(id: string): void {

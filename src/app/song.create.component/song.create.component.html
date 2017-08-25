@@ -7,29 +7,32 @@
     </div>
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
-            <br><br>
-
-
+            <br>
+            <br>
             <div class="drop-zone"
+                 (click)="nativeUploadInput.click()"
                  ngFileDrop
                  (uploadOutput)="onUploadOutput($event)"
                  [uploadInput]="uploadInput"
                  [ngClass]="{ 'is-drop-over': dragOver }">
                 <div class="placeholder">Drag & Drop or Select audio file</div>
             </div>
+            <input style="display: none" #nativeUploadInput type="file" ngFileSelect
+                   (uploadOutput)="onUploadOutput($event)"
+                   [uploadInput]="uploadInput">
 
-            <div class="progress-container">
-                Queue progress:
-                <div class="progress" style="">
-                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+
+            <div *ngIf="files?.length" class="progress-container">
+                <div>
+                    Upload progress: <span class="filename">{{ files[0].name }}</span>
+                    <span class="progress-data">{{ files[0].progress.data.percentage }}% at {{ files[0].progress.data.speedHuman }} eta {{ files[0].progress.data.eta }}</span>
+                </div>
+                <div class="progress" style="margin-top: 5px">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': files[0].progress.data.percentage + '%' }"></div>
                 </div>
             </div>
 
-            <form [formGroup]="musicForm" (ngSubmit)="onSubmit()" novalidate>
 
-
-
-            </form>
 
 
         </div>
