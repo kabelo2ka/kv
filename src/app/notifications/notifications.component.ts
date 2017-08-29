@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {SocketService} from "../socket.service";
+import {NotificationService} from "./notification.service";
 
 @Component({
     selector: 'app-notifications',
@@ -8,10 +9,12 @@ import {SocketService} from "../socket.service";
 })
 export class NotificationsComponent implements OnInit {
 
+    loading;
     connection;
     notifications = [];
 
-    constructor(private socketService: SocketService,) {
+    constructor(private socketService: SocketService,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit() {
@@ -20,6 +23,14 @@ export class NotificationsComponent implements OnInit {
             this.notifications.unshift(res);
             console.log(res);
         });
+        this.getNotifications();
     }
+
+    getNotifications() {
+        this.loading = this.notificationService.getNotifications().subscribe((res: any) => {
+            this.notifications = res.data;
+        });
+    }
+
 
 }

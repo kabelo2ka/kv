@@ -60,6 +60,7 @@ import {AuthGuard} from "./auth-guard.service";
 import {NotificationToastComponent} from "./notification-toast/notification-toast.component";
 import {SearchComponent} from "./search/search.component";
 import {NotificationsComponent} from "./notifications/notifications.component";
+import {NotificationService} from "./notifications/notification.service";
 
 
 @NgModule({
@@ -134,6 +135,7 @@ import {NotificationsComponent} from "./notifications/notifications.component";
         SongService,
         AlbumService,
         ArtistService,
+        NotificationService
     ],
     bootstrap: [AppComponent]
 })
