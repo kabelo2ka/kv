@@ -6,6 +6,10 @@ label {
     border: 3px dashed #444444;
 }
 
+.drop-zone:hover {
+    cursor: pointer;
+}
+
 .drop-zone.is-drop-over {
     background: #222222;
     border: 3px solid #444444;
@@ -14,11 +18,9 @@ label {
 .placeholder {
     padding: 20px;
     text-align: center;
-    font-size: 15px;
+    font-size: 18px;
+    color: #fafafa;
 }
-
-
-
 
 
 .progress-container {

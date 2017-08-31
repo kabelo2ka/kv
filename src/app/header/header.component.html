@@ -28,7 +28,7 @@
                     <app-notifications></app-notifications>
                     <div class="profile_icon btn-group" dropdown>
                         <button dropdownToggle class="btn btn-link btn-sm dropdown-toggle">
-                            <img width="30px" src="{{ user.avatar }}" alt="Avatar of {{ user.username }} "> &nbsp;
+                            <img width="30px" class="img-circle" src="{{ user.avatar }}" alt="Avatar of {{ user.username }} "> &nbsp;
                             <span *ngIf="user.artist_name"><strong>{{ user.artist_name }}</strong></span>
                             <span *ngIf="!user.artist_name"><strong>{{ user.username }}</strong></span>
                             <span class="caret"></span>

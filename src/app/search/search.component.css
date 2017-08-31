@@ -2,12 +2,20 @@ form.search-bar {
     display: inline-block;
     margin-left: 20px;
     padding: 8px;
-    width: 290px;
+    width: 400px;
 }
 
 form.search-bar .input-group {
     display: flex;
 }
+
+form.search-bar .input-group-btn {
+    position: relative;
+    font-size: 0;
+    white-space: nowrap;
+    width: 38px;
+}
+
 
 @media screen and (min-width: 480px) {
     form.search-bar input.search-input {

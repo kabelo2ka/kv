@@ -3,6 +3,8 @@ import {Music, Song} from "../data-model";
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes } from 'ngx-uploader';
 import {FormGroup, FormControl} from "@angular/forms";
 
+import { TabsetComponent } from 'ngx-bootstrap';
+
 @Component({
     selector: 'songs-upload',
     templateUrl: './song.create.component.html',
@@ -66,16 +68,10 @@ export class SongCreateComponent implements OnInit{
     onUploadOutput(output: UploadOutput): void {
         if (output.type === 'allAddedToQueue') { // when all files added in queue
             // Auto upload files when added
-            const event: UploadInput = {
-                type: 'uploadFile',
-                url: 'http://www.kasivibe.com/api/v1/songs/upload',
-                method: 'POST',
-                data: { foo: 'bar' },
-                concurrency: 1
-            };
-            this.uploadInput.emit(event);
+            this.startUpload();
         } else if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') {
             // add file to array when added
+            console.log('Added to queue', output.file);
             this.files[0] = output.file;
         } else if (output.type === 'uploading' && typeof output.file !== 'undefined') {
             // update current data in files array for uploading file
@@ -103,6 +99,19 @@ export class SongCreateComponent implements OnInit{
 
     removeAllFiles(): void {
         this.uploadInput.emit({ type: 'removeAll' });
+    }
+
+    startUpload(): void {
+        const event: UploadInput = {
+            type: 'uploadFile',
+            url: 'http://www.kasivibe.com/api/v1/upload',
+            method: 'POST',
+            data: { foo: 'bar' },
+            file: this.files[0]
+            //concurrency: this.formData.concurrency
+        };
+
+        this.uploadInput.emit(event);
     }
 
 

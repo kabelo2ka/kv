@@ -274,10 +274,39 @@ input:focus, input:active {
     opacity: .6;
 }
 
+.m-t-lg {
+    margin-top: 50px;
+}
+.m-t-md {
+    margin-top: 30px;
+}
+.m-t-sm {
+    margin-top: 20px;
+}
+.m-t-xs {
+    margin-top: 10px;
+}
+
+.m-b-lg {
+    margin-bottom: 50px;
+}
+.m-b-md {
+    margin-bottom: 30px;
+}
+.m-b-sm {
+    margin-bottom: 20px;
+}
+.m-b-xs {
+    margin-bottom: 10px;
+}
 
 
 
-
+.song-create-form .nav-link {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+}
 
 
 

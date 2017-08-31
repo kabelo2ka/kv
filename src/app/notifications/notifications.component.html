@@ -4,21 +4,26 @@
         <span *ngIf="notifications.length > 0"
               class="notification-btn-count badge bg-danger">{{ notifications.length }}</span>
     </button>
-    <div *dropdownMenu class="dropdown-menu">
+    <div *dropdownMenu class="dropdown-menu user-notifications">
         <ul *ngIf="notifications.length > 0" class="list-unstyled">
             <li *ngFor="let notification of notifications">
                 <a class="dropdown-item" routerLink="/songs/{{ notification.song.id }}">
-                    <div>
-                        <div><strong>{{ notification.author.username }}</strong> has commented on <strong>{{
-                            notification.song.name }}</strong></div>
-                        <div class="text-muted small"><i class="icon-clock"></i> {{ notification.comment.created_at_ago
-                            }}
+                    <div class="notification-item">
+                        <div class="notification-item-img">
+                            <img class="img-responsive" src="{{ notification.author.avatar }}" alt="{{ notification.author.username }}">
+                        </div>
+                        <div class="notification-item-content">
+                            <div>{{ notification.author.username }} has commented on {{ notification.song.name }}</div>
+                            <div class="text-muted small">
+                                <i class="icon-clock"></i> {{ notification.comment.created_at_ago }}
+                            </div>
                         </div>
                     </div>
                 </a>
             </li>
         </ul>
-        <div *ngIf="!notifications.length" class="empty">No activities</div>
+        <div *ngIf="!notifications.length" class="empty">No ac
+  ities</div>
         <div class="view-all">
             <a href>View all notifications</a>
         </div>
