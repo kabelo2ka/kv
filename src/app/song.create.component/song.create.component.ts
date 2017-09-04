@@ -3,6 +3,7 @@ import {humanizeBytes, UploadFile, UploadInput, UploadOutput} from "ngx-uploader
 import {GenreService} from "../genres/genre.service";
 import {Genre} from "../genres/genre";
 import {SongService} from "../songs.component/song.service";
+import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 
 @Component({
     selector: 'songs-upload',
@@ -12,6 +13,8 @@ import {SongService} from "../songs.component/song.service";
 
 
 export class SongCreateComponent implements OnInit{
+
+    songForm: FormGroup;
 
     file: UploadFile;
     uploadInput: EventEmitter<UploadInput>;
@@ -28,6 +31,7 @@ export class SongCreateComponent implements OnInit{
 
     constructor(private songService: SongService,
                 private genreService: GenreService,
+                private fb: FormBuilder,
     ){
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
         this.humanizeBytes = humanizeBytes;
@@ -41,6 +45,7 @@ export class SongCreateComponent implements OnInit{
         this.genreService.getGenres(null).subscribe(
             (res: any) => this.genres = res.data
         );
+        this.buildSongForm()
     }
 
     onUploadOutput(output: UploadOutput): void {
@@ -78,6 +83,14 @@ export class SongCreateComponent implements OnInit{
         };
         this.uploadInput.emit(event);
         this.song.file_name = this.file.response.filename;
+    }
+
+    buildSongForm(){
+        this.songForm = this.fb.group({
+            'name': [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(100)])],
+            'genre_id': [null, Validators.required],
+            'album_id': [null, Validators.required],
+        });
     }
 
     createSong() {

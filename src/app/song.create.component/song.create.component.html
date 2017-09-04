@@ -35,22 +35,36 @@
 
             <!--<div  *ngIf="files?.length" class="m-t-md">-->
             <div class="m-t-md">
-                <form class="song-create-form">
+                <form [formGroup]="songForm" (ngSubmit)="createSong()" class="song-create-form">
                     <tabset>
                         <tab heading="Basic Info">
-                            <div class="form-group">
+                            <div class="form-group required"
+                                 [ngClass]="{'has-error has-feedback':!songForm.controls['name'].valid && songForm.controls['name'].touched}">
                                 <input type="text" class="form-control" placeholder="Song name"
-                                       [(ngModel)]="song.name"
-                                       [ngModelOptions]="{standalone: true}"
+                                       formControlName="name"
                                        required>
+                                <span *ngIf="!songForm.controls['name'].valid && songForm.controls['name'].touched"
+                                      class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                <span *ngIf="!songForm.controls['name'].valid && songForm.controls['name'].touched"
+                                      class="help-block">The song name must have at least 2 characters.</span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <select class="form-control"
+                                        formControlName="genre_id"
+                                        required>
+                                    <option value="">Select Genre</option>
+                                    <option *ngFor="let genre of genres" [ngValue]="genre.id">{{ genre.name }}</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <select class="form-control"
-                                        [(ngModel)]="song.genre_id"
-                                        [ngModelOptions]="{standalone: true}"
+                                        formControlName="album_id"
                                         required>
-                                    <option value="0">Select Genre</option>
-                                    <option *ngFor="let genre of genres" [ngValue]="genre.id">{{ genre.name }}</option>
+                                    <option value="">Select Album</option>
+                                    <option value="2">Select Album</option>
+                                    <option *ngFor="let album of albums" [ngValue]="album.id">{{ album.name }}</option>
                                 </select>
                             </div>
                         </tab>
@@ -78,7 +92,7 @@
                         </tab>
                     </tabset>
                     <div class="clearfix">
-                        <button (click)="createSong()" class="btn btn-primary pull-right">Save</button>
+                        <button type="submit" [disabled]="!songForm.valid" class="btn btn-primary pull-right">Save</button>
                     </div>
                 </form>
             </div>
