@@ -1,14 +1,12 @@
-import {Injectable} from '@angular/core';
-import {Headers, Http, Response, RequestOptions} from '@angular/http';
-import {AuthHttp} from 'angular2-jwt';
+import {Injectable} from "@angular/core";
+import {Headers, Http, Response} from "@angular/http";
+import {AuthHttp} from "angular2-jwt";
 
-import 'rxjs/add/operator/toPromise';
+import "rxjs/add/operator/toPromise";
 
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-
-import {Meta} from "../meta";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/catch";
+import "rxjs/add/operator/map";
 import {AuthService} from "../auth/authService";
 
 
@@ -18,32 +16,8 @@ export class GenreService {
     private headers = new Headers({
         'Content-Type': 'application/json',
     });
-    private GENRE_URL = 'http://www.kasivibe.com/api/v1/genre';
+    private GENRE_URL = 'http://www.kasivibe.com/api/v1/genres';
     // URL to web api
-
-    // @todo: Get genres from server
-    genres = [
-        {
-            'id': 1,
-            'name': 'Hip hop'
-        },
-        {
-            'id': 2,
-            'name': 'RnB'
-        },
-        {
-            'id': 3,
-            'name': 'House'
-        },
-        {
-            'id': 4,
-            'name': 'Kwaito'
-        },
-        {
-            'id': 5,
-            'name': 'Gospel'
-        }
-    ];
 
     constructor(private http: Http,
                 public authHttp: AuthHttp,
@@ -56,9 +30,9 @@ export class GenreService {
      * @param query Search Query
      * @returns {Observable<Song[]>}
      */
-    getGenres(query: string) {
+    getGenres(query?: string) {
         query = (query && query.trim() != '' || query !== undefined) ? '?query=' + query : '';
-        return this.authHttp.get(this.GENRE_URL + query)
+        return this.http.get(this.GENRE_URL + query)
             .map(this.extractData)
             .catch(this.handleError);
     }

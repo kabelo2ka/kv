@@ -3,6 +3,8 @@ import {Subscription} from "rxjs";
 import {ActivatedRoute, Params} from "@angular/router";
 import {SongService} from "../songs.component/song.service";
 import {NotificationsService} from "angular2-notifications/dist";
+import {Genre} from "../genres/genre";
+import {GenreService} from "../genres/genre.service";
 
 @Component({
     selector: 'app-song-edit',
@@ -16,38 +18,20 @@ export class SongEditComponent implements OnInit {
     songUploadForm;
     old_song: any;
     song: any;
-    audio_file: any = "";
-    genres = [
-        {
-            'id': 1,
-            'name': 'Hip hop'
-        },
-        {
-            'id': 2,
-            'name': 'RnB'
-        },
-        {
-            'id': 3,
-            'name': 'House'
-        },
-        {
-            'id': 4,
-            'name': 'Kwaito'
-        },
-        {
-            'id': 5,
-            'name': 'Gospel'
-        }
-    ];
+    genres: Genre[];
     albums: any;
 
     constructor(
         private songService: SongService,
+        private genreService: GenreService,
         private activatedRoute: ActivatedRoute,
         private notificationService: NotificationsService,
     ){}
 
     ngOnInit() {
+        this.genreService.getGenres(null).subscribe(
+            (res: any) => this.genres = res.data
+        );
         this.activatedRoute.params.subscribe((params: Params) => {
             let $id = params['id'];
             this.loading = this.songService.getSong($id).subscribe(

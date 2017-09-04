@@ -61,6 +61,7 @@ import {NotificationToastComponent} from "./notification-toast/notification-toas
 import {SearchComponent} from "./search/search.component";
 import {NotificationsComponent} from "./notifications/notifications.component";
 import {NotificationService} from "./notifications/notification.service";
+import {GenreService} from "./genres/genre.service";
 
 
 @NgModule({
@@ -133,6 +134,7 @@ import {NotificationService} from "./notifications/notification.service";
         AudioService,
         AudioAPIWrapper,
         SongService,
+        GenreService,
         AlbumService,
         ArtistService,
         NotificationService

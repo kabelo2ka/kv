@@ -49,7 +49,7 @@ export class SongService {
             .catch(this.handleError);
     }
 
-    addSong(song) {
+    createSong(song) {
         let options = new RequestOptions({headers: this.headers});
         return this.http.post(this.SONGS_URL, song, options)
             .map(this.extractData)

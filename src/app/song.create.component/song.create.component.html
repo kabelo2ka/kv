@@ -2,46 +2,55 @@
     <div class="row">
         <div class="col-md-12">
             <!--<alert type="success">Welcome To Kasivibe! Share, comment and rate music.</alert>-->
-            <h3 class="text-center">Upload Song</h3>
+            <h3 class="text-center m-t-lg">Upload Song</h3>
         </div>
     </div>
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
             <br>
             <br>
-            <div class="drop-zone"
+            <div *ngIf="!file" class="drop-zone"
                  (click)="nativeUploadInput.click()"
                  ngFileDrop
                  (uploadOutput)="onUploadOutput($event)"
                  [uploadInput]="uploadInput"
                  [ngClass]="{ 'is-drop-over': dragOver }">
-                <div class="placeholder">Drag & Drop or Select audio file</div>
+                <div class="placeholder">Drag & drop or Select audio file</div>
             </div>
             <input style="display: none" #nativeUploadInput type="file" ngFileSelect
                    (uploadOutput)="onUploadOutput($event)"
                    [uploadInput]="uploadInput">
 
 
-            <div *ngIf="files?.length" class="progress-container">
+            <div *ngIf="file" class="progress-container">
                 <div>
-                    Upload progress: <span class="filename">{{ files[0].name }}</span>
-                    <span class="progress-data">{{ files[0].progress.data.percentage }}% at {{ files[0].progress.data.speedHuman }} eta {{ files[0].progress.data.eta }}</span>
+                    Upload progress: <span class="filename">{{ file.name }}</span>
+                    <span class="progress-data">{{ file.progress.data.percentage }}% at {{ file.progress.data.speedHuman }} eta {{ file.progress.data.eta }}</span>
                 </div>
                 <div class="progress" style="margin-top: 5px">
-                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': files[0].progress.data.percentage + '%' }"></div>
+                    <div class="progress-bar" role="progressbar"
+                         [ngStyle]="{ 'width': file.progress.data.percentage + '%' }"></div>
                 </div>
             </div>
 
-            <div  *ngIf="files?.length" class="m-t-md">
+            <!--<div  *ngIf="files?.length" class="m-t-md">-->
+            <div class="m-t-md">
                 <form class="song-create-form">
                     <tabset>
                         <tab heading="Basic Info">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Song name">
+                                <input type="text" class="form-control" placeholder="Song name"
+                                       [(ngModel)]="song.name"
+                                       [ngModelOptions]="{standalone: true}"
+                                       required>
                             </div>
                             <div class="form-group">
-                                <select class="form-control">
-                                    <option>Select Genre</option>
+                                <select class="form-control"
+                                        [(ngModel)]="song.genre_id"
+                                        [ngModelOptions]="{standalone: true}"
+                                        required>
+                                    <option value="0">Select Genre</option>
+                                    <option *ngFor="let genre of genres" [ngValue]="genre.id">{{ genre.name }}</option>
                                 </select>
                             </div>
                         </tab>
@@ -69,7 +78,7 @@
                         </tab>
                     </tabset>
                     <div class="clearfix">
-                        <button class="btn btn-primary pull-right">Save</button>
+                        <button (click)="createSong()" class="btn btn-primary pull-right">Save</button>
                     </div>
                 </form>
             </div>
