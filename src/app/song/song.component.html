@@ -1,52 +1,60 @@
 <div [ngBusy]="loading" class="container-fluid">
     <div *ngIf="song" class="row full-header">
+        <div class="visible-xs-block profile-header-top-row">
+            <div class="col-md-12">
+                <h6>By {{ song.user.artist_name  }}</h6>
+            </div>
+        </div>
         <section class="profile-header">
             <div class="col-md-8 col-md-offset-2 profile-header-inner">
-
-
-                <div class="col-md-8 header-content">
-                    <div class="play-button-wrap">
-                        <span [ngClass]="{'loading-state': loading_song, 'pause-state': !loading_song && isPlaying}"
-                              class="play-button play-button-cloudcast">
-                            <span (click)="playSong()" class="play-icon"><i class="icon-control-play"></i></span>
-                            <span (click)="pauseSong()" class="pause-icon"><i class="icon-control-pause"></i></span>
-                            <span class="loading-icon"><i class="icon-refresh fa fa-spin"></i></span>
-                        </span>
+                <div class="row">
+                    <div class="col-md-4 pull-right header-sidebar">
+                        <img class="album-art img-responsive"
+                             src="https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/d/c/a/abd5-4f27-49bf-91b7-189570551bbb">
                     </div>
-                    <h1>{{ song.name }}</h1>
-                    <ul class="list-inline">
-                        <li>by <a href="">{{ song.user.artist_name }}</a> &nbsp;
-                            <button class="btn btn-xs btn-default">
-                                <span class="hidden"><i class="icon-user-following"></i> Following</span>
-                                <span><i class="icon-user-follow"></i> Follow</span>
-                            </button>
-                        </li>
-                        <li>&nbsp;</li>
-                        <li><i class="icon-like"></i> {{ song.likes_count }}</li>
-                        <li><i class="icon-earphones"></i> {{ song.plays_count }}</li>
-                        <li><i class="icon-clock"></i> 6m</li>
-                        <li><i class="icon-cloud-upload"></i> {{ song.created_at_ago }}</li>
-                    </ul>
-                </div>
 
-                <div class="col-md-4 pull-right header-sidebar">
-                    <img height="300" width="300" class="album-art"
-                         src="https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/d/c/a/abd5-4f27-49bf-91b7-189570551bbb">
+                    <div class="col-md-8 header-content">
+                        <div class="play-button-wrap">
+                            <span [ngClass]="{'loading-state': loading_song, 'pause-state': !loading_song && isPlaying}"
+                                  class="play-button play-button-cloudcast">
+                                <span (click)="playSong()" class="play-icon"><i class="icon-control-play"></i></span>
+                                <span (click)="pauseSong()" class="pause-icon"><i class="icon-control-pause"></i></span>
+                                <span class="loading-icon"><i class="icon-refresh fa fa-spin"></i></span>
+                            </span>
+                        </div>
+                        <h1>{{ song.name }}</h1>
+                        <ul class="list-inline hidden-xs">
+                            <li>by <a href="">{{ song.user.artist_name }}</a> &nbsp;
+                                <button class="btn btn-xs btn-default">
+                                    <span class="hidden"><i class="icon-user-following"></i> Following</span>
+                                    <span><i class="icon-user-follow"></i> Follow</span>
+                                </button>
+                            </li>
+                            <li>&nbsp;</li>
+                            <li><i class="icon-like"></i> {{ song.likes_count }}</li>
+                            <li><i class="icon-earphones"></i> {{ song.plays_count }}</li>
+                            <li><i class="icon-clock"></i> 6m</li>
+                            <li><i class="icon-cloud-upload"></i> {{ song.created_at_ago }}</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <footer class="header-actions">
                     <ul class="list-inline">
                         <li>
                             <button (click)="likeSong()" class="btn btn-sm btn-inverse">
-                                <span *ngIf="!song.is_liked"><i class="icon-like"></i> Like</span>
+                                <span *ngIf="!song.is_liked">
+                                    <i class="icon-like"></i> <span>Like</span>
+                                    <span class="visible-xs-inline-block likes_count"> {{ song.likes_count }}</span>
+                                </span>
                                 <span *ngIf="song.is_liked">Unlike</span>
                             </button>
                         </li>
                         <li>
-                            <a href="" class="btn btn-sm btn-inverse"><i class="icon-bubble"></i> Comment</a>
+                            <a href="" class="btn btn-sm btn-inverse"><i class="icon-bubble"></i> <span>Comment</span></a>
                         </li>
                         <li>
-                            <button class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> Share</button>
+                            <button class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> <span>Share</span></button>
                         </li>
                     </ul>
                 </footer>
