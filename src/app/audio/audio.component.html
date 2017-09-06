@@ -9,17 +9,11 @@
                 <input #seekControler id="seek" type="range" min="0" max="100" step="0.01" [(value)]="audio_seek_value"
                        (change)="setSeek(seekControler.value)"
                        (input)="setSeek(seekControler.value)">
-                <!--<progress class="audio-progress-played" max="100" [value]="audio_progress_played"><span>{{ audio_progress_played }}</span>%
-                    played
-                </progress>
-                <progress class="audio-progress-buffer" max="100" [value]="audio_buffered_value"><span>{{ audio_buffered_value }}</span>%
-                    buffered
-                </progress>-->
                 <div class="web-footer-progress-indicator" [ngStyle]="{'width': audio_buffered_value+'%'}"></div>
                 <div class="web-footer-progress" [ngStyle]="{'width': audio_progress_played+'%'}"></div>
             </div>
             <div *ngIf="song.user" class="audio-info">
-                <p class="audio-title strong">{{ song.name }}</p>
+                <p class="audio-title strong"><strong>{{ song.name }}</strong></p>
                 <p *ngIf="song.user.artist_name" class="audio-meta text-muted text-small">
                     <em>By {{ song.user.artist_name }}</em>
                 </p>
@@ -31,7 +25,6 @@
 
     </div>
     <div id="audio-col-2" class="audio-controls">
-        <!--<a (click)="play()" class="button" id="play" title="Play song"><i class="fa fa-play" aria-hidden="true"></i></a>-->
         <span *ngIf="!isPlaying" (click)="play()" class="button" title="Play song">
             <i class="icon-control-play" aria-hidden="true"></i>
         </span>

@@ -1,33 +1,31 @@
 import {Injectable} from "@angular/core";
 import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {Observable} from "rxjs";
-import {AuthService} from "../auth/authService";
 import {AuthHttp} from "angular2-jwt";
 
 
 @Injectable()
-
 export class AlbumService {
 
-    ALBUMS_URL = "http://www.kasivibe.com/api/v1/albums";
-    USER_ALBUMS_URL = "http://www.kasivibe.com/api/v1/user/albums";
+    ALBUMS_URL = 'http://www.kasivibe.com/api/v1/albums';
+    USER_ALBUMS_URL = 'http://www.kasivibe.com/api/v1/user/albums';
 
     private headers = new Headers({
         'Content-Type': 'application/json',
     });
 
-    constructor(private http: Http, private authHttp: AuthHttp, private authService: AuthService) {
+    constructor(private http: Http, private authHttp: AuthHttp) {
     }
 
     getUserAlbums() {
-        let options = new RequestOptions({headers: this.headers});
+        const options = new RequestOptions({headers: this.headers});
         return this.authHttp.get(this.USER_ALBUMS_URL, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getAlbums(query) {
-        query = (query && query.trim() != '' || query !== undefined) ? '?query=' + query : '';
+    getAlbums(query?) {
+        query = (query && query.trim() !== '' || query !== undefined) ? '?query=' + query : '';
         return this.http.get(this.ALBUMS_URL + query)
             .map(this.extractData)
             .catch(this.handleError);
@@ -41,7 +39,7 @@ export class AlbumService {
 
 
     private extractData(res: Response) {
-        let body = res.json();
+        const body = res.json();
         return body || {};
     }
 

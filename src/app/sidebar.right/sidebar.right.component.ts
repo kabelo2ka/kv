@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {TabsetComponent} from 'ngx-bootstrap';
+import {Component, OnInit, ViewChild} from "@angular/core";
+import {TabsetComponent} from "ngx-bootstrap";
 import {AudioService} from "../audio/audio.service";
 import {CommentService} from "../comment/comment.service";
 import {AuthService} from "../auth/authService";
@@ -12,14 +12,12 @@ import {AuthService} from "../auth/authService";
     providers: [CommentService]
 })
 
-export class RightSidebarComponent {
+export class RightSidebarComponent implements OnInit {
 
     @ViewChild('staticTabs') staticTabs: TabsetComponent;
 
     user: any;
     song: any;
-
-    //comments: any = [];
     comment: any;
 
     errors: any;
@@ -39,17 +37,13 @@ export class RightSidebarComponent {
             password: null,
         };
         this.authService.user$.subscribe(
-            user => {
-                this.user = user
-            }
+            user => this.user = user
         );
     }
 
     ngOnInit(): void {
         this.audioService.active_song_selected$.subscribe(
-            active_song => {
-                this.song = active_song;
-            }
+            active_song => this.song = active_song
         );
     }
 
@@ -58,11 +52,11 @@ export class RightSidebarComponent {
         this.song.comments.push((<any>Object).assign({}, this.comment));
         this.commentService.addComment(this.comment, this.song.id).subscribe(
             () => {
-                //@todo Reset form after a successful comment
+                // @todo Reset form after a successful comment
                 this.comment.body = '';
             },
             errors => this.errors = errors
-        )
+        );
     }
 
     selectTab(tab_id: number) {
@@ -70,7 +64,7 @@ export class RightSidebarComponent {
     }
 
     disableEnable() {
-        this.staticTabs.tabs[2].disabled = !this.staticTabs.tabs[2].disabled
+        this.staticTabs.tabs[2].disabled = !this.staticTabs.tabs[2].disabled;
     }
 
 }

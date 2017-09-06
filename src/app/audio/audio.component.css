@@ -164,21 +164,40 @@ input#seek::-webkit-slider-thumb {
 
 
 @media screen and (max-width: 479px) {
+    #audio-col-1 {
+        height: 45px;
+    }
     #audio-col-2 {
-        width: 60px;
+        height: 45px;
+        width: 45px;
     }
     #audio-col-3 {
-        width: 90px
+        padding: 10px 0;
+        height: 45px;
+        width: 80px;
+    }
+
+    #audio-col-2 i {
+        font-size: 20px;
+        line-height: 50px;
     }
     #audio-container {
         position: relative;
+    }
+
+    .audio-info {
+        padding: 5px !important;
+        text-align: left;
     }
     .audio-player {
         position: static;
     }
     .seek-container {
+        background: #454745;
         position: absolute;
         width: 100%;
+        height: 5px;
+        top: -5px;
         left: 0;
     }
     input[type="range"]#seek,

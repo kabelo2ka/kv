@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../auth/authService";
@@ -10,29 +10,28 @@ import {AppService} from "../app.service";
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css'],
-    providers: []
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
     login_modal;
 
-    public is_sign_in_modal_shown: boolean = false;
-    public is_sign_up_modal_shown: boolean = false;
-    left_mobile_menu_visible: boolean = false;
+    public is_sign_in_modal_shown = false;
+    public is_sign_up_modal_shown = false;
+    left_mobile_menu_visible = false;
 
 
-    is_logged_in: boolean = false;
+    is_logged_in = false;
 
     subscription: Subscription;
 
     user: any;
 
-    constructor(private authService: AuthService,
+    constructor(public authService: AuthService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private appService: AppService,) {
-        //this.is_logged_in = this.authService.loggedIn();
+        // this.is_logged_in = this.authService.loggedIn();
     }
 
     ngOnInit(): void {
@@ -59,7 +58,7 @@ export class HeaderComponent implements OnInit {
 
     }
 
-    mobileMenu(visible: boolean){
+    mobileMenu(visible: boolean) {
         this.appService.setLeftMobileMenuVisible(visible);
     }
 
@@ -79,7 +78,7 @@ export class HeaderComponent implements OnInit {
         this.authService.logout();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscription.unsubscribe();
     };
 

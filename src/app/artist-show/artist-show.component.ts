@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Subscription} from "rxjs";
+import {Component, OnInit} from "@angular/core";
+import {Subscription} from "rxjs/Subscription";
 import {ArtistService} from "../artists.component/artist.service";
 import {ActivatedRoute, Params} from "@angular/router";
 import {AudioService} from "../audio/audio.service";
@@ -25,11 +25,11 @@ export class ArtistShowComponent implements OnInit {
 
     ngOnInit() {
         this.activatedRoute.params.subscribe((params: Params) => {
-            let id = params['id'];
+            const id = params['id'];
             // Load artists
             this.loading = this.artistService.getArtist(id).subscribe(
-                (res:any) => this.artist = res.data
-            )
+                (res: any) => this.artist = res.data
+            );
         });
         // Get and set authenticated user
         this.authService.user$.subscribe(

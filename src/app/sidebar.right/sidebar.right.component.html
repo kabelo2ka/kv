@@ -21,7 +21,7 @@
         </tab>
         <tab heading="COMMENTS" active="true">
             <div class="comments">
-                <form (ngSubmit)="onComment(commentForm)" #commentForm="ngForm">
+                <form (ngSubmit)="onComment()" #commentForm="ngForm">
                     <div class="form-group">
                         <textarea name="body" [(ngModel)]="comment.body" placeholder="Comment here..." rows="2" class="form-control" required></textarea>
                     </div>

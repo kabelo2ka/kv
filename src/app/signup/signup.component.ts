@@ -9,7 +9,8 @@ import {NotificationsService} from "angular2-notifications/dist";
 @Component({
     selector: 'app-signup',
     templateUrl: './signup.component.html',
-    styleUrls: ['./signup.component.css']
+    styleUrls: ['./signup.component.css'],
+    providers: [NotificationsService]
 })
 export class SignupComponent implements OnInit {
     @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
@@ -56,10 +57,10 @@ export class SignupComponent implements OnInit {
             },
             errors => {
                 this.errors = errors.json();
-                this.signingUp = null
+                this.signingUp = null;
             },
             () => this.signingUp = null
-        )
+        );
     }
 
 }

@@ -27,9 +27,6 @@
         <app-header></app-header>
     </div>
     <div id="main-body">
-        <!--<div id="main-col-1"><div slimScroll [options]="opts"><router-outlet></router-outlet></div></div>
-        <div id="main-col-2"><div slimScroll [options]="opts"><left-sidebar></left-sidebar></div></div>
-        <div id="main-col-3"><div slimScroll [options]="opts"><right-sidebar></right-sidebar></div></div>-->
         <div id="main-col-1">
             <div slimScroll [options]="opts" style="height: inherit;">
                 <router-outlet></router-outlet>
@@ -40,7 +37,7 @@
                 <left-sidebar></left-sidebar>
             </div>
         </div>
-        <div [hidden]="!right_sidebar_visible" id="main-col-3">
+        <div class="hidden-xs" [hidden]="!right_sidebar_visible" id="main-col-3">
             <div slimScroll [options]="opts" style="max-height: calc(100vh - 115px);">
                 <right-sidebar></right-sidebar>
             </div>

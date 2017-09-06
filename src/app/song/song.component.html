@@ -1,10 +1,5 @@
 <div [ngBusy]="loading" class="container-fluid">
     <div *ngIf="song" class="row full-header">
-        <div class="visible-xs-block profile-header-top-row">
-            <div class="col-md-12">
-                <h6>By {{ song.user.artist_name  }}</h6>
-            </div>
-        </div>
         <section class="profile-header">
             <div class="col-md-8 col-md-offset-2 profile-header-inner">
                 <div class="row">
@@ -22,15 +17,17 @@
                                 <span class="loading-icon"><i class="icon-refresh fa fa-spin"></i></span>
                             </span>
                         </div>
-                        <h1>{{ song.name }}</h1>
-                        <ul class="list-inline hidden-xs">
-                            <li>by <a href="">{{ song.user.artist_name }}</a> &nbsp;
-                                <button class="btn btn-xs btn-default">
+                        <div class="profile-details">
+                            <h1>{{ song.name }}</h1>
+                            <h6>
+                                <em>By {{ song?.user.artist_name }}</em>
+                                <!--<button class="btn btn-xs btn-default">
                                     <span class="hidden"><i class="icon-user-following"></i> Following</span>
                                     <span><i class="icon-user-follow"></i> Follow</span>
-                                </button>
-                            </li>
-                            <li>&nbsp;</li>
+                                </button>-->
+                            </h6>
+                        </div>
+                        <ul class="list-inline hidden-xs">
                             <li><i class="icon-like"></i> {{ song.likes_count }}</li>
                             <li><i class="icon-earphones"></i> {{ song.plays_count }}</li>
                             <li><i class="icon-clock"></i> 6m</li>
@@ -51,71 +48,74 @@
                             </button>
                         </li>
                         <li>
-                            <a href="" class="btn btn-sm btn-inverse"><i class="icon-bubble"></i> <span>Comment</span></a>
+                            <a href="" class="btn btn-sm btn-inverse"><i class="icon-bubble"></i>
+                                <span>Comment</span></a>
                         </li>
                         <li>
-                            <button class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> <span>Share</span></button>
+                            <button class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> <span>Share</span>
+                            </button>
                         </li>
                     </ul>
                 </footer>
 
 
             </div>
-            <div class="profile-header-blur" style="background-image: url('https://thumbnailer.mixcloud.com/unsafe/500x250/filters:blur(40)/extaudio/b/d/c/a/abd5-4f27-49bf-91b7-189570551bbb');"></div>
+            <div class="profile-header-blur"
+                 style="background-image: url('https://thumbnailer.mixcloud.com/unsafe/500x250/filters:blur(40)/extaudio/b/d/c/a/abd5-4f27-49bf-91b7-189570551bbb');"></div>
         </section>
     </div>
 
+    <section *ngIf="song" class="content-wrapper">
+        <div class="row">
+            <div class="col-md-8 col-lg-offset-2">
+                <div class="row">
 
-<section  *ngIf="song" class="content-wrapper">
-    <div class="row">
-        <div class="col-md-8 col-lg-offset-2">
-            <div class="row">
-
-                <div class="col-md-8">
-                    <div class="lyrics-container">
-                        <h2 class="h4 bottom-border">Lyrics</h2>
-                        <div class="lyrics-content kv-text-wrap">
-                            {{ song.lyrics }}
-                        </div>
-                    </div>
-
-                    <div class="comments-container">
-                        <h2 class="h4 bottom-border">Comments</h2>
-                        <div class="add-comment comment-wrapper">
-                            <div class="comment-avatar" *ngIf="loggedIn()">
-                                <img class="img-rounded" width="50" height="50" *ngIf="user" src="{{ user.avatar }}"
-                                     alt="">
+                    <div class="col-md-8">
+                        <div class="lyrics-container">
+                            <h2 class="h4 bottom-border">Lyrics</h2>
+                            <div class="lyrics-content kv-text-wrap">
+                                {{ song.lyrics }}
                             </div>
-                            <div class="comment-content">
-                                <div class="form-group">
+                        </div>
+
+                        <div class="comments-container">
+                            <h2 class="h4 bottom-border">Comments</h2>
+                            <div class="add-comment comment-wrapper">
+                                <div class="comment-avatar" *ngIf="loggedIn()">
+                                    <img class="img-rounded" width="50" height="50" *ngIf="user" src="{{ user.avatar }}"
+                                         alt="">
+                                </div>
+                                <div class="comment-content">
+                                    <div class="form-group">
                                     <textarea [(ngModel)]="commentBody" class="form-control"
                                               placeholder='What do you think of {{ song.name }} ?'></textarea>
-                                </div>
-                                <div class="comment-actions pull-right">
-                                    <button (click)="onComment()" type="submit" class="btn btn-success">Comment</button>
+                                    </div>
+                                    <div class="comment-actions pull-right">
+                                        <button (click)="onComment()" type="submit" class="btn btn-success">Comment
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                            <!--<div class="unseen-comments text-center">
+                                <span *ngIf="unseenComments!==1">{{ unseenCommentsCount }} new comments.
+                                <a href="#">Show comments</a></span>
+                            </div>-->
+                            <app-comments #comments
+                                          [parent]="song">
+                            </app-comments>
+
                         </div>
-                        <!--<div class="unseen-comments text-center">
-                            <span *ngIf="unseenComments!==1">{{ unseenCommentsCount }} new comments.
-                            <a href="#">Show comments</a></span>
-                        </div>-->
-                        <app-comments #comments
-                                      [parent]="song">
-                        </app-comments>
-
                     </div>
+
+                    <div class="col-md-4">
+                        <h2 class="h4">Liked by</h2>
+                    </div>
+
+
                 </div>
-
-                <div class="col-md-4">
-                    <h2 class="h4">Liked by</h2>
-                </div>
-
-
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 </div>

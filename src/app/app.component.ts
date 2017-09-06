@@ -1,12 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, RouterModule} from "@angular/router";
-import {FooterComponent} from "./footer/footer.component";
-import {AudioService} from "./audio/audio.service";
+import {Component, OnInit} from "@angular/core";
 
 import {AuthService} from "./auth/authService";
 import {AppService} from "./app.service";
 
-import {ISlimScrollOptions} from 'ng2-slimscroll';
+import {ISlimScrollOptions} from "ng2-slimscroll";
 
 @Component({
     selector: 'app-root',
@@ -21,14 +18,14 @@ export class AppComponent implements OnInit {
 
     opts: ISlimScrollOptions;
 
-    right_sidebar_visible: boolean = false;
-    left_mobile_menu_visible: boolean = false;
-    mobile_search_visible: boolean = false;
+    right_sidebar_visible = false;
+    left_mobile_menu_visible = false;
+    mobile_search_visible = false;
 
     login_modal;
-    public is_sign_in_modal_shown: boolean = false;
-    public is_sign_up_modal_shown: boolean = false;
-    is_logged_in: boolean = false;
+    public is_sign_in_modal_shown = false;
+    public is_sign_up_modal_shown = false;
+    is_logged_in = false;
 
     constructor(public authService: AuthService, private appService: AppService) {
     }
@@ -79,10 +76,10 @@ export class AppComponent implements OnInit {
             barOpacity: '1',
             gridBorderRadius: '0',
             gridMargin: '0',
-        }
+        };
     }
 
-    mobileMenu(visible: boolean){
+    mobileMenu(visible: boolean) {
         this.appService.setLeftMobileMenuVisible(visible);
     }
 

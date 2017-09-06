@@ -37,7 +37,7 @@ export class SongService {
     }
 
     getSongs(query?: string) {
-        query = (query && query.trim() != '' || query !== undefined) ? '?query=' + query : '';
+        query = (query && query.trim() !== '' || query !== undefined) ? '?query=' + query : '';
         return this.authHttp.get(this.SONGS_URL + query)
             .map(this.extractData)
             .catch(this.handleError);
@@ -50,8 +50,8 @@ export class SongService {
     }
 
     createSong(song) {
-        let options = new RequestOptions({headers: this.headers});
-        return this.http.post(this.SONGS_URL, song, options)
+        const options = new RequestOptions({headers: this.headers});
+        return this.authHttp.post(this.SONGS_URL, song, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -63,14 +63,14 @@ export class SongService {
     }
 
     updateSong(song){
-        let options = new RequestOptions({headers: this.headers});
+        const options = new RequestOptions({headers: this.headers});
         return this.authHttp.patch(this.SONGS_URL + '/' + song.id, song, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     deleteSong(id: number) {
-        let options = new RequestOptions({headers: this.headers});
+        const options = new RequestOptions({headers: this.headers});
         return this.http.delete(this.SONGS_URL + '/' + id, options)
             .map(this.extractData)
             .catch(this.handleError);
@@ -78,20 +78,20 @@ export class SongService {
 
     likeSong(id: number) {
         this.updateLike(id); // Update Client Side
-        let options = new RequestOptions({headers: this.headers});
+        const options = new RequestOptions({headers: this.headers});
         return this.http.post(this.SONG_LIKE_URL + '?token=' + this.authService.getToken(), {'id': id})
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    postPlay(song_id: number){
+    postPlay(song_id: number) {
         return this.http.post(this.SONGS_URL + '/plays', {'song_id': song_id})
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     private extractData(res: Response) {
-        let body = res.json();
+        const body = res.json();
         return body || {};
     }
 

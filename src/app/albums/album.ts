@@ -1,7 +1,7 @@
 export class Album {
     id: number;
-    user: any;
     name: string;
     image: string;
+    user?: any;
     songs?: any;
 }

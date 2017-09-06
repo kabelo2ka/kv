@@ -1,10 +1,10 @@
-<div class="btn-group" dropdown (onShown)="onShown()" (onHidden)="onHidden()" (isOpenChange)="isOpenChange()">
+<div class="btn-group" dropdown>
     <button class="notification-btn btn btn-link btn-sm" href dropdownToggle (click)="false">
         <i class="icon-bell"></i>
         <span *ngIf="notifications.length > 0"
               class="notification-btn-count badge bg-danger">{{ notifications.length }}</span>
     </button>
-    <div *dropdownMenu class="dropdown-menu user-notifications">
+    <div *dropdownMenu class="dropdown-menu   user-notifications">
         <ul *ngIf="notifications.length > 0" class="list-unstyled">
             <li *ngFor="let notification of notifications">
                 <a class="dropdown-item" routerLink="/songs/{{ notification.song.id }}">

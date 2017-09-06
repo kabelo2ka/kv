@@ -3,14 +3,11 @@ label {
 }
 .drop-zone {
     padding: 10px;
+    cursor: pointer;
     border: 3px dashed #444444;
 }
 
-.drop-zone:hover {
-    cursor: pointer;
-}
-
-.drop-zone.is-drop-over {
+.drop-zone.is-drop-over, .drop-zone:hover {
     background: #222222;
     border: 3px solid #444444;
 }

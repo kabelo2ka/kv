@@ -9,13 +9,14 @@ import {NotificationsService} from "angular2-notifications/dist";
 @Component({
     selector: 'app-signin',
     templateUrl: './signin.component.html',
-    styleUrls: ['./signin.component.css']
+    styleUrls: ['./signin.component.css'],
+    providers: [NotificationsService]
 })
 export class SigninComponent implements OnInit {
     @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
     private subscription: Subscription;
     signingIn: Subscription;
-    public is_modal_shown: boolean = false;
+    public is_modal_shown = false;
 
     errors: any;
 
@@ -55,10 +56,10 @@ export class SigninComponent implements OnInit {
             },
             errors => {
                 this.errors = errors.json();
-                this.signingIn = null
+                this.signingIn = null;
             },
             () => this.signingIn = null
-        )
+        );
     }
 
 }

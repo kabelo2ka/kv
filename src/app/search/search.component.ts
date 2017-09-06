@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
 })
 export class SearchComponent implements OnInit, OnDestroy {
 
-    mobile_search_visible: boolean = false;
+    mobile_search_visible = false;
 
     public typeheadModel: string;
     public typeaheadLoading: boolean;
@@ -51,9 +51,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     public typeaheadOnSelect(e: TypeaheadMatch): void {
-        let url = '/songs/' + e.item.id;
+        const url = '/songs/' + e.item.id;
         this.router.navigate([url]);
-        //console.log('Selected value: ', e);
+        // console.log('Selected value: ', e);
     }
 
 

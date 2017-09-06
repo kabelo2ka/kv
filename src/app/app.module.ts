@@ -137,7 +137,7 @@ import {GenreService} from "./genres/genre.service";
         GenreService,
         AlbumService,
         ArtistService,
-        NotificationService
+        NotificationService,
     ],
     bootstrap: [AppComponent]
 })

@@ -22,19 +22,19 @@ class Res {
 
 export class SongComponent implements OnInit {
     @ViewChild('comments') comments;
-    commentBody: string = '';
+    commentBody = '';
 
     loading: Subscription;
     song: Song;
     connection;
     unseenComments: any = [];
-    unseenCommentsCount: number = 0;
+    unseenCommentsCount = 0;
     user: User;
     private loading_song: boolean;
 
     // Song status
-    is_paused: boolean = false;
-    isPlaying: boolean = false;
+    is_paused = false;
+    isPlaying = false;
 
     // User status
     isLogged = false;
@@ -50,7 +50,7 @@ export class SongComponent implements OnInit {
 
     ngOnInit() {
         this.activatedRoute.params.subscribe((params: Params) => {
-            let id = params['id'];
+            const id = params['id'];
             // Load Song
             this.getSong(id);
         });
@@ -100,7 +100,7 @@ export class SongComponent implements OnInit {
 
     getSong(id: number){
         this.loading = this.songService.getSong(id).subscribe(
-            (res:Res) => this.song = res.data
+            (res: Res) => this.song = res.data
         );
     }
 
@@ -129,8 +129,8 @@ export class SongComponent implements OnInit {
 
     likeSong(){
         this.songService.likeSong(this.song.id).subscribe(
-            (res:any) => {
-                if( res.data === 'Liked' ){
+            (res: any) => {
+                if (res.data === 'Liked') {
                     this.song.likes_count += 1;
                     this.song.is_liked = true;
                 }else{

@@ -10,7 +10,7 @@ import {GenreService} from "../genres/genre.service";
     selector: 'app-song-edit',
     templateUrl: './song-edit.component.html',
     styleUrls: ['./song-edit.component.css'],
-    providers: [SongService]
+    providers: [SongService, NotificationsService],
 })
 export class SongEditComponent implements OnInit {
     loading: Subscription;
@@ -21,29 +21,28 @@ export class SongEditComponent implements OnInit {
     genres: Genre[];
     albums: any;
 
-    constructor(
-        private songService: SongService,
-        private genreService: GenreService,
-        private activatedRoute: ActivatedRoute,
-        private notificationService: NotificationsService,
-    ){}
+    constructor(private songService: SongService,
+                private genreService: GenreService,
+                private activatedRoute: ActivatedRoute,
+                private notificationService: NotificationsService,) {
+    }
 
     ngOnInit() {
         this.genreService.getGenres(null).subscribe(
             (res: any) => this.genres = res.data
         );
         this.activatedRoute.params.subscribe((params: Params) => {
-            let $id = params['id'];
+            const $id = params['id'];
             this.loading = this.songService.getSong($id).subscribe(
                 (res: any) => {
                     this.song = res.data;
                     this.old_song = res.data;
                 }
-            )
+            );
         });
     }
 
-    onSongSave(){
+    onSongSave() {
         this.savingSong = this.songService.updateSong(this.song).subscribe(
             (res: any) => this.notificationService.success('Success', 'Song updated!'),
             error => this.notificationService.error('Success', error),

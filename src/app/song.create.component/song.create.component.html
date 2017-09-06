@@ -17,14 +17,14 @@
                  [ngClass]="{ 'is-drop-over': dragOver }">
                 <div class="placeholder">Drag & drop or Select audio file</div>
             </div>
-            <input style="display: none" #nativeUploadInput type="file" ngFileSelect
+            <input style="display: none" #nativeUploadInput type="file" ngFileSelect accept="audio/mpeg"
                    (uploadOutput)="onUploadOutput($event)"
                    [uploadInput]="uploadInput">
 
 
             <div *ngIf="file" class="progress-container">
                 <div>
-                    Upload progress: <span class="filename">{{ file.name }}</span>
+                    Uploading <span class="filename">{{ file.name }}</span>
                     <span class="progress-data">{{ file.progress.data.percentage }}% at {{ file.progress.data.speedHuman }} eta {{ file.progress.data.eta }}</span>
                 </div>
                 <div class="progress" style="margin-top: 5px">
@@ -33,66 +33,91 @@
                 </div>
             </div>
 
-            <!--<div  *ngIf="files?.length" class="m-t-md">-->
-            <div class="m-t-md">
+            <div *ngIf="file" class="m-t-md">
+                <!--<div class="m-t-md">-->
                 <form [formGroup]="songForm" (ngSubmit)="createSong()" class="song-create-form">
                     <tabset>
                         <tab heading="Basic Info">
+
+                            <input type="hidden" value="" formControlName="file_name">
+
                             <div class="form-group required"
                                  [ngClass]="{'has-error has-feedback':!songForm.controls['name'].valid && songForm.controls['name'].touched}">
                                 <input type="text" class="form-control" placeholder="Song name"
-                                       formControlName="name"
-                                       required>
+                                       formControlName="name">
                                 <span *ngIf="!songForm.controls['name'].valid && songForm.controls['name'].touched"
                                       class="glyphicon glyphicon-remove form-control-feedback"></span>
                                 <span *ngIf="!songForm.controls['name'].valid && songForm.controls['name'].touched"
-                                      class="help-block">The song name must have at least 2 characters.</span>
+                                      class="help-block">The song name must have at least 3 characters.</span>
                             </div>
 
 
-                            <div class="form-group">
+                            <div class="form-group required"
+                                 [ngClass]="{'has-error has-feedback':!songForm.controls['genre_id'].valid && songForm.controls['genre_id'].touched}">
                                 <select class="form-control"
-                                        formControlName="genre_id"
-                                        required>
-                                    <option value="">Select Genre</option>
+                                        [style.color]="songForm.controls['genre_id'].value===''?'#888888':''"
+                                        formControlName="genre_id">
+                                    <option value="" disabled>Select Genre</option>
                                     <option *ngFor="let genre of genres" [ngValue]="genre.id">{{ genre.name }}</option>
                                 </select>
+                                <span *ngIf="!songForm.controls['genre_id'].valid && songForm.controls['genre_id'].touched"
+                                      class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                <span *ngIf="!songForm.controls['genre_id'].valid && songForm.controls['genre_id'].touched"
+                                      class="help-block">Select a song genre.</span>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group"
+                                 [ngClass]="{'has-error has-feedback':!songForm.controls['album_id'].valid && songForm.controls['album_id'].touched}">
                                 <select class="form-control"
-                                        formControlName="album_id"
-                                        required>
-                                    <option value="">Select Album</option>
-                                    <option value="2">Select Album</option>
+                                        [style.color]="songForm.controls['album_id'].value===''?'#888888':''"
+                                        formControlName="album_id">
+                                    <option value="" disabled>Select Album</option>
+                                    <option value="create">Create New Album</option>
                                     <option *ngFor="let album of albums" [ngValue]="album.id">{{ album.name }}</option>
                                 </select>
+                                <span *ngIf="!songForm.controls['album_id'].valid && songForm.controls['album_id'].touched"
+                                      class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                <span *ngIf="!songForm.controls['album_id'].valid && songForm.controls['album_id'].touched"
+                                      class="help-block">Select an album.</span>
+                            </div>
+                            <div *ngIf="songForm.controls['album_id'].value==='create'" class="form-group"
+                                 [ngClass]="{'has-error has-feedback':!songForm.controls['album_name'].valid && songForm.controls['album_name'].touched}">
+                                <input type="text" class="form-control" placeholder="Album name"
+                                       formControlName="album_name">
+                                <span *ngIf="!songForm.controls['album_name'].valid && songForm.controls['album_name'].touched"
+                                      class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                <span *ngIf="!songForm.controls['album_name'].valid && songForm.controls['album_name'].touched"
+                                      class="help-block">Album name must have at least 3 characters.</span>
                             </div>
                         </tab>
                         <tab heading="Metadata">
                             <div class="form-group">
-                                <textarea rows="3" class="form-control" placeholder="Lyrics"></textarea>
+                                <textarea formControlName="lyrics" rows="3" class="form-control"
+                                          placeholder="Lyrics"></textarea>
                             </div>
                         </tab>
                         <tab heading="Permissions">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox"> Enable downloads
+                                    <input formControlName="downloadable" type="checkbox"> Enable downloads
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox"> Enable comments
+                                    <input formControlName="commentable" type="checkbox"> Enable comments
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox"> Only visible to me
+                                    <input formControlName="private" type="checkbox"> Only visible to me
                                 </label>
                             </div>
                         </tab>
                     </tabset>
                     <div class="clearfix">
-                        <button type="submit" [disabled]="!songForm.valid" class="btn btn-primary pull-right">Save</button>
+                        <div class="pull-right">
+                            <button (click)="resetFrom()" type="button" class="btn btn-link">Cancel</button>
+                            <button type="submit" [disabled]="!songForm.valid" class="btn btn-primary">Save</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -104,3 +129,6 @@
         </div>
     </div>
 </div>
+
+
+<app-notification-toast></app-notification-toast>
