@@ -7,8 +7,8 @@ import {AuthHttp} from "angular2-jwt";
 @Injectable()
 export class AlbumService {
 
-    ALBUMS_URL = 'http://www.kasivibe.com/api/v1/albums';
-    USER_ALBUMS_URL = 'http://www.kasivibe.com/api/v1/user/albums';
+    ALBUMS_URL = '//kasivibe.com/api/v1/albums';
+    USER_ALBUMS_URL = '//kasivibe.com/api/v1/user/albums';
 
     private headers = new Headers({
         'Content-Type': 'application/json',

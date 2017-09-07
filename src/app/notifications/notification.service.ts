@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
 @Injectable()
 export class NotificationService {
 
-    NOTIFICATIONS_URL = "http://www.kasivibe.com/api/v1/notifications";
+    NOTIFICATIONS_URL = '//kasivibe.com/api/v1/notifications';
 
     constructor(private authHttp: AuthHttp,) {
     }
@@ -19,7 +19,7 @@ export class NotificationService {
 
 
     private extractData(res: Response) {
-        let body = res.json();
+        const body = res.json();
         return body || {};
     }
 

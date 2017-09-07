@@ -1,13 +1,13 @@
 import {Injectable} from "@angular/core";
 import {Song} from "../songs.component/song";
 
-import {Subject}    from 'rxjs/Subject';
+import {Subject} from "rxjs/Subject";
 
 
 @Injectable()
 export class AudioService {
 
-    private SONG_PATH = 'http://www.kasivibe.com/uploads/songs';
+    private SONG_PATH = '//kasivibe.com/uploads/songs';
 
     // Observable string sources
     private active_song = new Subject<Song>();
@@ -28,7 +28,6 @@ export class AudioService {
     // Service message commands
     setActiveSong(song: Song) {
         this.active_song.next(song);
-        //console.log(song);
     }
 
     isPlaying(isPlaying) {
@@ -56,7 +55,6 @@ export class AudioService {
 
     setTest(data: any) {
         this.test.next(data);
-        //console.log(song);
     }
 
 

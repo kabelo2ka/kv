@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {Song} from "../songs.component/song";
 import {Subscription} from "rxjs";
 import {SongService} from "../songs.component/song.service";
@@ -20,7 +20,7 @@ class Res {
     styleUrls: ['./song.component.css']
 })
 
-export class SongComponent implements OnInit {
+export class SongComponent implements OnInit, OnDestroy {
     @ViewChild('comments') comments;
     commentBody = '';
 
@@ -36,23 +36,19 @@ export class SongComponent implements OnInit {
     is_paused = false;
     isPlaying = false;
 
-    // User status
-    isLogged = false;
-
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private songService: SongService,
-        private socketService: SocketService,
-        private authService: AuthService,
-        private audioService: AudioService,
-        private audioApiWrapper: AudioAPIWrapper,) {
+    constructor(private activatedRoute: ActivatedRoute,
+                private songService: SongService,
+                private socketService: SocketService,
+                private authService: AuthService,
+                private audioService: AudioService,
+                private audioApiWrapper: AudioAPIWrapper,) {
     }
 
     ngOnInit() {
         this.activatedRoute.params.subscribe((params: Params) => {
-            const id = params['id'];
+            const slug = params['slug'];
             // Load Song
-            this.getSong(id);
+            this.getSong(slug);
         });
 
         // Get authenticated user
@@ -98,8 +94,8 @@ export class SongComponent implements OnInit {
         );
     }
 
-    getSong(id: number){
-        this.loading = this.songService.getSong(id).subscribe(
+    getSong(slug: string) {
+        this.loading = this.songService.getSong(slug).subscribe(
             (res: Res) => this.song = res.data
         );
     }
@@ -108,7 +104,7 @@ export class SongComponent implements OnInit {
         return this.authService.loggedIn();
     }
 
-    onComment(){
+    onComment() {
         this.comments.onComment(this.commentBody, this.user).subscribe(
             () => {
                 this.commentBody = '';
@@ -127,13 +123,13 @@ export class SongComponent implements OnInit {
         this.audioApiWrapper.pause();
     }
 
-    likeSong(){
+    likeSong() {
         this.songService.likeSong(this.song.id).subscribe(
             (res: any) => {
                 if (res.data === 'Liked') {
                     this.song.likes_count += 1;
                     this.song.is_liked = true;
-                }else{
+                } else {
                     this.song.likes_count -= 1;
                     this.song.is_liked = false;
                 }

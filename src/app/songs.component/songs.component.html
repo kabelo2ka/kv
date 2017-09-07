@@ -25,7 +25,8 @@
                             </div>
                             <div class="kv-media-content">
                                 <div>
-                                    <h6><a routerLink="/songs/{{ song.id }}" class="kv-color-default">{{ song.name }}</a></h6>
+                                    <h6><a routerLink="/songs/{{ song.slug }}" class="kv-color-default">{{ song.name
+                                        }}</a></h6>
                                     <div>
                                         <small *ngIf="song.user.artist_name">By {{ song.user.artist_name }}</small>
                                         <small *ngIf="! song.user.artist_name && !song.is_admin">Uploaded by {{
@@ -54,7 +55,7 @@
                                         <app-audio-visualization
                                                 [ngStyle]="{'display':(loading_song || is_paused)?'none':'block'}"></app-audio-visualization>
                                     </span>
-                                    <a *ngIf="song.is_admin" routerLink="/songs/{{ song.id }}/edit"
+                                    <a *ngIf="song.is_admin" routerLink="/songs/{{ song.slug }}/edit"
                                        class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Edit</a>
                                 </div>
                             </div>

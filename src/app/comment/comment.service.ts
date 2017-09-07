@@ -1,16 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Headers, Http, Response, RequestOptions} from '@angular/http';
-import {AuthHttp} from 'angular2-jwt';
+import {Injectable} from "@angular/core";
+import {Headers, Http, RequestOptions, Response} from "@angular/http";
+import {AuthHttp} from "angular2-jwt";
 
-import 'rxjs/add/operator/toPromise';
+import "rxjs/add/operator/toPromise";
 
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-
-import {Meta} from "../meta";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/catch";
+import "rxjs/add/operator/map";
 import {AuthService} from "../auth/authService";
-import {Subject} from "rxjs";
 
 
 @Injectable()
@@ -21,7 +18,7 @@ export class CommentService {
     });
 
     // URL to web api
-    COMMENTS_URL = 'http://www.kasivibe.com/api/v1/comments';
+    COMMENTS_URL = '//kasivibe.com/api/v1/comments';
 
     constructor(private http: Http,
                 public authHttp: AuthHttp,
@@ -29,15 +26,15 @@ export class CommentService {
     }
 
     getComments(song_id) {
-        return this.http.get('http://www.kasivibe.com/api/v1/songs/' + song_id + '/comments')
+        return this.http.get('//kasivibe.com/api/v1/songs/' + song_id + '/comments')
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     addComment(comment, song_id) {
-        let options = new RequestOptions({headers: this.headers});
+        const options = new RequestOptions({headers: this.headers});
         return this.authHttp
-            .post('http://www.kasivibe.com/api/v1/songs/' + song_id + '/comments' + '?token=' + this.authService.getToken(), comment, options)
+            .post('//kasivibe.com/api/v1/songs/' + song_id + '/comments' + '?token=' + this.authService.getToken(), comment, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -50,7 +47,7 @@ export class CommentService {
     }
 
     private extractData(res: Response) {
-        let body = res.json();
+        const body = res.json();
         return body || {};
     }
 

@@ -19,10 +19,10 @@ import * as io from "socket.io-client";
 
 
 export class SongsComponent implements OnInit {
-    isPlaying: boolean = false;
-    is_paused: boolean = false;
-    has_ended: boolean = false;
-    loading_song: boolean = true;
+    isPlaying = false;
+    is_paused = false;
+    has_ended = false;
+    loading_song = true;
 
     errorMessage: string;
     loading: Subscription;
@@ -33,7 +33,7 @@ export class SongsComponent implements OnInit {
     playingSong: Song;
 
     socket: any;
-    SOCKET_URL = 'http://www.kasivibe.com:3000';
+    SOCKET_URL = '//kasivibe.com:3000';
 
     constructor(private songService: SongService,
                 private audioService: AudioService,
@@ -45,7 +45,7 @@ export class SongsComponent implements OnInit {
         this.getSongs();
         this.songService.like_song_btn$.subscribe(
             songId => {
-                let songToModify = this.songs.find(song => song.id === songId);
+                const songToModify = this.songs.find(song => song.id === songId);
                 if (songToModify) {
                     songToModify.likes_count = songToModify.is_liked
                         ? songToModify.likes_count - 1
@@ -56,7 +56,7 @@ export class SongsComponent implements OnInit {
         );
         this.audioService.active_song_selected$.subscribe(
             song => {
-                let songToModify = this.songs.find(song => song.id === song.id);
+                const songToModify = this.songs.find(_song => _song.id === song.id);
                 if (songToModify) {
                     this.activeSong = song;
                 }
@@ -80,7 +80,6 @@ export class SongsComponent implements OnInit {
         this.audioApiWrapper.bindAudioEvent('play').subscribe(
             () => {
                 this.is_paused = false;
-                //this.loading_song = false;
             }
         );
         this.audioApiWrapper.bindAudioEvent('pause').subscribe(
@@ -92,7 +91,7 @@ export class SongsComponent implements OnInit {
         this.socket = io(this.SOCKET_URL).connect();
         Observable.fromEvent(this.socket, 'songs:App\\Events\\UserPlayedSong').subscribe(
             (res: any) => {
-                let songToModify = this.songs.find(song => song.id === res.song_id);
+                const songToModify = this.songs.find(song => song.id === res.song_id);
                 if (songToModify) {
                     songToModify.plays_count += 1;
                 }
@@ -101,7 +100,7 @@ export class SongsComponent implements OnInit {
     }
 
     private extractData(res: Response) {
-        let body = res.json();
+        const body = res.json();
         return body || {};
     }
 
@@ -109,7 +108,6 @@ export class SongsComponent implements OnInit {
         this.loading = this.songService.getSongs(null).subscribe(
             (res: any) => {
                 this.songs = res.data;
-                //this.meta = res.meta;
             },
             error => this.errorMessage = <any>error
         );

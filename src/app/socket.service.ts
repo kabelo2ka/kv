@@ -6,7 +6,7 @@ import * as io from "socket.io-client";
 @Injectable()
 export class SocketService {
 
-    private SOCKET_URL = 'http://www.kasivibe.com:3000';
+    private SOCKET_URL = '//kasivibe.com:3000';
     private socket;
 
     /**

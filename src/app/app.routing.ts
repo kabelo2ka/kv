@@ -38,11 +38,11 @@ const appRoutes: Routes = <Routes>[
         component: SongCreateComponent
     },
     {
-        path: 'songs/:id',
+        path: 'songs/:slug',
         component: SongComponent
     },
     {
-        path: 'songs/:id/edit',
+        path: 'songs/:slug/edit',
         component: SongEditComponent,
         canActivate: [AuthGuard]
     },

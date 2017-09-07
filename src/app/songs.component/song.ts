@@ -1,6 +1,7 @@
 export class Song {
     id?: number;
     name: string;
+    slug: string;
     user?: any;
     file_name: string;
     lyrics?: string;

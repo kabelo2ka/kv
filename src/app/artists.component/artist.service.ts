@@ -1,19 +1,17 @@
-import {Injectable} from '@angular/core';
-import {Headers, Http, Response, RequestOptions} from '@angular/http';
+import {Injectable} from "@angular/core";
+import {Http, Response} from "@angular/http";
 
-import 'rxjs/add/operator/toPromise';
+import "rxjs/add/operator/toPromise";
 
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-
-import {Meta} from "../meta";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/catch";
+import "rxjs/add/operator/map";
 
 
 @Injectable()
 export class ArtistService {
 
-    ARTISTS_URL = 'http://www.kasivibe.com/api/v1/artists';
+    ARTISTS_URL = '//kasivibe.com/api/v1/artists';
 
     constructor(private http: Http,) {
     }
@@ -33,7 +31,7 @@ export class ArtistService {
 
 
     private extractData(res: Response) {
-        let body = res.json();
+        const body = res.json();
         return body || {};
     }
 

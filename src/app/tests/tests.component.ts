@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {AudioAPIWrapper} from "../audio/audio-api-wrapper";
-import * as io from 'socket.io-client';
+import {Component, OnInit} from "@angular/core";
+import * as io from "socket.io-client";
 import {Http} from "@angular/http";
 import {Observable} from "rxjs";
 
@@ -12,7 +11,7 @@ import {Observable} from "rxjs";
 export class TestsComponent implements OnInit {
 
     count:number = 0;
-    SOCKET_URL = 'http://www.kasivibe.com:3000';
+    SOCKET_URL = '//kasivibe.com:3000';
     socket: any;
 
     constructor(private http: Http) {
@@ -33,7 +32,7 @@ export class TestsComponent implements OnInit {
     }
 
     PlaySong(){
-        this.http.get('http://www.kasivibe.com/api/v1/songs/8/plays').subscribe(
+        this.http.get('//kasivibe.com/api/v1/songs/8/plays').subscribe(
             res => console.log(res.statusText)
         );
     }

@@ -100,7 +100,7 @@ export class SongCreateComponent implements OnInit, OnChanges {
     startUpload(): void {
         const event: UploadInput = {
             type: 'uploadFile',
-            url: 'http://www.kasivibe.com/api/v1/songs/upload',
+            url: '//kasivibe.com/api/v1/songs/upload',
             headers: {'Authorization': 'Bearer ' + this.authService.getToken()},
             method: 'POST',
             data: {foo: 'bar'},

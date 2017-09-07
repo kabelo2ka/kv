@@ -32,8 +32,8 @@ export class SongEditComponent implements OnInit {
             (res: any) => this.genres = res.data
         );
         this.activatedRoute.params.subscribe((params: Params) => {
-            const $id = params['id'];
-            this.loading = this.songService.getSong($id).subscribe(
+            const slug = params['slug'];
+            this.loading = this.songService.getSong(slug).subscribe(
                 (res: any) => {
                     this.song = res.data;
                     this.old_song = res.data;

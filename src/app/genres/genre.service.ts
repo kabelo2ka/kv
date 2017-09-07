@@ -16,7 +16,7 @@ export class GenreService {
     private headers = new Headers({
         'Content-Type': 'application/json',
     });
-    private GENRE_URL = 'http://www.kasivibe.com/api/v1/genres';
+    private GENRE_URL = '//kasivibe.com/api/v1/genres';
     // URL to web api
 
     constructor(private http: Http,
@@ -31,7 +31,7 @@ export class GenreService {
      * @returns {Observable<Song[]>}
      */
     getGenres(query?: string) {
-        query = (query && query.trim() != '' || query !== undefined) ? '?query=' + query : '';
+        query = (query && query.trim() !== '' || query !== undefined) ? '?query=' + query : '';
         return this.http.get(this.GENRE_URL + query)
             .map(this.extractData)
             .catch(this.handleError);
@@ -44,7 +44,7 @@ export class GenreService {
     }
 
     private extractData(res: Response) {
-        let body = res.json();
+        const body = res.json();
         return body || {};
     }
 

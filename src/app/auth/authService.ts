@@ -10,10 +10,10 @@ import {User} from "../user.component/user";
 export class AuthService {
 
 
-    USER_SIGN_UP_URL = "http://www.kasivibe.com/api/v1/user";
-    USER_SIGN_IN_URL = "http://www.kasivibe.com/api/v1/user/authenticate";
-    AUTHORIZE_URL = "http://www.kasivibe.com/api/v1/user/authorize";
-    REFRESH_TOCKEN_URL = "http://www.kasivibe.com/api/v1/user/token/refresh";
+    USER_SIGN_UP_URL = '//kasivibe.com/api/v1/user';
+    USER_SIGN_IN_URL = '//kasivibe.com/api/v1/user/authenticate';
+    AUTHORIZE_URL = '//kasivibe.com/api/v1/user/authorize';
+    REFRESH_TOCKEN_URL = '//kasivibe.com/api/v1/user/token/refresh';
 
 
     // Observable string sources
@@ -25,7 +25,7 @@ export class AuthService {
 
     constructor(private http: Http, private authHttp: AuthHttp, private jwtHelper: JwtHelper) {}
 
-    signUp(username:string, email:string, password:string){
+    signUp(username: string, email: string, password: string) {
         return this.http.post(this.USER_SIGN_UP_URL, {
             username: username,
             email: email,
@@ -37,7 +37,7 @@ export class AuthService {
         });
     }
 
-    signIn(email:string, password:string){
+    signIn(email: string, password: string) {
         return this.http.post(this.USER_SIGN_IN_URL, {
             email: email,
             password: password,
@@ -53,7 +53,7 @@ export class AuthService {
                 const token = response.json().token;
                 const base64Url = token.split('.')[1];
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
-                return {token: token, decoded: JSON.parse(window.atob(base64))}
+                return {token: token, decoded: JSON.parse(window.atob(base64))};
             }
         ).do(
             tokenData => {
@@ -67,23 +67,23 @@ export class AuthService {
     }
 
     isAuthenticated(){
-        return this.http.get(this.AUTHORIZE_URL + '?token=' + this.getToken(),{
+        return this.http.get(this.AUTHORIZE_URL + '?token=' + this.getToken(), {
             headers: new Headers({
                 'X-Requested-With': 'XMLHttpRequest'
             })
         }).map(
-            (response: Response) => { //Fix this response block
-                if(response.json().status === 401){
+            (response: Response) => { // @todo Fix this response block
+                if (response.json().status === 401) {
 
                 }
                 //console.log(response.status);
                 this.user.next(response.json().user);
-                this.is_logged_in.next(true); //Check this line
+                this.is_logged_in.next(true); // @todo Check this line
             }
         ).catch(this.handleError);
     }
 
-    getToken(){
+    getToken() {
         return localStorage.getItem('token');
     }
 
@@ -91,7 +91,7 @@ export class AuthService {
         return tokenNotExpired('token');
     }
 
-    getAuthUser(){
+    getAuthUser() {
         return JSON.parse(localStorage.getItem('authUser'));
     }
 
@@ -99,7 +99,7 @@ export class AuthService {
         localStorage.setItem('authUser', JSON.stringify(user));
     }
 
-    logout(){
+    logout() {
         localStorage.removeItem('token');
         localStorage.removeItem('refresh_token');
         localStorage.removeItem('authUser');
@@ -118,7 +118,6 @@ export class AuthService {
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
-        //console.error(errMsg);
         return Observable.throw(errMsg);
     }
 
@@ -130,16 +129,16 @@ export class AuthService {
     public scheduleRefresh() {
         // If the user is authenticated, use the token stream
         // provided by angular2-jwt and flatMap the token
-        let source = this.authHttp.tokenStream.flatMap(
+        const source = this.authHttp.tokenStream.flatMap(
             token => {
                 // The delay to generate in this case is the difference
                 // between the expiry time and the issued at time
-                let jwtIat = this.jwtHelper.decodeToken(token).iat;
-                let jwtExp = this.jwtHelper.decodeToken(token).exp;
-                let iat = new Date(0);
-                let exp = new Date(0);
+                const jwtIat = this.jwtHelper.decodeToken(token).iat;
+                const jwtExp = this.jwtHelper.decodeToken(token).exp;
+                const iat = new Date(0);
+                const exp = new Date(0);
 
-                let delay = (exp.setUTCSeconds(jwtExp) - iat.setUTCSeconds(jwtIat));
+                const delay = (exp.setUTCSeconds(jwtExp) - iat.setUTCSeconds(jwtIat));
 
                 return Observable.interval(delay);
             });
@@ -153,15 +152,15 @@ export class AuthService {
         // If the user is authenticated, use the token stream
         // provided by angular2-jwt and flatMap the token
         if (this.loggedIn()) {
-            let source = this.authHttp.tokenStream.flatMap(
+            const source = this.authHttp.tokenStream.flatMap(
                 token => {
                     // Get the expiry time to generate
                     // a delay in milliseconds
-                    let now: number = Date.now();
-                    let jwtExp: number = this.jwtHelper.decodeToken(token).exp;
-                    let exp: Date = new Date(0);
+                    const now: number = Date.now();
+                    const jwtExp: number = this.jwtHelper.decodeToken(token).exp;
+                    const exp: Date = new Date(0);
                     exp.setUTCSeconds(jwtExp);
-                    let delay: number = exp.valueOf() - now;
+                    const delay: number = exp.valueOf() - now;
 
                     // Use the delay in a timer to
                     // run the refresh at the proper time

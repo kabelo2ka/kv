@@ -17,10 +17,8 @@ export class SongService {
     private headers = new Headers({
         'Content-Type': 'application/json',
     });
-    //private SONGS_URL = 'http://localhost/kasivibe2/public/api/v1/songs?fields=id,name,file_name,genre{id,name},artist{id,name,verified},album{id,name,image}';
-    //private SONGS_URL = 'http://localhost/kasivibe2/public/api/songs';
-    private SONGS_URL = 'http://www.kasivibe.com/api/v1/songs';
-    private SONG_LIKE_URL = 'http://www.kasivibe.com/api/v1/song/like';
+    private SONGS_URL = '//kasivibe.com/api/v1/songs';
+    private SONG_LIKE_URL = '//kasivibe.com/api/v1/song/like';
     // URL to web api
 
     // Like button
@@ -56,13 +54,13 @@ export class SongService {
             .catch(this.handleError);
     }
 
-    getSong(id: number) {
-        return this.authHttp.get(this.SONGS_URL + '/' + id)
+    getSong(slug: string) {
+        return this.authHttp.get(this.SONGS_URL + '/' + slug)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    updateSong(song){
+    updateSong(song) {
         const options = new RequestOptions({headers: this.headers});
         return this.authHttp.patch(this.SONGS_URL + '/' + song.id, song, options)
             .map(this.extractData)

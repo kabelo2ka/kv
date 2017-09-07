@@ -15,12 +15,12 @@ import {AuthService} from "../auth/authService";
 @Injectable()
 export class UserService {
 
-    USER_URL = 'http://www.kasivibe.com/api/v1/users';
+    USER_URL = '//kasivibe.com/api/v1/users';
 
     private headers = new Headers({
         'Content-Type': 'application/json',
     });
-    private usersUrl = 'http://kasivibe/api/v1/users?fields=id,username,email';
+    private usersUrl = '//kasivibe/api/v1/users?fields=id,username,email';
     // URL to web api
 
     constructor(private http: Http,
@@ -29,7 +29,7 @@ export class UserService {
     }
 
     getUsers(): Observable<User[]> {
-        let options = new RequestOptions({headers: this.headers});
+        const options = new RequestOptions({headers: this.headers});
         return this.http.get(this.usersUrl, options)
             .map(this.extractData)
             .catch(this.handleError);
@@ -40,14 +40,14 @@ export class UserService {
             headers: new Headers({
                 'X-Requested-With': 'XMLHttpRequest'
             })
-        })
+        });
     }
 
     updateUser(user) {
-        let options = new RequestOptions({headers: this.headers});
+        const options = new RequestOptions({headers: this.headers});
         return this.authHttp.patch(this.USER_URL, user, options)
             .map((res: Response) => {
-                let body = res.json();
+                const body = res.json();
                 // Update "authUser" local storage
                 this.authService.saveAuthUserToLocalStorage(body.data);
                 return body.data || {};
@@ -55,7 +55,7 @@ export class UserService {
     }
 
     private extractData(res: Response) {
-        let body = res.json();
+        const body = res.json();
         return body.data || {};
     }
 
