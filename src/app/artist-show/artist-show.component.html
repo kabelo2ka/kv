@@ -1,91 +1,114 @@
 <!--<img src="http://flatfull.com/themes/musik/images/m43.jpg"  class="img-cover-bg">-->
 <div [ngBusy]="loading" style="height: 100%">
     <div *ngIf="artist" id="profile-body" style="height: 100%">
-        <div class="artist-profile" id="profile-col-1">
-            <div class="wrapper">
-                <div class="text-center m-t m-b">
-                    <img src="{{ artist.avatar }}" alt="{{ artist.artist_name }} avatar" class="img-circle user-avatar">
-                    <div>
-                        <h2 class="h4 m-t-xs m-b-xs">{{ artist.artist_name }}</h2>
-                        <small class="text-muted"><i class="fa fa-music"></i> Music Artist</small>
-                    </div>
-                </div>
-                <div>
-                    <div class="about-user">
-                        <div *ngIf="auth_user" class="auth_cont">
-                            <button *ngIf="artist.id === auth_user.id" class="btn btn-default btn-block m-b">
-                                <i class="fa fa-pencil"></i> &nbsp;Edit Profile
-                            </button>
+
+
+        <div *ngIf="artist" class="row full-header">
+            <section class="profile-header">
+                <div class="col-md-8 col-md-offset-2 profile-header-inner">
+                    <div class="row">
+                        <div class="col-md-4 pull-right header-sidebar">
+                            <img class="album-art img-responsive"
+                                 src="https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/d/c/a/abd5-4f27-49bf-91b7-189570551bbb">
                         </div>
-                        <small class="text-muted">About me</small>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam.
-                            Aliquam sollicitudin venenatis ipsum ac feugiat.</p>
-                        <small class="text-muted">Connection</small>
-                        <p class="m-t-sm">
-                            <a class="btn kv-color-default" href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                            <a class="btn kv-color-default" href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                            <a class="btn kv-color-default" href="#" target="_blank"><i class="fa fa-google-plus"></i></a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="profile-col-2">
-            <div>
-                <tabset #artist_tabs>
-                    <tab heading="Albums">
 
-                        <div *ngIf="artist.albums" class="kv-wrapper">
-                            <div *ngFor="let album of artist.albums; let i = index" class="col-md-3">
-                                <div class="item">
-                                    <div class="pos-rlt">
-                                        <div class="item-overlay opacity">
-                                            <div class="center text-center" style="margin-top: -22px;">
-                                                <a routerLink="/albums/{{ album.id }}" ><i class="fa fa-play-circle kv-color-default i-4x"></i></a>
-                                            </div>
-                                        </div>
-                                        <a ><img src="{{ album.image }}" alt="no album" class="img-responsive full-width"></a>
-                                    </div>
-                                    <div class="padder-v">
-                                        <div><a routerLink="/albums/{{ album.id }}" class="text-ellipsis h6"> {{ album.name }} </a></div>
-                                    </div>
-                                </div>
-
+                        <div class="col-md-8 header-content">
+                            <div class="profile-details">
+                                <h1>{{ artist.artist_name }}</h1>
+                                <h6>
+                                    <em>AKA Blah blah</em>
+                                </h6>
                             </div>
-                        </div>
-                        
-                    </tab>
-
-
-                    <tab heading="All songs">
-                        <div class="wrapper">
-                            <ul *ngIf="artist.songs" class="list-group">
-
-                                <li *ngFor="let song of artist.songs; let i = index" class="list-group-item">
-                                    <div class="kv-col-cont">
-                                        <!--<div class="kv-col-1">{{ song.id }}</div>-->
-                                        <div class="kv-col-2 h6">
-                                            <div class="kv-media-image-overlay play_song" (click)="playSong(song)"
-                                                 attr.data-src="{{song.file_name}}">
-                                                <span class="song_item_count">{{ i+1 }}</span>
-                                                <span class="a"> {{ song.name }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-
+                            <ul class="list-inline hidden-xs">
+                                <li><i class="icon-earphones"></i> 201 Songs</li>
+                                <li><i class="icon-picture"></i> 21 Albums</li>
                             </ul>
                         </div>
-                    </tab>
+                    </div>
+
+                    <footer class="header-actions hidden-xs">
+                        <ul class="list-inline">
+                            <!--<li>
+                                <button (click)="followUser()" class="btn btn-sm btn-inverse">
+                                <span *ngIf="!user.is_following">
+                                    <i class="icon-follow"></i> <span>Follow</span>
+                                    <span class="visible-xs-inline-block follow_count"> {{ user.follow_count }}</span>
+                                </span>
+                                    <span *ngIf="song.is_following">Unfollow</span>
+                                </button>
+                            </li>-->
+                            <li>
+                                <button class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> <span>Share</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </footer>
 
 
+                </div>
+                <div class="profile-header-blur"
+                     style="background-image: url('https://thumbnailer.mixcloud.com/unsafe/500x250/filters:blur(40)/extaudio/b/d/c/a/abd5-4f27-49bf-91b7-189570551bbb');"></div>
+            </section>
+        </div>
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-12 m-t-lg">
+                    <tabset #artist_tabs>
+                        <tab heading="Albums">
+
+                            <div *ngIf="artist.albums" class="kv-wrapper">
+                                <div *ngFor="let album of artist.albums; let i = index" class="col-md-3">
+                                    <div class="item">
+                                        <div class="pos-rlt">
+                                            <div class="item-overlay opacity">
+                                                <div class="center text-center" style="margin-top: -22px;">
+                                                    <a routerLink="/albums/{{ album.id }}" ><i class="fa fa-play-circle kv-color-default i-4x"></i></a>
+                                                </div>
+                                            </div>
+                                            <a ><img src="{{ album.image }}" alt="no album" class="img-responsive full-width"></a>
+                                        </div>
+                                        <div class="padder-v">
+                                            <div><a routerLink="/albums/{{ album.id }}" class="text-ellipsis h6"> {{ album.name }} </a></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </tab>
 
 
-                    <tab heading="Liked songs">
-                        List view of all liked songs
-                    </tab>
-                </tabset>
+                        <tab heading="All songs">
+                            <div class="wrapper">
+                                <ul *ngIf="artist.songs" class="list-group">
+
+                                    <li *ngFor="let song of artist.songs; let i = index" class="list-group-item">
+                                        <div class="kv-col-cont">
+                                            <!--<div class="kv-col-1">{{ song.id }}</div>-->
+                                            <div class="kv-col-2 h6">
+                                                <div class="kv-media-image-overlay play_song" (click)="playSong(song)"
+                                                     attr.data-src="{{song.file_name}}">
+                                                    <span class="song_item_count">{{ i+1 }}</span>
+                                                    <span class="a"> {{ song.name }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </tab>
+
+
+                        <tab heading="Liked songs">
+                            List view of all liked songs
+                        </tab>
+                    </tabset>
+                </div>
             </div>
+
         </div>
     </div>
 </div>

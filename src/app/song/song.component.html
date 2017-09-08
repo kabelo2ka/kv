@@ -36,7 +36,7 @@
                     </div>
                 </div>
 
-                <footer class="header-actions">
+                <footer class="header-actions hidden-xs">
                     <ul class="list-inline">
                         <li>
                             <button (click)="likeSong()" class="btn btn-sm btn-inverse">
@@ -66,6 +66,31 @@
     </div>
 
     <section *ngIf="song" class="content-wrapper">
+        <div class="row visible-xs">
+            <div class="col-md-12">
+                <footer class="below-header-actions bottom-border m-b-lg">
+                    <ul class="list-inline">
+                        <li class="pull-right">
+                            <button (click)="likeSong()" class="btn btn-sm btn-inverse">
+                                <span *ngIf="!song.is_liked">
+                                    <i class="icon-like"></i> <span>Like</span>
+                                    <span class="visible-xs-inline-block likes_count"> {{ song.likes_count }}</span>
+                                </span>
+                                <span *ngIf="song.is_liked">Unlike</span>
+                            </button>
+                        </li>
+                        <li>
+                            <a href="" class="btn btn-sm btn-inverse"><i class="icon-bubble"></i>
+                                <span>Comment</span></a>
+                        </li>
+                        <li>
+                            <button class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> <span>Share</span>
+                            </button>
+                        </li>
+                    </ul>
+                </footer>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-8 col-lg-offset-2">
                 <div class="row">
