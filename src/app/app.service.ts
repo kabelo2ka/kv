@@ -12,6 +12,7 @@ export class AppService {
     private right_panel_visible = new Subject<boolean>();
     private sign_in_modal = new Subject<boolean>();
     private sign_up_modal = new Subject<boolean>();
+    private share_modal = new Subject<boolean>();
 
     // Observable string streams
     left_mobile_menu_visible$ = this.left_mobile_menu_visible.asObservable();
@@ -19,6 +20,7 @@ export class AppService {
     right_panel_visible$ = this.right_panel_visible.asObservable();
     sign_in_modal$ = this.sign_in_modal.asObservable();
     sign_up_modal$ = this.sign_up_modal.asObservable();
+    share_modal$ = this.share_modal.asObservable();
 
     setLeftMobileMenuVisible(visible: boolean) {
         this.left_mobile_menu_visible.next(visible);
@@ -43,6 +45,10 @@ export class AppService {
 
     showSignUpModal(visible: boolean) {
         this.sign_up_modal.next(visible);
+    }
+
+    showShareModal(visible: boolean) {
+        this.share_modal.next(visible);
     }
 
 }

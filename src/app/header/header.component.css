@@ -1,3 +1,11 @@
+.release_status {
+    font-size: 10px;
+    position: absolute;
+    bottom: 3px;
+    margin-left: -4px;
+    color: #999999;
+}
+
 .navbar {
     margin: 0;
     border-radius: 0;
