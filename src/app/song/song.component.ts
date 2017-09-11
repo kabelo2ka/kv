@@ -8,6 +8,7 @@ import {AuthService} from "../auth/authService";
 import {AudioService} from "../audio/audio.service";
 import {AudioAPIWrapper} from "../audio/audio-api-wrapper";
 import {SocketService} from "../socket.service";
+import {AppService} from "../app.service";
 
 class Res {
     data: any;
@@ -40,6 +41,7 @@ export class SongComponent implements OnInit, OnDestroy {
                 private songService: SongService,
                 private socketService: SocketService,
                 private authService: AuthService,
+                private appService: AppService,
                 private audioService: AudioService,
                 private audioApiWrapper: AudioAPIWrapper,) {
     }
@@ -135,6 +137,10 @@ export class SongComponent implements OnInit, OnDestroy {
                 }
             }
         );
+    }
+
+    public showShareModal(): void {
+        this.appService.showShareModal(true);
     }
 
     ngOnDestroy() {

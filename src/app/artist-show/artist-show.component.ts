@@ -46,4 +46,8 @@ export class ArtistShowComponent implements OnInit {
         this.appService.setRightPanelVisible(true);
     }
 
+    public showShareModal(): void {
+        this.appService.showShareModal(true);
+    }
+
 }

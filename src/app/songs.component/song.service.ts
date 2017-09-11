@@ -9,6 +9,7 @@ import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
 import {AuthService} from "../auth/authService";
 import {Subject} from "rxjs";
+import {AppService} from "../app.service";
 
 
 @Injectable()
@@ -27,7 +28,8 @@ export class SongService {
 
     constructor(private http: Http,
                 public authHttp: AuthHttp,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private appService: AppService) {
     }
 
     updateLike(id: number) {
@@ -75,6 +77,12 @@ export class SongService {
     }
 
     likeSong(id: number) {
+        // @todo If user not logged in, show login modal
+        if( ! this.authService.loggedIn()){
+            this.appService.showSignInModal(true);
+            // if user is successfully logged in, like the song
+        }
+
         this.updateLike(id); // Update Client Side
         const options = new RequestOptions({headers: this.headers});
         return this.http.post(this.SONG_LIKE_URL + '?token=' + this.authService.getToken(), {'id': id})

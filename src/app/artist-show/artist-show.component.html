@@ -15,9 +15,6 @@
                         <div class="col-md-8 header-content">
                             <div class="profile-details">
                                 <h1>{{ artist.artist_name }}</h1>
-                                <h6>
-                                    <em>AKA Blah blah</em>
-                                </h6>
                             </div>
                             <ul class="list-inline hidden-xs">
                                 <li><i class="icon-earphones"></i> 201 Songs</li>
@@ -38,7 +35,8 @@
                                 </button>
                             </li>-->
                             <li>
-                                <button class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> <span>Share</span>
+                                <button (click)="showShareModal()" class="btn btn-sm btn-inverse">
+                                    <i class="icon-share-alt"></i> <span>Share Profile</span>
                                 </button>
                             </li>
                         </ul>
@@ -52,6 +50,20 @@
         </div>
 
         <div class="container">
+
+            <div class="row visible-xs">
+                <div class="col-md-12">
+                    <footer class="below-header-actions bottom-border m-b-lg">
+                        <ul class="list-inline">
+                            <li>
+                                <button (click)="showShareModal()" class="btn btn-sm btn-inverse">
+                                    <i class="icon-share-alt"></i> <span>Share Profile</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </footer>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-12 m-t-lg">
@@ -101,10 +113,6 @@
                             </div>
                         </tab>
 
-
-                        <tab heading="Liked songs">
-                            List view of all liked songs
-                        </tab>
                     </tabset>
                 </div>
             </div>

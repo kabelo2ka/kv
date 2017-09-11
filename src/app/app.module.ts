@@ -62,6 +62,8 @@ import {SearchComponent} from "./search/search.component";
 import {NotificationsComponent} from "./notifications/notifications.component";
 import {NotificationService} from "./notifications/notification.service";
 import {GenreService} from "./genres/genre.service";
+import {ShareButtonsModule} from "ngx-sharebuttons";
+import {ShareComponent} from "./share/share.component";
 
 
 @NgModule({
@@ -87,6 +89,7 @@ import {GenreService} from "./genres/genre.service";
         AlbumShowComponent,
         SignupComponent,
         SigninComponent,
+        ShareComponent,
         SongEditComponent,
         TestsComponent,
         SongComponent,
@@ -114,6 +117,7 @@ import {GenreService} from "./genres/genre.service";
         TypeaheadModule.forRoot(),
         BsDropdownModule.forRoot(),
         AccordionModule.forRoot(),
+        ShareButtonsModule.forRoot(),
         TooltipModule.forRoot(),
         ReactiveFormsModule,
         SlimScrollModule,
