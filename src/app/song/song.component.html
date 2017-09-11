@@ -55,6 +55,11 @@
                             <button class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> <span>Share</span>
                             </button>
                         </li>
+                        <!-- @todo Check whether the song is set as downloadable or not-->
+                        <li>
+                            <a href="{{ song.url }}" download="true" class="btn btn-sm btn-primary"><i class="icon-cloud-download"></i>
+                                <span>Download</span></a>
+                        </li>
                     </ul>
                 </footer>
 
@@ -68,7 +73,7 @@
     <section *ngIf="song" class="content-wrapper">
         <div class="row visible-xs">
             <div class="col-md-12">
-                <footer class="below-header-actions bottom-border m-b-lg">
+                <footer class="below-header-actions m-b-md">
                     <ul class="list-inline">
                         <li class="pull-right">
                             <button (click)="likeSong()" class="btn btn-sm btn-inverse">
@@ -88,6 +93,9 @@
                             </button>
                         </li>
                     </ul>
+                    <!-- @todo Check whether the song is set as downloadable or not-->
+                    <a href="{{ song.url }}" download="true" class="btn btn-block btn-primary"><i class="icon-cloud-download"></i>
+                        <span>Download</span></a>
                 </footer>
             </div>
         </div>
