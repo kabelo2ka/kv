@@ -3,6 +3,10 @@ import * as io from "socket.io-client";
 import {Http} from "@angular/http";
 import {Observable} from "rxjs";
 
+import * as jsmediatags from "jsmediatags";
+
+declare var System: any;
+
 @Component({
     selector: 'app-tests',
     templateUrl: './tests.component.html',
@@ -10,39 +14,41 @@ import {Observable} from "rxjs";
 })
 export class TestsComponent implements OnInit {
 
-    count:number = 0;
-    SOCKET_URL = '//kasivibe.com:3000';
-    socket: any;
+
 
     constructor(private http: Http) {
-        this.socket = io(this.SOCKET_URL).connect();
+
     }
 
     ngOnInit() {
-        Observable.fromEvent(this.socket, 'songs-channel:App\\Events\\UserPlayedSong').subscribe(
-            res => {
-                this.count++;
-                console.log(res);
+
+    }
+
+    getMeta(event) {
+        let file = event.target.files[0];
+        console.log(file);
+        /*jsmediatags.read(file, {
+            onSuccess: tag => {
+                console.log(tag);
+                alert('sts');
+            },
+            onError: error => {
+                alert('error');
+                console.log(error);
             }
-        );
-        /*this.socket.on('song-channel:UserPlayedSong', res => {
-            this.count++;
-            console.log(res);
         });*/
+        System.import('jsmediatags').then(jsmediatags => {
+            new jsmediatags.Reader(file)
+                .setTagsToRead(["title", "artist"])
+                .read({
+                    onSuccess: function(tag) {
+                        console.log(tag);
+                    },
+                    onError: function(error) {
+                        console.log(':(', error.type, error.info);
+                    }
+                });
+        });
     }
-
-    PlaySong(){
-        this.http.get('//kasivibe.com/api/v1/songs/8/plays').subscribe(
-            res => console.log(res.statusText)
-        );
-    }
-
-    testEmit(){
-        this.socket.emit('songs-channel:App\\Events\\UserPlayedSong', {
-            username: 'kabelo',
-            song_id: 888
-        })
-    }
-
 
 }

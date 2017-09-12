@@ -27,6 +27,7 @@
     "angular2-notifications": "^0.7.7",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.0",
+    "jsmediatags": "^3.8.0",
     "ng2-slimscroll": "^2.0.1",
     "ngx-bootstrap": "^1.9.1",
     "ngx-sharebuttons": "^3.0.0",
