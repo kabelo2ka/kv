@@ -10,7 +10,7 @@
         <div class="col-md-offset-4 col-md-4">
             <br>
             <br>
-            <div *ngIf="!file" class="drop-zone"
+            <div *ngIf="!file || !authService.loggedIn()" class="drop-zone"
                  (click)="nativeUploadInput.click()"
                  ngFileDrop
                  (uploadOutput)="onUploadOutput($event)"
@@ -23,7 +23,7 @@
                    [uploadInput]="uploadInput">
 
 
-            <div *ngIf="file" class="progress-container">
+            <div *ngIf="file && authService.loggedIn()" class="progress-container">
                 <div>
                     Uploading <span class="filename">{{ file.name }}</span>
                     <span class="progress-data">{{ file.progress.data.percentage }}% at {{ file.progress.data.speedHuman }} eta {{ file.progress.data.eta }}</span>
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div *ngIf="file" class="m-t-md">
+            <div *ngIf="file && authService.loggedIn()" class="m-t-md">
                 <!--<div class="m-t-md">-->
                 <form [formGroup]="songForm" (ngSubmit)="createSong()" class="song-create-form">
                     <tabset>
@@ -109,7 +109,7 @@
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input formControlName="private" type="checkbox"> Only visible to me
+                                    <input formControlName="private" type="checkbox"> Private
                                 </label>
                             </div>
                         </tab>

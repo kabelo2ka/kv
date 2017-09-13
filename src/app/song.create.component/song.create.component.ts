@@ -8,6 +8,7 @@ import {AlbumService} from "../albums/album.service.component";
 import {AuthService} from "../auth/authService";
 import {NotificationsService} from "angular2-notifications/dist";
 import {Album} from "../albums/album";
+import {AppService} from "../app.service";
 
 @Component({
     selector: 'app-songs-upload',
@@ -35,6 +36,7 @@ export class SongCreateComponent implements OnInit, OnChanges {
                 private songService: SongService,
                 private albumService: AlbumService,
                 private authService: AuthService,
+                private appService: AppService,
                 private fb: FormBuilder,) {
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
         this.humanizeBytes = humanizeBytes;
@@ -71,13 +73,27 @@ export class SongCreateComponent implements OnInit, OnChanges {
     onUploadOutput(output: UploadOutput): void {
         if (output.type === 'allAddedToQueue') { // when all files added in queue
             // Auto upload files when added
-            this.startUpload();
+            if( ! this.authService.loggedIn()){
+                // @todo subscribe to login modal, so if the user logs in, startUpload
+                this.appService.showSignInModal(true);
+                this.authService.is_logged_in$.subscribe(
+                    // If user is logged in, start uploading
+                    (is_logged_in:boolean) => {
+                        if(is_logged_in){
+                            this.startUpload()
+                        }
+                    },
+                        error => console.log(error)
+                    );
+            }else{
+                this.startUpload();
+            }
         } else if (output.type === 'addedToQueue' && typeof output.file !== 'undefined') {
             // add file to array when added
             if (!this.songForm.controls['name'].value) {
                 this.songForm.controls['name'].setValue(output.file.name);
             }
-            console.log('Added to queue', output.file);
+            //console.log('Added to queue', output.file);
             this.file = output.file;
         } else if (output.type === 'uploading' && typeof output.file !== 'undefined') {
             // update current data in files array for uploading file
@@ -118,8 +134,8 @@ export class SongCreateComponent implements OnInit, OnChanges {
             'album_id': ['', Validators.required],
             'album_name': [null],
             'lyrics': [null],
-            'downloadable': [true, Validators.required],
-            'commentable': [false, Validators.required],
+            'downloadable': [false, Validators.required],
+            'commentable': [true, Validators.required],
             'private': [false, Validators.required],
         });
     }
