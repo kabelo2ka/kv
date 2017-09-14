@@ -5,8 +5,6 @@ import {Observable} from "rxjs";
 
 import * as jsmediatags from "jsmediatags";
 
-declare var System: any;
-
 @Component({
     selector: 'app-tests',
     templateUrl: './tests.component.html',
@@ -25,29 +23,17 @@ export class TestsComponent implements OnInit {
     }
 
     getMeta(event) {
-        let file = event.target.files[0];
+        const file = event.target.files[0];
         console.log(file);
-        /*jsmediatags.read(file, {
+        jsmediatags.read(file, {
             onSuccess: tag => {
+                alert('success');
                 console.log(tag);
-                alert('sts');
             },
             onError: error => {
                 alert('error');
                 console.log(error);
             }
-        });*/
-        System.import('jsmediatags').then(jsmediatags => {
-            new jsmediatags.Reader(file)
-                .setTagsToRead(["title", "artist"])
-                .read({
-                    onSuccess: function(tag) {
-                        console.log(tag);
-                    },
-                    onError: function(error) {
-                        console.log(':(', error.type, error.info);
-                    }
-                });
         });
     }
 

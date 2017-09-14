@@ -15,4 +15,8 @@ export class Song {
     album?: any;
     artists?: any[];
     comments?: any[];
+    downloadable: boolean;
+    download_link: string;
+    commentable: boolean;
+    private: boolean;
 }
