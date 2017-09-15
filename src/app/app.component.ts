@@ -39,8 +39,8 @@ export class AppComponent implements OnInit {
             // token expires
             this.authService.startupTokenRefresh();
             // logged in so return true
-            this.authService.isAuthenticated().subscribe((result) => {
-                console.log('authenticated');
+            this.authService.isAuthenticated().subscribe((res) => {
+                this.is_logged_in = res;
             });
         }
 

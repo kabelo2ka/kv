@@ -29,7 +29,6 @@ export class HomeComponent {
         this.authService.user$.subscribe(
             user => {
                 this.user = user;
-                console.log(user);
             }
         );
     }
