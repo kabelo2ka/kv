@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
-import {ModalDirective} from "ngx-bootstrap";
-import {NgForm} from "@angular/forms";
-import {AuthService} from "../auth/authService";
-import {AppService} from "../app.service";
-import {Subscription} from "rxjs";
-import {NotificationsService} from "angular2-notifications/dist";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ModalDirective} from 'ngx-bootstrap';
+import {NgForm} from '@angular/forms';
+import {AuthService} from '../auth/authService';
+import {AppService} from '../app.service';
+import {Subscription} from 'rxjs';
+import {NotificationsService} from 'angular2-notifications/dist';
 
 @Component({
     selector: 'app-signin',
@@ -22,7 +22,8 @@ export class SigninComponent implements OnInit {
 
     constructor(private authService: AuthService,
                 private appService: AppService,
-                private notificationService: NotificationsService,) {
+                private notificationService: NotificationsService,
+                ) {
         this.errors = {
             error: null,
             email: null,

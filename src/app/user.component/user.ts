@@ -4,4 +4,5 @@ export class User {
     avatar: string;
     artist_name?: string;
     phone_number?: number;
+    confirmed: number;
 }

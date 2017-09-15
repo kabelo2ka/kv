@@ -16,7 +16,8 @@ export class Song {
     artists?: any[];
     comments?: any[];
     downloadable: boolean;
-    download_link: string;
+    download_link?: string;
+    downloads_count?: number;
     commentable: boolean;
     private: boolean;
 }

@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
-import {ModalDirective} from "ngx-bootstrap";
-import {NgForm} from "@angular/forms";
-import {AuthService} from "../auth/authService";
-import {AppService} from "../app.service";
-import {Subscription} from "rxjs";
-import {NotificationsService} from "angular2-notifications/dist";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ModalDirective} from 'ngx-bootstrap';
+import {NgForm} from '@angular/forms';
+import {AuthService} from '../auth/authService';
+import {AppService} from '../app.service';
+import {Subscription} from 'rxjs';
+import {NotificationsService} from 'angular2-notifications/dist';
 
 @Component({
     selector: 'app-signup',
@@ -16,13 +16,14 @@ export class SignupComponent implements OnInit {
     @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
     private subscription: Subscription;
     signingUp: Subscription;
-    public is_modal_shown: boolean = false;
+    public is_modal_shown = false;
 
     errors: any;
 
     constructor(private authService: AuthService,
                 private appService: AppService,
-                private notificationService: NotificationsService,) {
+                private notificationService: NotificationsService,
+                ) {
         this.errors = {
             error: null,
             username: null,
@@ -54,10 +55,10 @@ export class SignupComponent implements OnInit {
             () => {
                 this.autoShownModal.hide();
                 this.notificationService.success('Hello :-)', 'Your account has been created!');
+                this.notificationService.alert('Confirm Your Email', 'We sent an email to ' + form.value.email + ', please confirm.');
             },
             errors => {
                 this.errors = errors.json();
-                this.signingUp = null;
             },
             () => this.signingUp = null
         );

@@ -30,7 +30,7 @@
                         <ul class="list-inline hidden-xs">
                             <li><i class="icon-like"></i> {{ song.likes_count }}</li>
                             <li><i class="icon-earphones"></i> {{ song.plays_count }}</li>
-                            <li><i class="icon-clock"></i> 6m</li>
+                            <li *ngIf="song.downloadable"><i class="icon-cloud-download"></i> {{ song.downloads_count }}</li>
                             <li><i class="icon-cloud-upload"></i> {{ song.created_at_ago }}</li>
                         </ul>
                     </div>
@@ -55,7 +55,6 @@
                             <button (click)="showShareModal()" class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> <span>Share</span>
                             </button>
                         </li>
-                        <!-- @todo Check whether the song is set as downloadable or not-->
                         <li *ngIf="song.downloadable" >
                             <a href="{{ song.download_link }}" class="btn btn-sm btn-primary">
                                 <i class="icon-cloud-download"></i>
