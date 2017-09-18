@@ -21,14 +21,14 @@
         </tab>
         <tab heading="COMMENTS" active="true">
             <div class="comments">
-                <form (ngSubmit)="onComment()" #commentForm="ngForm">
+                <form (ngSubmit)="onComment()" #commentForm="ngForm" class="clearfix">
                     <div class="form-group">
                         <textarea name="body" [(ngModel)]="comment.body" placeholder="Comment here..." rows="2" class="form-control" required></textarea>
                     </div>
                     <p *ngIf="errors.error" class="alert alert-danger">
                         {{ errors.error }}
                     </p>
-                    <button class="btn btn-success btn-sm" type="submit" [disabled]="!commentForm.valid">Comment</button>
+                    <button class="btn btn-default btn-sm pull-right" type="submit" [disabled]="!commentForm.valid">Comment</button>
                 </form>
                 <div *ngIf="song" class="comments-wrapper">
                     <ul *ngIf="song.comments" class="list-unstyled">

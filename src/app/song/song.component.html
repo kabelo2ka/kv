@@ -47,10 +47,10 @@
                                 <span *ngIf="song.is_liked">Unlike</span>
                             </button>
                         </li>
-                        <li>
+                        <!--<li>
                             <a href="" class="btn btn-sm btn-inverse"><i class="icon-bubble"></i>
                                 <span>Comment</span></a>
-                        </li>
+                        </li>-->
                         <li>
                             <button (click)="showShareModal()" class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> <span>Share</span>
                             </button>
@@ -85,16 +85,15 @@
                                 <span *ngIf="song.is_liked">Unlike</span>
                             </button>
                         </li>
-                        <li>
+                        <!--<li>
                             <a href="" class="btn btn-sm btn-inverse"><i class="icon-bubble"></i>
                                 <span>Comment</span></a>
-                        </li>
+                        </li>-->
                         <li>
                             <button (click)="showShareModal()" class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> <span>Share</span>
                             </button>
                         </li>
                     </ul>
-                    <!-- @todo Check whether the song is set as downloadable or not-->
                     <a *ngIf="song.downloadable" href="{{ song.download_link }}" class="btn btn-block btn-primary">
                         <i class="icon-cloud-download"></i>
                         <span>Download</span>
@@ -144,7 +143,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <h2 class="h4">Liked by</h2>
+                        <!--<h2 class="h4">Liked by</h2>-->
                     </div>
 
 
