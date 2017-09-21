@@ -1,18 +1,24 @@
-import {Injectable} from "@angular/core";
-import {Response} from "@angular/http";
-import {AuthHttp} from "angular2-jwt";
-import {Observable} from "rxjs";
+import {Injectable} from '@angular/core';
+import {Response} from '@angular/http';
+import {AuthHttp} from 'angular2-jwt';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class NotificationService {
 
     NOTIFICATIONS_URL = '//kasivibe.com/api/v1/notifications';
 
-    constructor(private authHttp: AuthHttp,) {
+    constructor(private authHttp: AuthHttp, ) {
     }
 
     getNotifications() {
         return this.authHttp.get(this.NOTIFICATIONS_URL)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    setNotificationAsRead(id) {
+        return this.authHttp.get(this.NOTIFICATIONS_URL + '/' + id + '/read')
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -33,7 +39,6 @@ export class NotificationService {
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
-        console.error(errMsg);
         return Observable.throw(errMsg);
     }
 }

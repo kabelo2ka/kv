@@ -74,7 +74,7 @@ export class SongComponent implements OnInit, OnDestroy {
         );
         // Subscribe to song comments channel
         this.connection = this.socketService.getComments().subscribe((res: any) => {
-            //this.unseenComments.unshift((<any>Object).assign({}, res));
+            // this.unseenComments.unshift((<any>Object).assign({}, res));
             this.song.comments.unshift(res.comment);
             this.unseenCommentsCount++;
             console.log(res.comment[0]);

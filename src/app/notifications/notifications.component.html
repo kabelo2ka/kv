@@ -1,13 +1,13 @@
 <div class="btn-group" dropdown>
-    <button class="notification-btn btn btn-link btn-sm" href dropdownToggle (click)="false">
+    <button class="notification-btn btn btn-link btn-sm" href dropdownToggle (click)="clearNotificationsCount()">
         <i class="icon-bell"></i>
-        <span *ngIf="notifications.length > 0"
-              class="notification-btn-count badge bg-danger">{{ notifications.length }}</span>
+        <span *ngIf="notifications_count > 0"
+              class="notification-btn-count badge bg-danger">{{ notifications_count }}</span>
     </button>
     <div *dropdownMenu class="dropdown-menu   user-notifications">
         <ul *ngIf="notifications.length > 0" class="list-unstyled">
-            <li *ngFor="let notification of notifications">
-                <a class="dropdown-item" routerLink="/songs/{{ notification.song.id }}">
+            <li *ngFor="let notification of notifications" (click)="setNotificationAsRead(notification.id, '/songs/'+notification.song.slug)">
+                <a class="dropdown-item">
                     <div class="notification-item">
                         <div class="notification-item-img">
                             <img class="img-responsive" src="{{ notification.author.avatar }}" alt="{{ notification.author.username }}">
@@ -22,8 +22,7 @@
                 </a>
             </li>
         </ul>
-        <div *ngIf="!notifications.length" class="empty">No ac
-  ities</div>
+        <div *ngIf="!notifications.length" class="empty">No notifications yet</div>
         <div class="view-all">
             <a href>View all notifications</a>
         </div>
