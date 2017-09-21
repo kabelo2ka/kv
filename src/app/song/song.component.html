@@ -4,8 +4,7 @@
             <div class="col-md-8 col-md-offset-2 profile-header-inner">
                 <div class="row">
                     <div class="col-md-4 pull-right header-sidebar">
-                        <img class="album-art img-responsive"
-                             src="https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/d/c/a/abd5-4f27-49bf-91b7-189570551bbb">
+                        <img class="album-art img-responsive" src="{{ song.album.image }}">
                     </div>
 
                     <div class="col-md-8 header-content">
@@ -66,8 +65,7 @@
 
 
             </div>
-            <div class="profile-header-blur"
-                 style="background-image: url('https://thumbnailer.mixcloud.com/unsafe/500x250/filters:blur(40)/extaudio/b/d/c/a/abd5-4f27-49bf-91b7-189570551bbb');"></div>
+            <div class="profile-header-blur" [ngStyle]="{'background-image': 'url(' +song.album.image+ ')'}"></div>
         </section>
     </div>
 
