@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
 
 
 import {SongService} from "./song.service";
@@ -19,27 +19,21 @@ import * as io from "socket.io-client";
 
 
 export class SongsComponent implements OnInit {
-    isPlaying = false;
-    is_paused = false;
-    has_ended = false;
-    loading_song = true;
 
     errorMessage: string;
     loading: Subscription;
+
     songs: Song[] = [];
     meta: Meta[];
 
-    activeSong: Song;
-    playingSong: Song;
+    activeSongId: number;
 
     socket: any;
     SOCKET_URL = '//kasivibe.com:3000';
 
-    constructor(private songService: SongService,
-                private audioService: AudioService,
-                private appService: AppService,
-                private audioApiWrapper: AudioAPIWrapper) {
-    }
+    constructor(
+        private songService: SongService,
+    ) {}
 
     ngOnInit(): void {
         this.getSongs();
@@ -54,40 +48,14 @@ export class SongsComponent implements OnInit {
                 }
             }
         );
-        this.audioService.active_song_selected$.subscribe(
+        /*this.audioService.active_song_selected$.subscribe(
             song => {
                 const songToModify = this.songs.find(_song => _song.id === song.id);
                 if (songToModify) {
                     this.activeSong = song;
                 }
             }
-        );
-        // Get audio status play | pause | stop
-        this.audioService.status$.subscribe(
-            status => {
-                if (status === 'play') {
-                    this.isPlaying = true;
-                } else if (status === 'pause') {
-                    this.isPlaying = false;
-                } else if (status === 'stop') {
-                    this.isPlaying = false;
-                }
-            }
-        );
-        this.audioApiWrapper.bindAudioEvent('loadedmetadata').subscribe(
-            () => this.loading_song = false
-        );
-        this.audioApiWrapper.bindAudioEvent('play').subscribe(
-            () => {
-                this.is_paused = false;
-            }
-        );
-        this.audioApiWrapper.bindAudioEvent('pause').subscribe(
-            () => this.is_paused = true
-        );
-        this.audioApiWrapper.bindAudioEvent('ended').subscribe(
-            () => this.is_paused = false
-        );
+        );*/
         this.socket = io(this.SOCKET_URL).connect();
         Observable.fromEvent(this.socket, 'songs:App\\Events\\UserPlayedSong').subscribe(
             (res: any) => {
@@ -99,11 +67,6 @@ export class SongsComponent implements OnInit {
         );
     }
 
-    private extractData(res: Response) {
-        const body = res.json();
-        return body || {};
-    }
-
     getSongs() {
         this.loading = this.songService.getSongs(null).subscribe(
             (res: any) => {
@@ -113,31 +76,9 @@ export class SongsComponent implements OnInit {
         );
     }
 
-
-    playSong(song: any) {
-        this.loading_song = true;
-        this.is_paused = true;
-        this.setActiveSong(song);
-        this.isPlayingSong(song);
-        this.audioService.setStatus('play');
-        this.appService.setRightPanelVisible(true);
+    setActiveSongId(songId: number){
+        this.activeSongId = songId;
     }
 
-    pauseSong() {
-        this.audioService.setStatus('pause');
-        this.audioApiWrapper.pause();
-    }
-
-    isActiveSong(song: Song) {
-        return (this.activeSong) && this.activeSong.id === song.id;
-    }
-
-    setActiveSong(song) {
-        this.audioService.setActiveSong(song);
-    }
-
-    isPlayingSong(song: Song) {
-        return (this.playingSong) && this.playingSong.id === song.id;
-    }
 
 }

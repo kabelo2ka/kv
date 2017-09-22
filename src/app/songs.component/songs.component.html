@@ -6,61 +6,10 @@
 
             <ul *ngIf="songs" class="list-group">
 
-                <li *ngFor="let song of songs"
-                    [ngClass]="{'kv-active':isActiveSong(song)}" class="list-group-item">
-                    <div class="kv-col-cont">
-                        <!--<div class="kv-col-1">{{ song.id }}</div>-->
-                        <div class="kv-col-2">
-                            <div class="kv-media-image">
-                                <img *ngIf="song.album" style="width: 64px;height: 64px;"
-                                     src="{{song.album.image}}" alt="{{song.name}}">
-                                <div class="kv-media-image-overlay">
-                                    <i *ngIf="!isActiveSong(song) || (isActiveSong(song) && is_paused)"
-                                       (click)="playSong(song)"
-                                       class="fa fa-play" aria-hidden="true"></i>
-                                    <i *ngIf="isActiveSong(song) && !is_paused"
-                                       (click)="pauseSong(song)"
-                                       class="fa fa-pause" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                            <div class="kv-media-content">
-                                <div>
-                                    <h6><a routerLink="/songs/{{ song.slug }}" class="kv-color-default">{{ song.name
-                                        }}</a></h6>
-                                    <div>
-                                        <small *ngIf="song.user.artist_name">By {{ song.user.artist_name }}</small>
-                                        <small *ngIf="! song.user.artist_name && !song.is_admin">Uploaded by {{
-                                            song.user.username }}
-                                        </small>
-                                        <small *ngIf="! song.user.artist_name && song.is_admin">Uploaded by You</small>
-                                    </div>
-                                    <div>
-                                        <small *ngIf="song.plays_count == 1">{{ song.plays_count }} Play &middot; </small>
-                                        <small *ngIf="song.plays_count != 1">{{ song.plays_count }} Plays &middot; </small>
-                                        <small *ngIf="song.comments.length  == 1">{{ song.comments.length }} Comment
-                                            &middot;
-                                        </small>
-                                        <small *ngIf="song.comments.length  != 1">{{ song.comments.length }} Comments
-                                            &middot;
-                                        </small>
-                                        <small *ngIf="song.likes_count == 1">{{ song.likes_count }} Like</small>
-                                        <small *ngIf="song.likes_count != 1">{{ song.likes_count }} Likes</small>
-                                        <small *ngIf="song.is_liked"> &middot; <span
-                                                class="text-success">You Like this</span></small>
-                                    </div>
-                                </div>
-                                <div class="controls pull-right">
-                                    <span *ngIf="isActiveSong(song)" class="is-activated">
-                                        <i *ngIf="loading_song" class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-                                        <app-audio-visualization
-                                                [ngStyle]="{'display':(loading_song || is_paused)?'none':'block'}"></app-audio-visualization>
-                                    </span>
-                                    <a *ngIf="song.is_admin" routerLink="/songs/{{ song.slug }}/edit"
-                                       class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <li *ngFor="let song of songs" [ngClass]="{'kv-active':activeSongId === song.id}" class="list-group-item">
+
+                    <app-song-item [song]="song" (onSetActiveSongId)="setActiveSongId($event)"></app-song-item>
+
                 </li>
 
             </ul>

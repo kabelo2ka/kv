@@ -10,6 +10,7 @@ export class Song {
     plays_count?: number;
     likes?: any[];
     likes_count?: number;
+    comments_count?: number;
     is_liked?: boolean;
     is_admin?: boolean;
     album?: any;

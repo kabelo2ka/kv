@@ -1,0 +1,6 @@
+<i *ngIf="!isActiveSong || (isActiveSong && isPaused)"
+   (click)="playSong(song)"
+   class="fa fa-play" aria-hidden="true"></i>
+<i *ngIf="isActiveSong && !isPaused"
+   (click)="pauseSong(song)"
+   class="fa fa-pause" aria-hidden="true"></i>

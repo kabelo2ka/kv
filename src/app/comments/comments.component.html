@@ -2,7 +2,7 @@
   <li *ngFor="let comment of parent.comments" class="comment-wrapper">
     <div class="comment-avatar">
       <!--<img class="img-rounded" width="50" height="50" src="https://thumbnailer.mixcloud.com/unsafe/60x60/tmp/7/5/c/5/ec81-2b3c-4c65-ad9b-4b5d38b7ca6f" alt="">-->
-      <img class="img-rounded" width="50" height="50" src="{{comment.author.avatar}}" alt="">
+      <img class="img-circle" width="50" height="50" src="{{comment.author.avatar}}" alt="">
     </div>
     <div class="comment-content">
       <div class="comment-header"><a href=""><strong>{{comment.author.username}}</strong></a> &middot; <span class="text-muted">{{ comment.created_at_ago }}</span></div>

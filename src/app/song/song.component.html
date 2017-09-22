@@ -4,7 +4,7 @@
             <div class="col-md-8 col-md-offset-2 profile-header-inner">
                 <div class="row">
                     <div class="col-md-4 pull-right header-sidebar">
-                        <img class="album-art img-responsive" src="{{ song.album.image }}">
+                        <img class="album-art img-responsive img-rounded" src="{{ song.album.image }}">
                     </div>
 
                     <div class="col-md-8 header-content">
@@ -103,41 +103,46 @@
             <div class="col-md-8 col-lg-offset-2">
                 <div class="row">
 
-                    <div class="col-md-8">
-                        <div class="lyrics-container">
-                            <h2 class="h4 bottom-border">Lyrics</h2>
-                            <div class="lyrics-content kv-text-wrap">
-                                {{ song.lyrics }}
-                            </div>
-                        </div>
+                    <div class="col-md-8 m-t-lg">
 
-                        <div class="comments-container">
-                            <h2 class="h4 bottom-border">Comments</h2>
-                            <div class="add-comment comment-wrapper">
-                                <div class="comment-avatar" *ngIf="loggedIn()">
-                                    <img class="img-rounded" width="50" height="50" *ngIf="user" src="{{ user.avatar }}"
-                                         alt="">
-                                </div>
-                                <div class="comment-content">
-                                    <div class="form-group">
-                                    <textarea [(ngModel)]="commentBody" class="form-control"
-                                              placeholder='What do you think of {{ song.name }} ?'></textarea>
+                        <tabset #song_tabs class="tabs-lg">
+                            <tab heading="Comments">
+                                <div class="add-comment comment-wrapper">
+                                    <div class="comment-avatar" *ngIf="loggedIn()">
+                                        <img class="img-rounded" width="50" height="50" *ngIf="user" src="{{ user.avatar }}"
+                                             alt="">
                                     </div>
-                                    <div class="comment-actions pull-right">
-                                        <button (click)="onComment()" type="submit" class="btn btn-success">Comment
-                                        </button>
+                                    <div class="comment-content">
+                                        <div class="form-group">
+                                <textarea [(ngModel)]="commentBody" class="form-control"
+                                          placeholder='What do you think of {{ song.name }} ?'></textarea>
+                                        </div>
+                                        <div class="comment-actions pull-right">
+                                            <button (click)="onComment()" type="submit" class="btn btn-success">Comment
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!--<div class="unseen-comments text-center">
-                                <span *ngIf="unseenComments!==1">{{ unseenCommentsCount }} new comments.
-                                <a href="#">Show comments</a></span>
-                            </div>-->
-                            <app-comments #comments
-                                          [parent]="song">
-                            </app-comments>
+                                <!--<div class="unseen-comments text-center">
+                                    <span *ngIf="unseenComments!==1">{{ unseenCommentsCount }} new comments.
+                                    <a href="#">Show comments</a></span>
+                                </div>-->
+                                <app-comments #comments
+                                              [parent]="song">
+                                </app-comments>
+                            </tab>
 
-                        </div>
+                            <tab heading="Lyrics">
+                                <div class="lyrics-content kv-text-wrap">
+                                    {{ song.lyrics }}
+                                </div>
+                            </tab>
+                        </tabset>
+
+
+
+
+
                     </div>
 
                     <div class="col-md-4">

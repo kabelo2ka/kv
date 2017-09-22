@@ -64,6 +64,8 @@ import {NotificationService} from "./notifications/notification.service";
 import {GenreService} from "./genres/genre.service";
 import {ShareButtonsModule} from "ngx-sharebuttons";
 import {ShareComponent} from "./share/share.component";
+import { SongItemComponent } from './partials/song-item/song-item.component';
+import { PlayButtonComponent } from './partials/play-button/play-button.component';
 
 
 @NgModule({
@@ -97,6 +99,8 @@ import {ShareComponent} from "./share/share.component";
         NotificationToastComponent,
         SearchComponent,
         NotificationsComponent,
+        SongItemComponent,
+        PlayButtonComponent,
     ],
     imports: [
         BrowserAnimationsModule,

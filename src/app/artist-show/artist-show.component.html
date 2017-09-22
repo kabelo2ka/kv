@@ -8,7 +8,7 @@
                 <div class="col-md-8 col-md-offset-2 profile-header-inner">
                     <div class="row">
                         <div class="col-md-4 pull-right header-sidebar">
-                            <img class="album-art img-responsive" src="{{ artist.avatar }}">
+                            <img class="album-art img-responsive img-rounded" src="{{ artist.avatar }}">
                         </div>
 
                         <div class="col-md-8 header-content">
@@ -65,7 +65,7 @@
 
             <div class="row">
                 <div class="col-md-12 m-t-lg">
-                    <tabset #artist_tabs>
+                    <tabset #artist_tabs class="tabs-lg">
                         <tab heading="Albums">
 
                             <div *ngIf="artist.albums" class="kv-wrapper">
@@ -95,8 +95,8 @@
                                 <ul *ngIf="artist.songs" class="list-group">
 
                                     <li *ngFor="let song of artist.songs; let i = index" class="list-group-item">
-                                        <div class="kv-col-cont">
-                                            <!--<div class="kv-col-1">{{ song.id }}</div>-->
+                                        <!--<div class="kv-col-cont">
+                                            &lt;!&ndash;<div class="kv-col-1">{{ song.id }}</div>&ndash;&gt;
                                             <div class="kv-col-2 h6">
                                                 <div class="kv-media-image-overlay play_song" (click)="playSong(song)"
                                                      attr.data-src="{{song.file_name}}">
@@ -104,7 +104,11 @@
                                                     <span class="a"> {{ song.name }}</span>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
+
+                                        <app-song-item [song]="song"></app-song-item>
+
+
                                     </li>
 
                                 </ul>
