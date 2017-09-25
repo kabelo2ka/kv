@@ -19,7 +19,8 @@
                         <div class="profile-details">
                             <h1>{{ song.name }}</h1>
                             <h6>
-                                <em>By {{ song?.user.artist_name }}</em>
+                                <em> By <a routerLink="/artists/{{ song.user.slug }}">{{ song?.user.artist_name }}</a></em>
+                                <span class="text-muted genre"> &middot; {{ song.genre.name }}</span>
                                 <!--<button class="btn btn-xs btn-default">
                                     <span class="hidden"><i class="icon-user-following"></i> Following</span>
                                     <span><i class="icon-user-follow"></i> Follow</span>

@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
-import {Headers, Http, RequestOptions, Response} from "@angular/http";
-import {Observable} from "rxjs";
-import {AuthHttp} from "angular2-jwt";
+import {Injectable} from '@angular/core';
+import {Headers, Http, RequestOptions, Response} from '@angular/http';
+import {Observable} from 'rxjs';
+import {AuthHttp} from 'angular2-jwt';
 
 
 @Injectable()
@@ -31,8 +31,8 @@ export class AlbumService {
             .catch(this.handleError);
     }
 
-    getAlbum(id: number) {
-        return this.http.get(this.ALBUMS_URL + '/' + id)
+    getAlbum(slug: string) {
+        return this.http.get(this.ALBUMS_URL + '/' + slug)
             .map(this.extractData)
             .catch(this.handleError);
     }

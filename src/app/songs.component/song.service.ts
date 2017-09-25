@@ -78,7 +78,7 @@ export class SongService {
 
     likeSong(id: number) {
         // @todo If user not logged in, show login modal
-        if( ! this.authService.loggedIn()){
+        if ( ! this.authService.loggedIn()) {
             this.appService.showSignInModal(true);
             // if user is successfully logged in, like the song
         }
@@ -114,10 +114,6 @@ export class SongService {
         }
         console.error(errMsg);
         return Observable.throw(errMsg);
-    }
-
-    saveMusic(data: any) {
-        console.log(data);
     }
 
 

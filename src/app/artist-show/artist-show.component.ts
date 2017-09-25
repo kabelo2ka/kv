@@ -1,10 +1,11 @@
-import {Component, OnInit} from "@angular/core";
-import {Subscription} from "rxjs/Subscription";
-import {ArtistService} from "../artists.component/artist.service";
-import {ActivatedRoute, Params} from "@angular/router";
-import {AudioService} from "../audio/audio.service";
-import {AppService} from "../app.service";
-import {AuthService} from "../auth/authService";
+import {Component, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs/Subscription';
+import {ArtistService} from '../artists.component/artist.service';
+import {ActivatedRoute, Params} from '@angular/router';
+import {AudioService} from '../audio/audio.service';
+import {AppService} from '../app.service';
+import {AuthService} from '../auth/authService';
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-artist-show',
@@ -20,15 +21,19 @@ export class ArtistShowComponent implements OnInit {
                 private activatedRoute: ActivatedRoute,
                 private audioService: AudioService,
                 private authService: AuthService,
-                private appService: AppService) {
+                private appService: AppService,
+                private title: Title) {
     }
 
     ngOnInit() {
         this.activatedRoute.params.subscribe((params: Params) => {
-            const id = params['id'];
+            const slug = params['slug'];
             // Load artists
-            this.loading = this.artistService.getArtist(id).subscribe(
-                (res: any) => this.artist = res.data
+            this.loading = this.artistService.getArtist(slug).subscribe(
+                (res: any) => {
+                    this.artist = res.data;
+                    this.title.setTitle( this.artist.artist_name + ' - Kasivibe');
+                }
             );
         });
         // Get and set authenticated user

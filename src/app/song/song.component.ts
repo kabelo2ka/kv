@@ -1,14 +1,15 @@
-import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
-import {Song} from "../songs.component/song";
-import {Subscription} from "rxjs";
-import {SongService} from "../songs.component/song.service";
-import {ActivatedRoute, Params} from "@angular/router";
-import {User} from "../user.component/user";
-import {AuthService} from "../auth/authService";
-import {AudioService} from "../audio/audio.service";
-import {AudioAPIWrapper} from "../audio/audio-api-wrapper";
-import {SocketService} from "../socket.service";
-import {AppService} from "../app.service";
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Song} from '../songs.component/song';
+import {Subscription} from 'rxjs';
+import {SongService} from '../songs.component/song.service';
+import {ActivatedRoute, Params} from '@angular/router';
+import {User} from '../user.component/user';
+import {AuthService} from '../auth/authService';
+import {AudioService} from '../audio/audio.service';
+import {AudioAPIWrapper} from '../audio/audio-api-wrapper';
+import {SocketService} from '../socket.service';
+import {AppService} from '../app.service';
+import {Title} from '@angular/platform-browser';
 
 class Res {
     data: any;
@@ -43,7 +44,8 @@ export class SongComponent implements OnInit, OnDestroy {
                 private authService: AuthService,
                 private appService: AppService,
                 private audioService: AudioService,
-                private audioApiWrapper: AudioAPIWrapper,) {
+                private audioApiWrapper: AudioAPIWrapper,
+                private title: Title) {
     }
 
     ngOnInit() {
@@ -98,7 +100,10 @@ export class SongComponent implements OnInit, OnDestroy {
 
     getSong(slug: string) {
         this.loading = this.songService.getSong(slug).subscribe(
-            (res: Res) => this.song = res.data
+            (res: Res) => {
+                this.song = res.data;
+                this.title.setTitle( this.song.name + ' - Kasivibe');
+            }
         );
     }
 

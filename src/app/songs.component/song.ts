@@ -11,6 +11,7 @@ export class Song {
     likes?: any[];
     likes_count?: number;
     comments_count?: number;
+    created_at_ago?: string;
     is_liked?: boolean;
     is_admin?: boolean;
     album?: any;

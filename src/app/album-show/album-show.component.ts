@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable, Subscription} from "rxjs";
-import {AlbumService} from "../albums/album.service.component";
-import {ActivatedRoute, Params} from "@angular/router";
-import {AudioService} from "../audio/audio.service";
-import {AppService} from "../app.service";
+import {Observable, Subscription} from 'rxjs';
+import {AlbumService} from '../albums/album.service.component';
+import {ActivatedRoute, Params} from '@angular/router';
+import {AudioService} from '../audio/audio.service';
+import {AppService} from '../app.service';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-album-show',
@@ -18,20 +19,24 @@ export class AlbumShowComponent implements OnInit {
     constructor(private albumService: AlbumService,
                 private activatedRoute: ActivatedRoute,
                 private audioService: AudioService,
-                private appService: AppService
-    ){ }
+                private appService: AppService,
+                private title: Title,
+    ) {}
 
     ngOnInit() {
-    let id = 1;
+    const id = 1;
         this.activatedRoute.params.subscribe((params: Params) => {
-            let album_id = params['id'];
-            this.loading = this.albumService.getAlbum(album_id).subscribe(
-                res => this.album = res.data
-            )
+            const album_slug = params['slug'];
+            this.loading = this.albumService.getAlbum(album_slug).subscribe(
+                res => {
+                    this.album = res.data;
+                    this.title.setTitle( this.album.name + ' - Kasivibe');
+                }
+            );
         });
     }
 
-    playSong(song: any){
+    playSong(song: any) {
         this.audioService.setActiveSong(song);
         this.appService.setRightPanelVisible(true);
     }
