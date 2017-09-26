@@ -4,7 +4,7 @@
         <div class="kv-media-image">
             <img *ngIf="song.album" style="width: 64px;height: 64px;"
                  src="{{song.album.image}}" alt="{{song.name}}">
-            <div class="kv-media-image-overlay">
+            <div class="kv-media-image-overlay" style="display: block">
                 <app-play-button [song]="song"></app-play-button>
             </div>
         </div>

@@ -35,7 +35,7 @@ export class SongCreateComponent implements OnInit, OnChanges {
                 private notificationService: NotificationsService,
                 private songService: SongService,
                 private albumService: AlbumService,
-                private authService: AuthService,
+                public authService: AuthService,
                 private appService: AppService,
                 private fb: FormBuilder, ) {
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader

@@ -46,8 +46,7 @@ export class ArtistShowComponent implements OnInit {
      * Play song
      */
     playSong(song: any) {
-        this.audioService.setStatus('play');
-        this.audioService.setActiveSong(song);
+        this.audioService.playSong(song);
         this.appService.setRightPanelVisible(true);
     }
 

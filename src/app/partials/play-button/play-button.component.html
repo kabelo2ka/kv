@@ -1,6 +1,6 @@
-<i *ngIf="!isActiveSong || (isActiveSong && isPaused)"
-   (click)="playSong(song)"
-   class="fa fa-play" aria-hidden="true"></i>
-<i *ngIf="isActiveSong && !isPaused"
-   (click)="pauseSong(song)"
-   class="fa fa-pause" aria-hidden="true"></i>
+<span [ngClass]="{'loading-state': isLoading(), 'pause-state': isPlaying()}"
+      class="play-button play-button-cloudcast">
+    <span (click)="playSong()" class="play-icon" ><i class="icon-control-play"></i></span>
+    <span (click)="pauseSong()" class="pause-icon"><i class="icon-control-pause"></i></span>
+    <span class="loading-icon"><i class="icon-refresh fa fa-spin"></i></span>
+</span>

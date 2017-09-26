@@ -61,19 +61,6 @@ export class SongComponent implements OnInit, OnDestroy {
                 this.user = user;
             }
         );
-
-        // Get audio status play | pause | stop
-        this.audioService.status$.subscribe(
-            status => {
-                if (status === 'play') {
-                    this.isPlaying = true;
-                } else if (status === 'pause') {
-                    this.isPlaying = false;
-                } else if (status === 'stop') {
-                    this.isPlaying = false;
-                }
-            }
-        );
         // Subscribe to song comments channel
         this.connection = this.socketService.getComments().subscribe((res: any) => {
             // this.unseenComments.unshift((<any>Object).assign({}, res));
@@ -81,21 +68,6 @@ export class SongComponent implements OnInit, OnDestroy {
             this.unseenCommentsCount++;
             console.log(res.comment[0]);
         });
-        this.audioApiWrapper.bindAudioEvent('canplaythrough').subscribe(
-            () => this.loading_song = false
-        );
-        this.audioApiWrapper.bindAudioEvent('play').subscribe(
-            () => {
-                this.is_paused = false;
-                this.loading_song = false;
-            }
-        );
-        this.audioApiWrapper.bindAudioEvent('pause').subscribe(
-            () => this.is_paused = true
-        );
-        this.audioApiWrapper.bindAudioEvent('ended').subscribe(
-            () => this.is_paused = false
-        );
     }
 
     getSong(slug: string) {
@@ -117,17 +89,6 @@ export class SongComponent implements OnInit, OnDestroy {
                 this.commentBody = '';
             }
         );
-    }
-
-    playSong() {
-        this.loading_song = true;
-        this.audioService.setActiveSong(this.song);
-        this.audioService.setStatus('play');
-    }
-
-    pauseSong() {
-        this.audioService.setStatus('pause');
-        this.audioApiWrapper.pause();
     }
 
     likeSong() {

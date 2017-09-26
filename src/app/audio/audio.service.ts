@@ -2,59 +2,70 @@ import {Injectable} from "@angular/core";
 import {Song} from "../songs.component/song";
 
 import {Subject} from "rxjs/Subject";
+import {AudioAPIWrapper} from "./audio-api-wrapper";
 
 
 @Injectable()
 export class AudioService {
 
-    private SONG_PATH = '//kasivibe.com/uploads/songs';
+    AUDIO_LOADING = 0;
+    AUDIO_PLAYING = 1;
+    AUDIO_PAUSED = 2;
+    AUDIO_STOPPED = 3;
+    AUDIO_ENDED = 4;
+
+    private loadedAudio:Song;
 
     // Observable string sources
-    private active_song = new Subject<Song>();
-    private is_playing = new Subject<boolean>();
-    private is_paused = new Subject<boolean>();
-    private status = new Subject<string>(); // pause | play | stop
+    private currentSong = new Subject<Song>();
+    private status = new Subject<number>(); // pause | play | stop | loading
 
-    // @todo Finish current queue (playlist)
-    private queue = new Subject<any>();
+    constructor(
+        private audioApiWrapper: AudioAPIWrapper
+    ) {
+        this.audioApiWrapper.bindAudioEvent('loadedmetadata').subscribe(() => {
+            this.audioApiWrapper.play();
+        });
+        this.audioApiWrapper.bindAudioEvent('play').subscribe(() => this.setStatus(this.AUDIO_PLAYING));
+        this.audioApiWrapper.bindAudioEvent('pause').subscribe(() =>  this.setStatus(this.AUDIO_PAUSED));
+        this.audioApiWrapper.bindAudioEvent('ended').subscribe(() =>  {
+            this.setStatus(this.AUDIO_STOPPED);
+            this.setStatus(this.AUDIO_ENDED);
+        });
+    }
 
 
     // Observable string streams
-    active_song_selected$ = this.active_song.asObservable();
-    is_playing$ = this.is_playing.asObservable();
-    is_paused$ = this.is_paused.asObservable();
+    $currentSong = this.currentSong.asObservable();
     status$ = this.status.asObservable();
 
+
+
+    playSong(song: Song) {
+
+        if (this.loadedAudio && this.loadedAudio.id === song.id) {
+            this.audioApiWrapper.play();
+        }else{
+            // Set Active Song
+            this.setSong(song);
+            this.audioApiWrapper.load(song.url);
+            this.setStatus(this.AUDIO_LOADING);
+            this.loadedAudio = song;
+        }
+    }
+
+
     // Service message commands
-    setActiveSong(song: Song) {
-        this.active_song.next(song);
-    }
-
-    isPlaying(isPlaying) {
-        this.is_playing.next(isPlaying);
-    }
-
-    isPaused(isPaused) {
-        this.is_paused.next(isPaused);
+    protected setSong(song: Song) {
+        this.currentSong.next(song);
     }
 
     /**
      * Set Audio Status
-     * @param status pause | play | stop
+     * @param status pause | play | stop | loading
      */
-    setStatus(status: string) {
+    protected setStatus(status: number) {
         this.status.next(status);
-    }
-
-    getActiveSong() {
-        return this.active_song;
-    }
-
-    private test = new Subject<any>();
-    test$ = this.test.asObservable();
-
-    setTest(data: any) {
-        this.test.next(data);
     }
 
 

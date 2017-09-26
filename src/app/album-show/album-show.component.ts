@@ -14,7 +14,6 @@ import {Title} from "@angular/platform-browser";
 export class AlbumShowComponent implements OnInit {
     loading: Subscription;
     album;
-    playingSong;
 
     constructor(private albumService: AlbumService,
                 private activatedRoute: ActivatedRoute,
@@ -34,11 +33,6 @@ export class AlbumShowComponent implements OnInit {
                 }
             );
         });
-    }
-
-    playSong(song: any) {
-        this.audioService.setActiveSong(song);
-        this.appService.setRightPanelVisible(true);
     }
 
 }

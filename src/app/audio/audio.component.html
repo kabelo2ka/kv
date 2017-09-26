@@ -1,8 +1,8 @@
 <div id="audio-container">
     <div id="audio-col-1">
         <div class="audio-album-cover hidden-xs">
-            <img *ngIf="song.album.image" style="width: 64px;height: 64px;"
-                 src="{{song.album.image}}" alt="{{song.name}}">
+            <img *ngIf="song?.album.image" style="width: 64px;height: 64px;"
+                 src="{{song?.album.image}}" alt="{{song?.name}}">
         </div>
         <div class="audio-player">
             <div class="seek-container">
@@ -12,13 +12,13 @@
                 <div class="web-footer-progress-indicator" [ngStyle]="{'width': audio_buffered_value+'%'}"></div>
                 <div class="web-footer-progress" [ngStyle]="{'width': audio_progress_played+'%'}"></div>
             </div>
-            <div *ngIf="song.user" class="audio-info">
-                <p class="audio-title strong"><strong>{{ song.name }}</strong></p>
-                <p *ngIf="song.user.artist_name" class="audio-meta text-muted text-small">
-                    <em>By {{ song.user.artist_name }}</em>
+            <div *ngIf="song?.user" class="audio-info">
+                <p class="audio-title strong"><strong>{{ song?.name }}</strong></p>
+                <p *ngIf="song?.user.artist_name" class="audio-meta text-muted text-small">
+                    <em>By {{ song?.user.artist_name }}</em>
                 </p>
-                <p *ngIf="!song.user.artist_name" class="audio-meta text-muted text-small">
-                    <em>Uploaded by {{ song.user.username }}</em>
+                <p *ngIf="!song?.user.artist_name" class="audio-meta text-muted text-small">
+                    <em>Uploaded by {{ song?.user.username }}</em>
                 </p>
             </div>
         </div>
@@ -36,7 +36,7 @@
         <ul class="list-inline list-unstyled audio-controls">
             <li class=""><span id="current_time">{{ audio_progress_time }}</span></li>
             <li class="" tooltip="Like this song.">
-                <span (click)="likeSong(song.id)" class="kv-like-btn hidden-xs" [ngClass]="{'liked':song.is_liked}">
+                <span (click)="likeSong(song?.id)" class="kv-like-btn hidden-xs" [ngClass]="{'liked':song?.is_liked}">
                     <i class="fa fa-thumbs-up"></i>
                 </span>
             </li>

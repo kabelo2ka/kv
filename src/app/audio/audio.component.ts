@@ -5,6 +5,7 @@ import {AppService} from "../app.service";
 import {Subscription} from "rxjs/Subscription";
 import {SongService} from "../songs.component/song.service";
 import {AudioAPIWrapper} from "./audio-api-wrapper";
+import {Song} from "../songs.component/song";
 
 
 @Component({
@@ -14,7 +15,7 @@ import {AudioAPIWrapper} from "./audio-api-wrapper";
 })
 
 export class AudioComponent {
-    song: any;
+    song: Song;
     songCopy: any;
     src = "";
 
@@ -33,43 +34,28 @@ export class AudioComponent {
                 private audioApiWrapper: AudioAPIWrapper,
                 private songService: SongService,
                 private appService: AppService) {
-        this.song = {
-            id: 0,
-            name: '',
-            url: '',
-            lyrics: '',
-            genre: '',
-            album: '',
-            likes_count: 0,
-        };
+
     }
 
     ngOnInit() {
         // Get active Song - song that will be played
-        this.audioService.active_song_selected$.subscribe(
-            active_song => {
+        this.audioService.$currentSong.subscribe(
+            currentSong => {
                 this.songCopy = this.song;
-                this.song = active_song;
-                if (this.song.id === this.songCopy.id) {
-                    this.play();
-                } else {
-                    this.load(this.song.url).play();
-                }
+                this.song = currentSong;
             }
         );
 
         // Get audio status play | pause | stop
-        this.audioService.status$.subscribe(
-            status => {
-                if(status === 'play'){
-                    this.isPlaying = true;
-                }else if(status === 'pause'){
-                    this.isPlaying = false;
-                }else if(status === 'stop'){
-                    this.isPlaying = false;
-                }
+        this.audioService.status$.subscribe( (status:number) => {
+            if(status === this.audioService.AUDIO_PLAYING){
+                this.isPlaying = true;
+            }else if(status === this.audioService.AUDIO_PAUSED){
+                this.isPlaying = false;
+            }else if(status === this.audioService.AUDIO_STOPPED){
+                this.isPlaying = false;
             }
-        );
+        });
 
         // Calculate Progress played
         this.audioApiWrapper.bindAudioEvent('timeupdate').subscribe(
@@ -131,28 +117,16 @@ export class AudioComponent {
     }
 
     /*
-     * Load song's url via audio html5 element
-     */
-    load(song_url) {
-        // Load song
-        this.audioApiWrapper.load(song_url);
-        return this;
-    }
-
-    /*
      * Play song
      */
     play() {
-        this.audioService.setStatus('play');
-        this.audioApiWrapper.play();
-        this.isPlaying = true;
+        this.audioService.playSong(this.song);
     }
 
     /*
      * Pause song
      */
     pause() {
-        this.audioService.setStatus('pause');
         this.audioApiWrapper.pause();
         this.isPlaying = false;
     }
@@ -161,7 +135,6 @@ export class AudioComponent {
      * Stop song
      */
     stop() {
-        this.audioService.setStatus('stop');
         this.audioApiWrapper.stop();
     }
 

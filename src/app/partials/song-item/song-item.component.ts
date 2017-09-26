@@ -29,16 +29,16 @@ export class SongItemComponent implements OnInit {
 
     ngOnInit() {
         // Get audio status play | pause | stop
-        this.audioService.status$.subscribe(status => {
-            if (status === 'play') {
+        this.audioService.status$.subscribe( (status:number) => {
+            if(status === this.audioService.AUDIO_PLAYING){
                 this.isPlaying = true;
-            } else if (status === 'pause') {
+            }else if(status === this.audioService.AUDIO_PAUSED){
                 this.isPlaying = false;
-            } else if (status === 'stop') {
+            }else if(status === this.audioService.AUDIO_STOPPED){
                 this.isPlaying = false;
             }
         });
-        this.audioService.active_song_selected$.subscribe((song: Song) => {
+        this.audioService.$currentSong.subscribe((song: Song) => {
             this.isActiveSong = song.id === this.song.id;
         });
         this.audioApiWrapper.bindAudioEvent('loadedmetadata').subscribe(() => this.loadingSong = false);
@@ -48,24 +48,5 @@ export class SongItemComponent implements OnInit {
         this.audioApiWrapper.bindAudioEvent('pause').subscribe(() => this.isPaused = true);
         this.audioApiWrapper.bindAudioEvent('ended').subscribe(() => this.isPaused = false);
     }
-
-    playSong(song: any) {
-        this.loadingSong = true;
-        this.isPaused = true;
-        this.setActiveSong(song);
-        this.audioService.setStatus('play');
-        this.appService.setRightPanelVisible(true);
-    }
-
-    pauseSong() {
-        this.audioService.setStatus('pause');
-        this.audioApiWrapper.pause();
-    }
-
-    setActiveSong(song) {
-        this.audioService.setActiveSong(song);
-        this.onSetActiveSongId.emit(song.id);
-    }
-
 
 }
