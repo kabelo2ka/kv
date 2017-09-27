@@ -1,8 +1,8 @@
-import {Injectable} from "@angular/core";
-import {Song} from "../songs.component/song";
+import {Injectable} from '@angular/core';
+import {Song} from '../songs.component/song';
 
-import {Subject} from "rxjs/Subject";
-import {AudioAPIWrapper} from "./audio-api-wrapper";
+import {Subject} from 'rxjs/Subject';
+import {AudioAPIWrapper} from './audio-api-wrapper';
 
 
 @Injectable()
@@ -14,11 +14,15 @@ export class AudioService {
     AUDIO_STOPPED = 3;
     AUDIO_ENDED = 4;
 
-    private loadedAudio:Song;
+    private loadedAudio: Song;
 
     // Observable string sources
     private currentSong = new Subject<Song>();
     private status = new Subject<number>(); // pause | play | stop | loading
+
+    // Observable string streams
+    currentSong$ = this.currentSong.asObservable();
+    status$ = this.status.asObservable();
 
     constructor(
         private audioApiWrapper: AudioAPIWrapper
@@ -34,18 +38,11 @@ export class AudioService {
         });
     }
 
-
-    // Observable string streams
-    $currentSong = this.currentSong.asObservable();
-    status$ = this.status.asObservable();
-
-
-
     playSong(song: Song) {
 
         if (this.loadedAudio && this.loadedAudio.id === song.id) {
             this.audioApiWrapper.play();
-        }else{
+        }else {
             // Set Active Song
             this.setSong(song);
             this.audioApiWrapper.load(song.url);

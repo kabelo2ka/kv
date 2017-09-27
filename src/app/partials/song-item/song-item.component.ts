@@ -1,9 +1,9 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {Song} from "../../songs.component/song";
-import {AudioService} from "../../audio/audio.service";
-import {AppService} from "../../app.service";
-import {AudioAPIWrapper} from "../../audio/audio-api-wrapper";
-import {SongService} from "../../songs.component/song.service";
+import {Song} from '../../songs.component/song';
+import {AudioService} from '../../audio/audio.service';
+import {AppService} from '../../app.service';
+import {AudioAPIWrapper} from '../../audio/audio-api-wrapper';
+import {SongService} from '../../songs.component/song.service';
 
 @Component({
     selector: 'app-song-item',
@@ -29,16 +29,16 @@ export class SongItemComponent implements OnInit {
 
     ngOnInit() {
         // Get audio status play | pause | stop
-        this.audioService.status$.subscribe( (status:number) => {
-            if(status === this.audioService.AUDIO_PLAYING){
+        this.audioService.status$.subscribe( (status: number) => {
+            if (status === this.audioService.AUDIO_PLAYING){
                 this.isPlaying = true;
-            }else if(status === this.audioService.AUDIO_PAUSED){
+            }else if (status === this.audioService.AUDIO_PAUSED){
                 this.isPlaying = false;
-            }else if(status === this.audioService.AUDIO_STOPPED){
+            }else if (status === this.audioService.AUDIO_STOPPED){
                 this.isPlaying = false;
             }
         });
-        this.audioService.$currentSong.subscribe((song: Song) => {
+        this.audioService.currentSong$.subscribe((song: Song) => {
             this.isActiveSong = song.id === this.song.id;
         });
         this.audioApiWrapper.bindAudioEvent('loadedmetadata').subscribe(() => this.loadingSong = false);

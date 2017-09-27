@@ -1,11 +1,11 @@
-import {Component} from "@angular/core";
-import {AudioService} from "./audio.service";
-import {AppService} from "../app.service";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AudioService} from './audio.service';
+import {AppService} from '../app.service';
 
-import {Subscription} from "rxjs/Subscription";
-import {SongService} from "../songs.component/song.service";
-import {AudioAPIWrapper} from "./audio-api-wrapper";
-import {Song} from "../songs.component/song";
+import {Subscription} from 'rxjs/Subscription';
+import {SongService} from '../songs.component/song.service';
+import {AudioAPIWrapper} from './audio-api-wrapper';
+import {Song} from '../songs.component/song';
 
 
 @Component({
@@ -14,18 +14,18 @@ import {Song} from "../songs.component/song";
     styleUrls: ['./audio.component.css'],
 })
 
-export class AudioComponent {
+export class AudioComponent implements OnInit, OnDestroy {
     song: Song;
     songCopy: any;
-    src = "";
+    src = '';
 
-    audio_progress_time: string = '00:00';
-    audio_progress_played: number = 0;
-    audio_buffered_value: number = 0;
-    audio_seek_value: number = 0;
-    audio_volume_value: number = 80;
-    mute: boolean = false;
-    info_panel_visible: boolean = false;
+    audio_progress_time = '00:00';
+    audio_progress_played = 0;
+    audio_buffered_value = 0;
+    audio_seek_value = 0;
+    audio_volume_value = 80;
+    mute = false;
+    info_panel_visible = false;
     isPlaying = false;
 
     subscription: Subscription;
@@ -39,7 +39,7 @@ export class AudioComponent {
 
     ngOnInit() {
         // Get active Song - song that will be played
-        this.audioService.$currentSong.subscribe(
+        this.audioService.currentSong$.subscribe(
             currentSong => {
                 this.songCopy = this.song;
                 this.song = currentSong;
@@ -47,12 +47,12 @@ export class AudioComponent {
         );
 
         // Get audio status play | pause | stop
-        this.audioService.status$.subscribe( (status:number) => {
-            if(status === this.audioService.AUDIO_PLAYING){
+        this.audioService.status$.subscribe( (status: number) => {
+            if (status === this.audioService.AUDIO_PLAYING) {
                 this.isPlaying = true;
-            }else if(status === this.audioService.AUDIO_PAUSED){
+            }else if (status === this.audioService.AUDIO_PAUSED) {
                 this.isPlaying = false;
-            }else if(status === this.audioService.AUDIO_STOPPED){
+            }else if (status === this.audioService.AUDIO_STOPPED) {
                 this.isPlaying = false;
             }
         });
@@ -60,9 +60,9 @@ export class AudioComponent {
         // Calculate Progress played
         this.audioApiWrapper.bindAudioEvent('timeupdate').subscribe(
             () => {
-                let current_time = this.audioApiWrapper._audio.currentTime;
+                const current_time = this.audioApiWrapper._audio.currentTime;
                 if (current_time > 0) {
-                    let seek_value = (current_time / this.audioApiWrapper._audio.duration) * 100;
+                    const seek_value = (current_time / this.audioApiWrapper._audio.duration) * 100;
                     this.audio_seek_value = this.audio_progress_played = seek_value;
                     this.formatTime(Math.floor(current_time));
                 }
@@ -86,8 +86,8 @@ export class AudioComponent {
 
         // Calculate Buffered/Loaded percentage
         setInterval(() => {
-            let audioElem = this.audioApiWrapper._audio;
-            let buffered = audioElem.buffered;
+            const audioElem = this.audioApiWrapper._audio;
+            const buffered = audioElem.buffered;
             let loaded;
             if (buffered.length) {
                 loaded = 100 * buffered.end(0) / audioElem.duration;
@@ -138,13 +138,13 @@ export class AudioComponent {
         this.audioApiWrapper.stop();
     }
 
-    //@todo load previous song on playlist
+    // @todo load previous song on playlist
     previousTrack(): void {
         /** If first track, then do nothing. */
         /** Else go back to previous element in track's array. */
     }
 
-    //@todo load next song on playlist
+    // @todo load next song on playlist
     nextTrack(): void {
         /** If last track, then do nothing. */
         /** Else, go to the next element in track's array. */
@@ -167,7 +167,7 @@ export class AudioComponent {
     /*
      * Toggle mute
      */
-    setMute():void {
+    setMute(): void {
         this.mute = ! this.mute;
     }
 

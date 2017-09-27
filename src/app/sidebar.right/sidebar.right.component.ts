@@ -42,7 +42,7 @@ export class RightSidebarComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.audioService.$currentSong.subscribe(
+        this.audioService.currentSong$.subscribe(
             active_song => this.song = active_song
         );
     }
