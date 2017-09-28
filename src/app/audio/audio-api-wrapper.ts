@@ -7,10 +7,10 @@ import {Injectable, NgZone} from '@angular/core';
 import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
 
-declare let AudioContext: any;
-declare let webkitAudioContext: any;
+declare const AudioContext: any;
+declare const webkitAudioContext: any;
 // TODO Abstract visualizer to separate class
-declare let d3: any;
+declare const d3: any;
 
 @Injectable()
 export class AudioAPIWrapper {
@@ -26,11 +26,11 @@ export class AudioAPIWrapper {
     }
 
     visualize() {
-        let self = this;
-        let frequencyData = new Uint8Array(200);
-        let svgHeight = 300;
-        let svgWidth = 1200;
-        let barPadding = 1;
+        const self = this;
+        const frequencyData = new Uint8Array(200);
+        const svgHeight = 300;
+        const svgWidth = 1200;
+        const barPadding = 1;
 
         function createSvg(parent, height, width) {
             return d3.select(parent).append('svg').attr('height', height).attr('width', width);
@@ -76,9 +76,8 @@ export class AudioAPIWrapper {
     }
 
     play() {
-        if (!this._audio.src){ alert('Select song'); return;}
-        //this._audio.play();
-        let playPromise = this._audio.play();
+        if (!this._audio.src) { alert('Select song'); return; }
+        const playPromise = this._audio.play();
         if (playPromise !== undefined) {
             playPromise.then(() => {
                 // Automatic playback started!
@@ -104,7 +103,7 @@ export class AudioAPIWrapper {
     load(url) {
         this._createAudio();
         this._audio.pause();
-        this._audio.crossOrigin = "anonymous";
+        this._audio.crossOrigin = 'anonymous';
         this._audio.src = url;
         this._audio.load();
         return this;
@@ -115,7 +114,7 @@ export class AudioAPIWrapper {
     }
 
     bindAudioEvent<E>(eventName: string): Observable<E> {
-        let self = this;
+        const self = this;
         return Observable.create((observer: Observer<E>) => {
             self._audio.addEventListener(eventName, (args: E) => {
                 self._zone.run(() => observer.next(args));
@@ -156,7 +155,7 @@ export class AudioAPIWrapper {
     }
 
     _tests(): Boolean {
-        let elem = document.createElement('audio');
+        const elem = document.createElement('audio');
         let bool: any = false;
         try {
             if (bool = !!elem.canPlayType) {

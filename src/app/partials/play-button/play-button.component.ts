@@ -1,25 +1,23 @@
-import {Component, OnInit, Input, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {Song} from '../../songs.component/song';
 import {AudioAPIWrapper} from '../../audio/audio-api-wrapper';
 import {AudioService} from '../../audio/audio.service';
-import {Subject} from 'rxjs';
-
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-play-button',
     templateUrl: './play-button.component.html',
-    styleUrls: ['./play-button.component.css']
+    styleUrls: ['./play-button.component.css'],
 })
 export class PlayButtonComponent implements OnInit {
     @Input() song: Song;
 
-    @Output() onLoading: EventEmitter<any> = new EventEmitter<any>();
-    @Output() onPaused: EventEmitter<any> = new EventEmitter<any>();
-    @Output() onPlaying: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onStatus: EventEmitter<any> = new EventEmitter<any>();
 
-    audio_status: number;
+    audio_status: number = this.audioService.AUDIO_STOPPED;
     selected = false;
 
+    subscription: Subscription;
 
     constructor(
         private audioService: AudioService,
@@ -31,12 +29,12 @@ export class PlayButtonComponent implements OnInit {
             if (song.id === this.song.id) {
                 this.selected = true;
                 // Get audio status play | pause | stop
-                // @todo unsubscribe from this(playing states) if not current song
-                this.audioService.status$
-                    .subscribe( (status: number) => {
+                this.audioService.status$.takeWhile(() => this.selected).subscribe( (status: number) => {
                     this.audio_status = status;
-                    console.log('audio status: ', status);
+                    this.onStatus.emit(status);
                 });
+            }else {
+                this.reset();
             }
         });
     }
@@ -68,6 +66,13 @@ export class PlayButtonComponent implements OnInit {
 
     pauseSong() {
         this.audioApiWrapper.pause();
+    }
+
+    private reset() {
+        if (this.selected ) {
+            this.selected = false;
+            this.audio_status = undefined;
+        }
     }
 
 }
