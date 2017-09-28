@@ -85,67 +85,7 @@ h2.h4.bottom-border {
     width: 90px;
     height: 90px;
     margin-right: 30px;
-}
-
-.play-button.play-button-cloudcast {
-    background: rgba(255, 255, 255, .2);
-    transition: background .2s;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, .1);
-}
-
-.play-button.play-button-cloudcast:hover {
-    background: rgba(255, 255, 255, .25);
-}
-
-.play-button {
-    border-radius: 50%;
-    text-align: center;
-    position: relative;
-    user-select: none;
-    cursor: pointer;
-    display: block;
-    line-height: 1;
-    width: inherit;
-    height: inherit;
-}
-
-.play-button .loading-icon,
-.play-button .pause-icon {
-    display: none;
-}
-
-.play-button.loading-state .loading-icon,
-.play-button.pause-state .pause-icon {
-    display: block;
-}
-
-.play-button.loading-state .play-icon,
-.play-button.loading-state .pause-icon {
-    display: none;
-}
-
-.play-button.pause-state .loading-icon,
-.play-button.pause-state .play-icon {
-    display: none;
-}
-
-.play-button-wrap .play-icon,
-.play-button-wrap .pause-icon,
-.play-button-wrap .loading-icon {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 3;
-    margin-top: -2px;
-    transform: translateX(-50%) translateY(-50%);
-    transition: color .2s;
     font-size: 3em;
-    color: #ffffff;
-}
-
-.play-button .play-icon {
-    left: 56%;
-    top: 53%;
 }
 
 .header-actions {

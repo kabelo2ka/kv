@@ -32,19 +32,12 @@ export class SongComponent implements OnInit, OnDestroy {
     unseenComments: any = [];
     unseenCommentsCount = 0;
     user: User;
-    private loading_song: boolean;
-
-    // Song status
-    is_paused = false;
-    isPlaying = false;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private songService: SongService,
                 private socketService: SocketService,
                 private authService: AuthService,
                 private appService: AppService,
-                private audioService: AudioService,
-                private audioApiWrapper: AudioAPIWrapper,
                 private title: Title) {
     }
 

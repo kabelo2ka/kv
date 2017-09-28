@@ -4,18 +4,17 @@
         <div class="kv-media-image">
             <img *ngIf="song.album" style="width: 64px;height: 64px;"
                  src="{{song.album.image}}" alt="{{song.name}}">
-            <div class="kv-media-image-overlay" style="display: block">
-                <app-play-button [song]="song"></app-play-button>
+            <div [ngStyle]="{'display':(audioStatus===audioService.AUDIO_LOADING || audioStatus===audioService.AUDIO_PLAYING)?'block':''}"
+                 class="kv-media-image-overlay">
+                <app-play-button (onStatus)="setAudioStatus($event)" [song]="song"></app-play-button>
             </div>
         </div>
         <div class="kv-media-content">
             <div>
-                <h6><a routerLink="/songs/{{ song.slug }}" class="kv-color-default">{{ song.name
-                    }}</a></h6>
+                <h6><a routerLink="/songs/{{ song.slug }}" class="kv-color-default">{{ song.name }}</a></h6>
                 <div>
                     <small *ngIf="song.user.artist_name">By {{ song.user.artist_name }}</small>
-                    <small *ngIf="! song.user.artist_name && !song.is_admin">Uploaded by {{
-                        song.user.username }}
+                    <small *ngIf="! song.user.artist_name && !song.is_admin">Uploaded by {{ song.user.username }}
                     </small>
                     <small *ngIf="! song.user.artist_name && song.is_admin">Uploaded by You</small>
                 </div>
@@ -35,11 +34,11 @@
                 </div>
             </div>
             <div class="controls pull-right">
-                                    <span *ngIf="isActiveSong" class="is-activated">
-                                        <i *ngIf="loadingSong" class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-                                        <app-audio-visualization
-                                                [ngStyle]="{'display':(loadingSong || isPaused)?'none':'block'}"></app-audio-visualization>
-                                    </span>
+                <span *ngIf="isActiveSong" class="is-activated">
+                    <i *ngIf="audioStatus===audioService.AUDIO_LOADING" class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+                    <app-audio-visualization
+                            [ngStyle]="{'display':(audioStatus===audioService.AUDIO_PLAYING)?'block':'none'}"></app-audio-visualization>
+                </span>
                 <a *ngIf="song.is_admin" routerLink="/songs/{{ song.slug }}/edit"
                    class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Edit</a>
             </div>

@@ -9,17 +9,12 @@
 
                     <div class="col-md-8 header-content">
                         <div class="play-button-wrap">
-                            <span [ngClass]="{'loading-state': loading_song, 'pause-state': !loading_song && isPlaying}"
-                                  class="play-button play-button-cloudcast">
-                                <span (click)="playSong()" class="play-icon"><i class="icon-control-play"></i></span>
-                                <span (click)="pauseSong()" class="pause-icon"><i class="icon-control-pause"></i></span>
-                                <span class="loading-icon"><i class="icon-refresh fa fa-spin"></i></span>
-                            </span>
+                            <app-play-button [song]="song"></app-play-button>
                         </div>
                         <div class="profile-details">
                             <h1>{{ song.name }}</h1>
                             <h6>
-                                <em> By <a routerLink="/artists/{{ song.user.slug }}">{{ song?.user.artist_name }}</a></em>
+                                <span> By <a routerLink="/artists/{{ song.user.slug }}">{{ song?.user.artist_name }}</a></span>
                                 <span class="text-muted genre"> &middot; {{ song.genre.name }}</span>
                                 <!--<button class="btn btn-xs btn-default">
                                     <span class="hidden"><i class="icon-user-following"></i> Following</span>
@@ -48,7 +43,7 @@
                             </button>
                         </li>
                         <!--<li>
-                            <a href="" class="btn btn-sm btn-inverse"><i class="icon-bubble"></i>
+                            <a [routerLink]="'/song/'+song.slug" fragment="comments" class="btn btn-sm btn-inverse"><i class="icon-bubble"></i>
                                 <span>Comment</span></a>
                         </li>-->
                         <li>
