@@ -6,49 +6,158 @@
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 </head>
 <body>
 <app-root>
     <style type="text/css">
-        #pre-bootstrap {
-            background-color: #262626;
-            bottom: 0;
-            left: 0;
-            position: fixed;
-            right: 0;
-            top: 0;
-            z-index: 999999;
-        }
-
-        #pre-bootstrap div.messaging {
-            color: #FFFFFF;
-            font-family: monospace;
-            left: 0;
-            margin-top: -37px;
-            position: absolute;
-            right: 0;
-            text-align: center;
-            top: 50%;
-        }
-
-        #pre-bootstrap h1 {
-            font-size: 26px;
-            line-height: 35px;
-            margin: 0 0 20px 0;
-        }
-
-        #pre-bootstrap p {
-            font-size: 18px;
-            line-height: 14px;
+        body {
             margin: 0;
+            height: 100%;
+            background: #333333;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        #pre-bootstrap {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #pre-bootstrap .loading {
+            width: auto;
+            padding: 20px;
+            margin: 0 auto;
+        }
+
+        #pre-bootstrap .title {
+            text-align:center;
+            color:#ffffff;
+        }
+
+        #pre-bootstrap .subtitle {
+            font-size:85%;
+            color:#cccccc;
+            display:block;
+            margin-top:10px;
+        }
+
+        #pre-bootstrap .stripe {
+            width: 100px;
+            height: 8px;
+            margin: 20px auto;
+            border-radius: 50px;
+        }
+
+        #pre-bootstrap .stripe:nth-child(1) {
+            background: #3a94fd;
+            -webkit-animation: right 3.3s infinite ease-in-out;
+            -moz-animation: right 3.3s infinite ease-in-out;
+            animation: right 3.3s infinite ease-in-out;
+        }
+
+        #pre-bootstrap .stripe:nth-child(2) {
+            background: #ffffff;
+            -webkit-animation: left 3.1s infinite ease-in-out;
+            -moz-animation: left 3.1s infinite ease-in-out;
+            animation: left 3.1s infinite ease-in-out;
+        }
+
+        #pre-bootstrap .stripe:nth-child(3) {
+            background: #F15D58;
+            -webkit-animation: right 3.0s infinite ease-in-out;
+            -moz-animation: right 3.0s infinite ease-in-out;
+            animation: right 3.0s infinite ease-in-out;
+        }
+
+        @-webkit-keyframes right {
+            0% {
+                -webkit-transform: translate(-15px);
+            }
+            50% {
+                -webkit-transform: translate(15px);
+            }
+            100% {
+                -webkit-transform: translate(-15px);
+            }
+        }
+
+        @-webkit-keyframes left {
+            0% {
+                -webkit-transform: translate(15px);
+            }
+            50% {
+                -webkit-transform: translate(-15px);
+            }
+            100% {
+                -webkit-transform: translate(15px);
+            }
+        }
+
+        @-moz-keyframes right {
+            0% {
+                -moz-transform: translate(-15px);
+            }
+            50% {
+                -moz-transform: translate(15px);
+            }
+            100% {
+                -moz-transform: translate(-15px);
+            }
+        }
+
+        @-moz-keyframes left {
+            0% {
+                -moz-transform: translate(15px);
+            }
+            50% {
+                -moz-transform: translate(-15px);
+            }
+            100% {
+                -moz-transform: translate(15px);
+            }
+        }
+
+        @keyframes right {
+            0% {
+                transform: translate(-15px);
+            }
+            50% {
+                transform: translate(15px);
+            }
+            100% {
+                transform: translate(-15px);
+            }
+        }
+
+        @keyframes left {
+            0% {
+                transform: translate(15px);
+            }
+            50% {
+                transform: translate(-15px);
+            }
+            100% {
+                transform: translate(15px);
+            }
         }
     </style>
 
     <div id="pre-bootstrap">
-        <div class="messaging">
-            <h1>Loading...</h1>
-            <p>Just a little patience.</p>
+        <div class="loading">
+            <div class="stripe"></div>
+            <div class="stripe"></div>
+            <div class="stripe"></div>
+            <div class="title">
+                <span>... Loading Kasivibe ...</span>
+                <em class=subtitle>Preparing decks for you.</em>
+            </div>
         </div>
     </div>
 </app-root>
