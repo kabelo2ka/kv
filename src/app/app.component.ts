@@ -10,7 +10,6 @@ import {ISlimScrollOptions} from "ng2-slimscroll";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
     providers: [],
-    //directives: [ROUTER_DIRECTIVES],
 })
 
 
@@ -23,8 +22,6 @@ export class AppComponent implements OnInit {
     mobile_search_visible = false;
 
     login_modal;
-    public is_sign_in_modal_shown = false;
-    public is_sign_up_modal_shown = false;
     is_logged_in = false;
 
     constructor(public authService: AuthService, private appService: AppService) {
@@ -53,15 +50,15 @@ export class AppComponent implements OnInit {
         );
 
         // Right Panel
-        this.appService.right_panel_visible$.subscribe(res => {
+        this.appService.right_panel_visible$.subscribe((res:boolean) => {
             this.right_sidebar_visible = res;
         });
 
         // Mobile Menu - Right
-        this.appService.left_mobile_menu_visible$.subscribe(res => {
+        this.appService.left_mobile_menu_visible$.subscribe((res:boolean) => {
             this.left_mobile_menu_visible = res;
         });
-        this.appService.mobile_search_visible$.subscribe(res => {
+        this.appService.mobile_search_visible$.subscribe((res:boolean) => {
             this.mobile_search_visible = res;
         });
 

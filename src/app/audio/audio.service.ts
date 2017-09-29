@@ -3,6 +3,8 @@ import {Song} from '../songs.component/song';
 
 import {Subject} from 'rxjs/Subject';
 import {AudioAPIWrapper} from './audio-api-wrapper';
+import {UserPreferencesService} from "../UserPreferences/user-preferences.service";
+import {Observable} from "rxjs";
 
 
 @Injectable()
@@ -25,7 +27,8 @@ export class AudioService {
     status$ = this.status.asObservable();
 
     constructor(
-        private audioApiWrapper: AudioAPIWrapper
+        private audioApiWrapper: AudioAPIWrapper,
+        private userPreferencesService: UserPreferencesService,
     ) {
         this.audioApiWrapper.bindAudioEvent('loadedmetadata').subscribe(() => {
             this.audioApiWrapper.play();
@@ -52,7 +55,10 @@ export class AudioService {
     }
 
 
-    // Service message commands
+    /**
+     * Set active song
+     * @param song
+     */
     protected setSong(song: Song) {
         this.currentSong.next(song);
     }
@@ -64,6 +70,19 @@ export class AudioService {
     protected setStatus(status: number) {
         this.status.next(status);
     }
+
+
+    protected setSettings() {
+        let settings = {
+            "volume": "5.6",
+            "notify": true,
+            "repeatMode": "NO_REPEAT",
+            "showInfoPanel": false,
+            "artistsViewMode": "thumbnails",
+            "albumsViewMode": "thumbnails",
+        }
+    }
+
 
 
 

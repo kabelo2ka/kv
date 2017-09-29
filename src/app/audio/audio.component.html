@@ -41,12 +41,12 @@
                 </span>
             </li>
             <li [ngClass]="info_panel_visible?'active':''" class="control hidden-xs" id="info-panel-trigger"
-                (click)="hideInfoPanel()"><span>INFO</span></li>
-            <li class="control hidden-xs"><span><i class="fa fa-repeat"></i></span></li>
-            <li class="control hidden-xs" id="volume">
-                <span (click)="setMute()">
-                    <i *ngIf="!mute" class="fa fa-volume-up"></i>
-                    <i *ngIf="mute" class="fa fa-volume-off"></i>
+                (click)="toggleInfoPanel()"><span>INFO</span></li>
+            <li [ngClass]="repeatMode" class="control hidden-xs" id="repeat-btn"
+                (click)="toggleRepeatMode()"><span><i class="fa fa-repeat"></i></span></li>
+            <li class="control hidden-xs" id="mute-btn">
+                <span (click)="toggleMute()">
+                    <i class="fa" [ngClass]="!muted?'fa-volume-up':'fa-volume-off'"></i>
                 </span>
                 <input #volumeControler type="range" min="0" max="100" step="1" class="plyr__volume"
                        (change)="setVolume(volumeControler.value)"

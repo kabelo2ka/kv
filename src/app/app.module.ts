@@ -66,6 +66,7 @@ import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {ShareComponent} from './share/share.component';
 import { SongItemComponent } from './partials/song-item/song-item.component';
 import { PlayButtonComponent } from './partials/play-button/play-button.component';
+import {UserPreferencesService} from "./UserPreferences/user-preferences.service";
 
 
 @NgModule({
@@ -137,6 +138,7 @@ import { PlayButtonComponent } from './partials/play-button/play-button.componen
         AuthGuard,
         SocketService,
         UserService,
+        UserPreferencesService,
         AuthService,
         JwtHelper,
         AudioService,

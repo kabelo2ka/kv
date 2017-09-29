@@ -153,13 +153,44 @@ input#seek::-webkit-slider-thumb {
     border: none;
 }
 
-#volume {
+#mute-btn {
     color: #cccccc;
 }
 
-#volume i {
+#mute-btn i {
+    font-size: 16px;
     width: 16px;
 }
+
+#repeat-btn {
+    position: relative;
+    color: #cccccc;
+}
+
+#repeat-btn i {
+    font-size: 16px;
+    width: 16px;
+}
+
+#repeat-btn.REPEAT_ONE {
+    color: #3a94fd;
+}
+
+#repeat-btn.REPEAT_ONE:after {
+    content: "1";
+    position: absolute;
+    top: 3px;
+    left: -2px;
+    font-weight: 700;
+    font-size: 8px;
+    text-align: center;
+    width: 100%;
+}
+
+#repeat-btn.REPEAT_ALL {
+    color: #3a94fd;
+}
+
 
 .control {
     cursor: pointer;
@@ -167,7 +198,7 @@ input#seek::-webkit-slider-thumb {
 }
 
 #info-panel-trigger.active {
-    color: #77b300;
+    color: #3a94fd;
 }
 
 #play-button-wrapper {

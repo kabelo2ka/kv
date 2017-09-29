@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 
 import {Subject}    from 'rxjs/Subject';
+import {UserPreferencesService} from "./UserPreferences/user-preferences.service";
 
 
 @Injectable()
@@ -22,6 +23,7 @@ export class AppService {
     sign_up_modal$ = this.sign_up_modal.asObservable();
     share_modal$ = this.share_modal.asObservable();
 
+
     setLeftMobileMenuVisible(visible: boolean) {
         this.left_mobile_menu_visible.next(visible);
     }
@@ -32,11 +34,6 @@ export class AppService {
     // Service message commands
     setRightPanelVisible(visible: boolean) {
         this.right_panel_visible.next(visible);
-        //console.log(song);
-    }
-
-    rightPanelVisible() {
-        return this.right_panel_visible;
     }
 
     showSignInModal(visible: boolean) {

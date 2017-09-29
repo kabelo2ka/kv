@@ -23,7 +23,8 @@ export class AuthService {
     is_logged_in$ = this.is_logged_in.asObservable();
     user$ = this.user.asObservable();
 
-    constructor(private http: Http, private authHttp: AuthHttp, private jwtHelper: JwtHelper) {}
+    constructor(private http: Http, private authHttp: AuthHttp, private jwtHelper: JwtHelper) {
+    }
 
     signUp(username: string, email: string, password: string) {
         return this.http.post(this.USER_SIGN_UP_URL, {
@@ -62,11 +63,10 @@ export class AuthService {
                 // Schedule a token refresh
                 this.scheduleRefresh();
             }
-
         );
     }
 
-    isAuthenticated(){
+    isAuthenticated() {
         return this.http.get(this.AUTHORIZE_URL + '?token=' + this.getToken(), {
             headers: new Headers({
                 'X-Requested-With': 'XMLHttpRequest'
@@ -108,7 +108,7 @@ export class AuthService {
         this.unscheduleRefresh();
     }
 
-    private handleError (error: Response | any) {
+    private handleError(error: Response | any) {
         // In a real world app, you might use a remote logging infrastructure
         let errMsg: string;
         if (error instanceof Response) {
@@ -122,10 +122,8 @@ export class AuthService {
     }
 
 
-
-
-
     refreshSubscription: any;
+
     public scheduleRefresh() {
         // If the user is authenticated, use the token stream
         // provided by angular2-jwt and flatMap the token

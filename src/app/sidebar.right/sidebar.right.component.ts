@@ -36,14 +36,14 @@ export class RightSidebarComponent implements OnInit {
             email: null,
             password: null,
         };
-        this.authService.user$.subscribe(
-            user => this.user = user
-        );
     }
 
     ngOnInit(): void {
         this.audioService.currentSong$.subscribe(
             active_song => this.song = active_song
+        );
+        this.authService.user$.subscribe(
+            user => this.user = user
         );
     }
 

@@ -6,6 +6,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {SongService} from '../songs.component/song.service';
 import {AudioAPIWrapper} from './audio-api-wrapper';
 import {Song} from '../songs.component/song';
+import {UserPreferencesService} from "../UserPreferences/user-preferences.service";
 
 
 @Component({
@@ -26,7 +27,8 @@ export class AudioComponent implements OnInit, OnDestroy {
     audio_buffered_value = 0;
     audio_seek_value = 0;
     audio_volume_value = 80;
-    mute = false;
+    repeatMode: 'REPEAT_ONE'|'NO_REPEAT'|'REPEAT_ALL';
+    muted = false;
     info_panel_visible = false;
 
     subscription: Subscription;
@@ -34,8 +36,19 @@ export class AudioComponent implements OnInit, OnDestroy {
     constructor(private audioService: AudioService,
                 private audioApiWrapper: AudioAPIWrapper,
                 private songService: SongService,
-                private appService: AppService) {
-
+                private appService: AppService,
+                private userPreferencesService: UserPreferencesService
+    ) {
+        this.muted = this.userPreferencesService.getPreference(UserPreferencesService.MUTED);
+        if(this.muted){
+            this.audio_volume_value=0;
+        }else{
+            this.audio_volume_value = this.userPreferencesService.getPreference(UserPreferencesService.VOLUME);
+        }
+        this.repeatMode = this.userPreferencesService.getPreference(UserPreferencesService.REPEAT_MODE);
+        /*const rightPanelPref = this.userPreferencesService.getPreference(UserPreferencesService.SHOW_INFO_PANEL);
+        this.info_panel_visible = rightPanelPref;
+        this.appService.setRightPanelVisible(rightPanelPref);*/
     }
 
     ngOnInit() {
@@ -75,7 +88,13 @@ export class AudioComponent implements OnInit, OnDestroy {
 
         // Stop song when song ends (Resets song's duration)
         this.audioApiWrapper.bindAudioEvent('ended').subscribe(
-            () => this.stop()
+            () => {
+                this.stop();
+                // @todo If  REPEAT_ONE is set repeat song -- Fix below if statement
+                if(this.userPreferencesService.getPreference(UserPreferencesService.REPEAT_MODE) ===  'REPEAT_ONE'){
+                    this.audioApiWrapper.play();
+                }
+            }
         );
 
         // Calculate Buffered/Loaded percentage
@@ -105,9 +124,24 @@ export class AudioComponent implements OnInit, OnDestroy {
     /*
      * Toggle info bar / right panel's visibility
      */
-    hideInfoPanel() {
+    toggleInfoPanel() {
         this.info_panel_visible = !this.info_panel_visible;
         this.appService.setRightPanelVisible(this.info_panel_visible);
+        this.userPreferencesService.setPreference(UserPreferencesService.SHOW_INFO_PANEL, this.info_panel_visible);
+    }
+
+    /**
+     *  Set repeat mode
+     */
+    toggleRepeatMode() {
+        if (this.repeatMode === 'NO_REPEAT') {
+            this.repeatMode = 'REPEAT_ONE';
+        }else if (this.repeatMode === 'REPEAT_ONE') {
+            this.repeatMode = 'REPEAT_ALL';
+        }else {
+            this.repeatMode = 'NO_REPEAT';
+        }
+        this.userPreferencesService.setPreference(UserPreferencesService.REPEAT_MODE, this.repeatMode);
     }
 
     /*
@@ -154,14 +188,26 @@ export class AudioComponent implements OnInit, OnDestroy {
      * Set volume value
      */
     setVolume(val): void {
+        if(this.muted){
+            this.toggleMute();
+        }
         this.audioApiWrapper._audio.volume = val / 100;
+        this.userPreferencesService.setPreference('volume', val);
     }
 
     /*
-     * Toggle mute
+     * Toggle muted
      */
-    setMute(): void {
-        this.mute = ! this.mute;
+    toggleMute(): void {
+        this.muted = !this.muted;
+        this.userPreferencesService.setPreference(UserPreferencesService.MUTED, this.muted);
+        if(this.muted){
+            this.audio_volume_value = 0;
+            this.audioApiWrapper._audio.volume = 0;
+        }else{
+            this.audio_volume_value = this.userPreferencesService.getPreference(UserPreferencesService.VOLUME);
+            this.audioApiWrapper._audio.volume = this.audio_volume_value / 100;
+        }
     }
 
     /*
