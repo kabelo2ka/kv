@@ -300,6 +300,32 @@ input:focus, input:active {
     margin-bottom: 10px;
 }
 
+.m-r-lg {
+    margin-right: 50px;
+}
+.m-r-md {
+    margin-right: 30px;
+}
+.m-r-sm {
+    margin-right: 20px;
+}
+.m-r-xs {
+    margin-right: 10px;
+}
+
+.m-l-lg {
+    margin-left: 50px;
+}
+.m-l-md {
+    margin-left: 30px;
+}
+.m-l-sm {
+    margin-left: 20px;
+}
+.m-l-xs {
+    margin-left: 10px;
+}
+
 
 
 .song-create-form .nav-link,
