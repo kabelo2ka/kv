@@ -9,6 +9,9 @@
                 <input #seekControler id="seek" type="range" min="0" max="100" step="0.01" [(value)]="audio_seek_value"
                        (change)="setSeek(seekControler.value)"
                        (input)="setSeek(seekControler.value)">
+                <div class="web-footer-loader">
+                    <div *ngIf="isLoading()" class="progress-bar progress-bar-striped active" style="width: 100%"></div>
+                </div>
                 <div class="web-footer-progress-indicator" [ngStyle]="{'width': audio_buffered_value+'%'}"></div>
                 <div class="web-footer-progress" [ngStyle]="{'width': audio_progress_played+'%'}"></div>
             </div>
@@ -25,11 +28,8 @@
 
     </div>
     <div id="audio-col-2" class="audio-controls">
-        <span *ngIf="!isPlaying" (click)="play()" class="button" title="Play song">
-            <i class="icon-control-play" aria-hidden="true"></i>
-        </span>
-        <span *ngIf="isPlaying" (click)="pause()" class="button" title="Pause song">
-            <i class="icon-control-pause" aria-hidden="true"></i>
+        <span id="play-button-wrapper">
+            <app-play-button [ngClass]="{'hidden': !song?.id}" [song]="song"></app-play-button>
         </span>
     </div>
     <div id="audio-col-3">

@@ -30,4 +30,12 @@ export class SongItemComponent implements OnInit {
         this.audioStatus = status;
     }
 
+    isLoading() {
+        return this.audioStatus === this.audioService.AUDIO_LOADING;
+    }
+
+    isPlaying() {
+        return this.audioStatus === this.audioService.AUDIO_PLAYING;
+    }
+
 }

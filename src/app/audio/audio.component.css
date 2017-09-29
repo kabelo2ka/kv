@@ -66,7 +66,20 @@ input[type="range"]#seek {
     top: 0;
 }
 
+.web-footer-loader {
+    position: absolute;
+    display: block;
+    top: 0;
+    height: 5px;
+    width: 100%;
+    background-color: #2c2c2c;
+}
 
+.web-footer-loader .progress-bar {
+    background-color: #2c2c2c;
+    background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    animation: progress-bar-stripes .2s linear infinite reverse !important;
+}
 
 .web-footer-progress-indicator {
     position: absolute;
@@ -74,8 +87,9 @@ input[type="range"]#seek {
     top: 0;
     height: 5px;
     width: 0;
-    background-color: #7f7f7f;
+    background-color: #666666;
 }
+
 .web-footer-progress {
     position: absolute;
     display: block;
@@ -95,7 +109,7 @@ input#seek::-webkit-slider-thumb {
     width: 10px;
 }
 
-.audio-player:hover input#seek::-webkit-slider-thumb{
+.audio-player:hover input#seek::-webkit-slider-thumb {
     background-color: #3a94fd;
     z-index: 999;
 }
@@ -156,21 +170,20 @@ input#seek::-webkit-slider-thumb {
     color: #77b300;
 }
 
-
-
-
-
-
-
+#play-button-wrapper {
+    font-size: 2em;
+}
 
 @media screen and (max-width: 479px) {
     #audio-col-1 {
         height: 45px;
     }
+
     #audio-col-2 {
         height: 45px;
         width: 45px;
     }
+
     #audio-col-3 {
         padding: 10px 0;
         height: 45px;
@@ -181,6 +194,7 @@ input#seek::-webkit-slider-thumb {
         font-size: 20px;
         line-height: 50px;
     }
+
     #audio-container {
         position: relative;
     }
@@ -189,9 +203,11 @@ input#seek::-webkit-slider-thumb {
         padding: 5px !important;
         text-align: left;
     }
+
     .audio-player {
         position: static;
     }
+
     .seek-container {
         background: #454745;
         position: absolute;
@@ -200,11 +216,13 @@ input#seek::-webkit-slider-thumb {
         top: -5px;
         left: 0;
     }
+
     input[type="range"]#seek,
     .audio-progress-buffer[value],
     .audio-progress-played[value] {
         height: 5px;
     }
+
     input#seek::-webkit-slider-thumb {
         background-color: #ffffff;
         border-radius: 50%;

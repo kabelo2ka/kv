@@ -14,7 +14,7 @@ export class PlayButtonComponent implements OnInit {
 
     @Output() onStatus: EventEmitter<any> = new EventEmitter<any>();
 
-    audio_status: number = this.audioService.AUDIO_STOPPED;
+    audioStatus: number = this.audioService.AUDIO_STOPPED;
     selected = false;
 
     subscription: Subscription;
@@ -26,37 +26,46 @@ export class PlayButtonComponent implements OnInit {
 
     ngOnInit() {
         this.audioService.currentSong$.subscribe( (song: Song) => {
-            if (song.id === this.song.id) {
-                this.selected = true;
-                // Get audio status play | pause | stop
-                this.audioService.status$.takeWhile(() => this.selected).subscribe( (status: number) => {
-                    this.audio_status = status;
+            // If @input song is not set, set currentSong as @input song - For main Audio Player
+            if(!this.song){
+                this.song = song;
+                this.audioService.status$.subscribe( (status: number) => {
+                    this.audioStatus = status;
                     this.onStatus.emit(status);
                 });
-            }else {
-                this.reset();
+            }else{
+                if (song.id === this.song.id) {
+                    this.selected = true;
+                    // Get audio status play | pause | stop
+                    this.audioService.status$.takeWhile(() => this.selected).subscribe( (status: number) => {
+                        this.audioStatus = status;
+                        this.onStatus.emit(status);
+                    });
+                }else {
+                    this.reset();
+                }
             }
         });
     }
 
     isLoading() {
-        return this.audio_status === this.audioService.AUDIO_LOADING;
+        return this.audioStatus === this.audioService.AUDIO_LOADING;
     }
 
     isPlaying() {
-        return this.audio_status === this.audioService.AUDIO_PLAYING;
+        return this.audioStatus === this.audioService.AUDIO_PLAYING;
     }
 
     isPaused() {
-        return this.audio_status === this.audioService.AUDIO_PAUSED;
+        return this.audioStatus === this.audioService.AUDIO_PAUSED;
     }
 
     isStopped() {
-        return this.audio_status === this.audioService.AUDIO_STOPPED;
+        return this.audioStatus === this.audioService.AUDIO_STOPPED;
     }
 
     hasEnded() {
-        return this.audio_status === this.audioService.AUDIO_ENDED;
+        return this.audioStatus === this.audioService.AUDIO_ENDED;
     }
 
 
@@ -71,7 +80,7 @@ export class PlayButtonComponent implements OnInit {
     private reset() {
         if (this.selected ) {
             this.selected = false;
-            this.audio_status = undefined;
+            this.audioStatus = undefined;
         }
     }
 

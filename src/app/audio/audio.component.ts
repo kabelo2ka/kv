@@ -19,6 +19,8 @@ export class AudioComponent implements OnInit, OnDestroy {
     songCopy: any;
     src = '';
 
+    audioStatus: number;
+
     audio_progress_time = '00:00';
     audio_progress_played = 0;
     audio_buffered_value = 0;
@@ -26,7 +28,6 @@ export class AudioComponent implements OnInit, OnDestroy {
     audio_volume_value = 80;
     mute = false;
     info_panel_visible = false;
-    isPlaying = false;
 
     subscription: Subscription;
 
@@ -39,35 +40,28 @@ export class AudioComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         // Get active Song - song that will be played
-        this.audioService.currentSong$.subscribe(
-            currentSong => {
-                this.songCopy = this.song;
-                this.song = currentSong;
-            }
-        );
+        this.audioService.currentSong$.subscribe( currentSong => {
+            this.songCopy = this.song;
+            this.song = currentSong;
+        });
 
         // Get audio status play | pause | stop
         this.audioService.status$.subscribe( (status: number) => {
-            if (status === this.audioService.AUDIO_PLAYING) {
-                this.isPlaying = true;
-            }else if (status === this.audioService.AUDIO_PAUSED) {
-                this.isPlaying = false;
-            }else if (status === this.audioService.AUDIO_STOPPED) {
-                this.isPlaying = false;
+            this.audioStatus = status;
+            if( this.isLoading() ){
+                this.reset();
             }
         });
 
         // Calculate Progress played
-        this.audioApiWrapper.bindAudioEvent('timeupdate').subscribe(
-            () => {
-                const current_time = this.audioApiWrapper._audio.currentTime;
-                if (current_time > 0) {
-                    const seek_value = (current_time / this.audioApiWrapper._audio.duration) * 100;
-                    this.audio_seek_value = this.audio_progress_played = seek_value;
-                    this.formatTime(Math.floor(current_time));
-                }
+        this.audioApiWrapper.bindAudioEvent('timeupdate').subscribe( () => {
+            const current_time = this.audioApiWrapper._audio.currentTime;
+            if (current_time > 0) {
+                const seek_value = (current_time / this.audioApiWrapper._audio.duration) * 100;
+                this.audio_seek_value = this.audio_progress_played = seek_value;
+                this.formatTime(Math.floor(current_time));
             }
-        );
+        });
 
         // Calculate audio Volume
         this.audioApiWrapper.bindAudioEvent('volumechange').subscribe(
@@ -128,7 +122,6 @@ export class AudioComponent implements OnInit, OnDestroy {
      */
     pause() {
         this.audioApiWrapper.pause();
-        this.isPlaying = false;
     }
 
     /*
@@ -186,9 +179,24 @@ export class AudioComponent implements OnInit, OnDestroy {
         this.audio_progress_time = minutes + ':' + secs;
     }
 
+    isLoading() {
+        return this.audioStatus === this.audioService.AUDIO_LOADING;
+    }
+
+    isPlaying() {
+        return this.audioStatus === this.audioService.AUDIO_PLAYING;
+    }
+
     ngOnDestroy() {
         this.subscription.unsubscribe();
     };
 
+
+    reset(){
+        this.audio_progress_time = '00:00';
+        this.audio_progress_played = 0;
+        this.audio_buffered_value = 0;
+        this.audio_seek_value = 0;
+    }
 
 }
