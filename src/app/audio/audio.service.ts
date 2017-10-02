@@ -36,6 +36,10 @@ export class AudioService {
         this.audioApiWrapper.bindAudioEvent('play').subscribe(() => this.setStatus(this.AUDIO_PLAYING));
         this.audioApiWrapper.bindAudioEvent('pause').subscribe(() =>  this.setStatus(this.AUDIO_PAUSED));
         this.audioApiWrapper.bindAudioEvent('ended').subscribe(() =>  {
+            // @todo If  REPEAT_ONE is set, repeat song -- Fix below if statement
+            if(this.userPreferencesService.getPreference(UserPreferencesService.REPEAT_MODE) ===  'REPEAT_ONE') {
+                this.audioApiWrapper.play();
+            }
             this.setStatus(this.AUDIO_STOPPED);
             this.setStatus(this.AUDIO_ENDED);
         });

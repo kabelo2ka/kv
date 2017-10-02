@@ -20,8 +20,8 @@ export class UserPreferencesService {
 
 
     constructor() {
-        this.defaults = Object.assign({}, {
-            volume: '80',
+        this.defaults = <UserPreferences>Object.assign({}, {
+            volume: 80,
             muted: false,
             notify: true,
             repeatMode: 'REPEAT_ONE',
@@ -31,7 +31,7 @@ export class UserPreferencesService {
         });
 
         if (this.getLocalPreferences()) {
-            this.preferences = Object.assign({}, this.defaults, this.getLocalPreferences());
+            this.preferences = <UserPreferences>Object.assign({}, this.defaults, this.getLocalPreferences());
         }else{
             this.preferences = this.defaults;
         }

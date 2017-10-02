@@ -4,6 +4,6 @@ export interface UserPreferences {
     notify: boolean;
     repeatMode: 'REPEAT_ONE' | 'NO_REPEAT' | 'REPEAT_ALL';
     showInfoPanel: boolean;
-    artistsViewMode?: string;
-    albumsViewMode?: string;
+    artistsViewMode?: 'LIST' | 'GRID';
+    albumsViewMode?: 'LIST' | 'GRID';
 }

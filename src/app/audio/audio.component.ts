@@ -86,17 +86,6 @@ export class AudioComponent implements OnInit, OnDestroy {
             () => setTimeout(() => this.songService.postPlay(this.song.id).subscribe(), 5000)
         );
 
-        // Stop song when song ends (Resets song's duration)
-        this.audioApiWrapper.bindAudioEvent('ended').subscribe(
-            () => {
-                this.stop();
-                // @todo If  REPEAT_ONE is set repeat song -- Fix below if statement
-                if(this.userPreferencesService.getPreference(UserPreferencesService.REPEAT_MODE) ===  'REPEAT_ONE'){
-                    this.audioApiWrapper.play();
-                }
-            }
-        );
-
         // Calculate Buffered/Loaded percentage
         setInterval(() => {
             const audioElem = this.audioApiWrapper._audio;
