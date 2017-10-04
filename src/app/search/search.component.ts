@@ -51,7 +51,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     public typeaheadOnSelect(e: TypeaheadMatch): void {
-        const url = '/songs/' + e.item.id;
+        const url = '/songs/' + e.item.slug;
         this.router.navigate([url]);
         // console.log('Selected value: ', e);
     }
