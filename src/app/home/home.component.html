@@ -4,8 +4,8 @@
 
             <br><br><br>
 
-            <h3 class="text-center" *ngIf="is_logged_in">Welcome {{ user.username }}</h3>
-            <h3 class="text-center" *ngIf="!is_logged_in">Welcome!</h3>
+            <h3 class="text-center" *ngIf="authService.loggedIn()">Welcome, {{ user?.username }}</h3>
+            <h3 class="text-center" *ngIf="!authService.loggedIn()">Welcome!</h3>
             <br>
             <p class="text-center">Join your friends & listen to the best music in South Africa.</p>
 
@@ -13,8 +13,8 @@
 
             <div class="text-center">
                 <div class="btn-group" role="group">
-                    <a class="btn btn-primary btn-md" routerLink="songs"><i class="fa fa-play"></i> Start listening</a>
-                    <a class="btn btn-success btn-md" routerLink="songs/create"><i class="fa fa-cloud-upload"></i>
+                    <a class="btn btn-primary btn-lg" routerLink="songs"><i class="fa fa-play"></i> Start listening</a>
+                    <a class="btn btn-success btn-lg" routerLink="songs/create"><i class="fa fa-cloud-upload"></i>
                         Upload Song</a>
                 </div>
             </div>
