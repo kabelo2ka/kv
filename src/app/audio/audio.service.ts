@@ -36,7 +36,7 @@ export class AudioService {
         this.audioApiWrapper.bindAudioEvent('play').subscribe(() => this.setStatus(this.AUDIO_PLAYING));
         this.audioApiWrapper.bindAudioEvent('pause').subscribe(() =>  this.setStatus(this.AUDIO_PAUSED));
         this.audioApiWrapper.bindAudioEvent('ended').subscribe(() =>  {
-            // @todo If  REPEAT_ONE is set, repeat song -- Fix below if statement
+            // If  REPEAT_ONE is set, repeat song
             if(this.userPreferencesService.getPreference(UserPreferencesService.REPEAT_MODE) ===  'REPEAT_ONE') {
                 this.audioApiWrapper.play();
             }
@@ -55,6 +55,7 @@ export class AudioService {
             this.audioApiWrapper.load(song.url);
             this.setStatus(this.AUDIO_LOADING);
             this.loadedAudio = song;
+            localStorage.setItem('currentSong', JSON.stringify(song));
         }
     }
 
@@ -73,18 +74,6 @@ export class AudioService {
      */
     protected setStatus(status: number) {
         this.status.next(status);
-    }
-
-
-    protected setSettings() {
-        let settings = {
-            "volume": "5.6",
-            "notify": true,
-            "repeatMode": "NO_REPEAT",
-            "showInfoPanel": false,
-            "artistsViewMode": "thumbnails",
-            "albumsViewMode": "thumbnails",
-        }
     }
 
 

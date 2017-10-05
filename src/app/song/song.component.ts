@@ -6,7 +6,6 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {User} from '../user.component/user';
 import {AuthService} from '../auth/authService';
 import {AudioService} from '../audio/audio.service';
-import {AudioAPIWrapper} from '../audio/audio-api-wrapper';
 import {SocketService} from '../socket.service';
 import {AppService} from '../app.service';
 import {Title} from '@angular/platform-browser';
@@ -35,6 +34,7 @@ export class SongComponent implements OnInit, OnDestroy {
 
     constructor(private activatedRoute: ActivatedRoute,
                 private songService: SongService,
+                private audioService: AudioService,
                 private socketService: SocketService,
                 private authService: AuthService,
                 private appService: AppService,
@@ -59,7 +59,7 @@ export class SongComponent implements OnInit, OnDestroy {
             // this.unseenComments.unshift((<any>Object).assign({}, res));
             this.song.comments.unshift(res.comment);
             this.unseenCommentsCount++;
-            console.log(res.comment[0]);
+            // console.log(res.comment[0]);
         });
     }
 
@@ -88,10 +88,10 @@ export class SongComponent implements OnInit, OnDestroy {
         this.songService.likeSong(this.song.id).subscribe(
             (res: any) => {
                 if (res.data === 'Liked') {
-                    this.song.likes_count += 1;
+                    this.song.likes_count++;
                     this.song.is_liked = true;
                 } else {
-                    this.song.likes_count -= 1;
+                    this.song.likes_count--;
                     this.song.is_liked = false;
                 }
             }
