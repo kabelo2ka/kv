@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../auth/authService";
 import {Subscription} from "rxjs/Subscription";
 import {AppService} from "../app.service";
+import {User} from "../user.component/user";
 
 
 @Component({
@@ -25,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
 
-    user: any;
+    user: User;
 
     constructor(public authService: AuthService,
                 private route: ActivatedRoute,

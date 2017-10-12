@@ -66,7 +66,7 @@ import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {ShareComponent} from './share/share.component';
 import { SongItemComponent } from './partials/song-item/song-item.component';
 import { PlayButtonComponent } from './partials/play-button/play-button.component';
-import {UserPreferencesService} from "./user-preferences/user-preferences.service";
+import {UserPreferencesService} from './user-preferences/user-preferences.service';
 import { AlbumCreateComponent } from './album-create/album-create.component';
 import { AlbumEditComponent } from './album-edit/album-edit.component';
 import { AlbumItemGridComponent } from './partials/album-item-grid/album-item-grid.component';

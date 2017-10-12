@@ -59,6 +59,7 @@ export class SignupComponent implements OnInit {
             },
             errors => {
                 this.errors = errors.json();
+                this.signingUp = null;
             },
             () => this.signingUp = null
         );

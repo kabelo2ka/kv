@@ -106,7 +106,7 @@ export class AudioComponent implements OnInit, OnDestroy {
     /*
      * Like song
      */
-    likeSong(id) {
+    likeSong(id: number) {
         this.songService.likeSong(id);
     }
 

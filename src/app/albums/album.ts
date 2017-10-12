@@ -3,8 +3,8 @@ export class Album {
     name: string;
     image: string;
     slug: string;
-    user?: any;
     user_id: number;
+    user?: any;
     songs?: any;
     artist?: any;
 }

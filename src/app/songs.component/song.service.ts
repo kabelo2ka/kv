@@ -93,7 +93,7 @@ export class SongService {
 
         this.updateLike(id); // Update Client Side
         const options = new RequestOptions({headers: this.headers});
-        return this.http.post(this.SONG_LIKE_URL + '?token=' + this.authService.getToken(), {'id': id})
+        return this.authHttp.post(this.SONG_LIKE_URL , {'id': id})
             .map(this.extractData)
             .catch(this.handleError);
     }

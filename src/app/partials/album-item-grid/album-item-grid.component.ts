@@ -1,7 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {Album} from "../../albums/album";
-import {User} from "../../user.component/user";
-import {AuthService} from "../../auth/authService";
+import {Album} from '../../albums/album';
+import {User} from '../../user.component/user';
+import {AuthService} from '../../auth/authService';
 
 @Component({
     selector: 'app-album-item-grid',
@@ -14,7 +14,7 @@ export class AlbumItemGridComponent implements OnInit {
 
     isLoggedIn = false;
 
-    constructor(private authService: AuthService,) {
+    constructor(private authService: AuthService, ) {
     }
 
     ngOnInit() {
@@ -23,6 +23,6 @@ export class AlbumItemGridComponent implements OnInit {
 
     isOwner() {
         return (this.authService.loggedIn() || this.isLoggedIn)
-            && (this.album.user_id === this.authService.getAuthUser().id);
+            && (this.album && this.album.user_id === this.authService.getAuthUser().id);
     }
 }

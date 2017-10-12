@@ -200,6 +200,12 @@ input:focus, input:active {
     color: #ffffff;
 }
 
+.header-global-alert .alert {
+    border: none;
+    padding: 5px;
+    margin: 0;
+}
+
 .item .opacity {
     background-color: rgba(23, 25, 22, 0.75);
 }

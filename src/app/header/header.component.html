@@ -1,4 +1,15 @@
 <nav class="navbar navbar-inverse navbar-default">
+    <div *ngIf="authService.loggedIn() && !user?.confirmed" class="bg-warning header-global-alert">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <alert [type]="'warning'" dismissible="true">
+                        Please confirm your email.
+                    </alert>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header ">
