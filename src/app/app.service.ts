@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 
 import {Subject}    from 'rxjs/Subject';
-import {UserPreferencesService} from "./UserPreferences/user-preferences.service";
+import {UserPreferencesService} from "./user-preferences/user-preferences.service";
 
 
 @Injectable()

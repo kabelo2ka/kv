@@ -70,19 +70,8 @@
 
                             <div *ngIf="artist.albums" class="kv-wrapper">
                                 <div *ngFor="let album of artist.albums; let i = index" class="col-md-3">
-                                    <div class="item">
-                                        <div class="pos-rlt">
-                                            <div class="item-overlay opacity">
-                                                <div class="center text-center" style="margin-top: -22px;">
-                                                    <a routerLink="/albums/{{ album.id }}" ><i class="fa fa-play-circle kv-color-default i-4x"></i></a>
-                                                </div>
-                                            </div>
-                                            <a ><img src="{{ album.image }}" alt="no album" class="img-responsive full-width"></a>
-                                        </div>
-                                        <div class="padder-v">
-                                            <div><a routerLink="/albums/{{ album.id }}" class="text-ellipsis h6"> {{ album.name }} </a></div>
-                                        </div>
-                                    </div>
+
+                                    <app-album-item-grid [album]="album" [owner]="artist"></app-album-item-grid>
 
                                 </div>
                             </div>
@@ -95,19 +84,8 @@
                                 <ul *ngIf="artist.songs" class="list-group">
 
                                     <li *ngFor="let song of artist.songs; let i = index" class="list-group-item">
-                                        <!--<div class="kv-col-cont">
-                                            &lt;!&ndash;<div class="kv-col-1">{{ song.id }}</div>&ndash;&gt;
-                                            <div class="kv-col-2 h6">
-                                                <div class="kv-media-image-overlay play_song" (click)="playSong(song)"
-                                                     attr.data-src="{{song.file_name}}">
-                                                    <span class="song_item_count">{{ i+1 }}</span>
-                                                    <span class="a"> {{ song.name }}</span>
-                                                </div>
-                                            </div>
-                                        </div>-->
 
                                         <app-song-item [song]="song"></app-song-item>
-
 
                                     </li>
 

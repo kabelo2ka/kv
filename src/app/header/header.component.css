@@ -1,9 +1,14 @@
 .release_status {
-    font-size: 10px;
+    font-size: 9px;
     position: absolute;
     bottom: 3px;
     margin-left: -4px;
-    color: #999999;
+    color: #222;
+    background: #fff324;
+    font-weight: bold;
+    padding: 2px 2px 1px;
+    line-height: 1;
+    border-radius: 2px;
 }
 
 .navbar {

@@ -4,5 +4,7 @@ export class Album {
     image: string;
     slug: string;
     user?: any;
+    user_id: number;
     songs?: any;
+    artist?: any;
 }

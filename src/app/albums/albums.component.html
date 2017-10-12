@@ -8,27 +8,7 @@
 
 
         <div *ngFor="let album of albums; let i = index" class="col-xs-6 col-md-3">
-            <div class="item">
-                <div class="pos-rlt">
-                    <a routerLink="/albums/{{ album.slug }}" >
-                        <div class="item-overlay opacity">
-                            <div class="center text-center" style="margin-top: -22px;">
-                                <a routerLink="/albums/{{ album.slug }}" ><i class="fa fa-play-circle kv-color-default i-4x"></i></a>
-                            </div>
-                        </div>
-                        <img src="{{ album.image }}" alt="no album" class="img-responsive img-rounded full-width">
-                    </a>
-                </div>
-                <div class="padder-v">
-                    <div><a routerLink="/albums/{{ album.slug }}" class="text-ellipsis h6"> {{ album.name }} </a></div>
-                    <div>
-                        <a routerLink="/users/{{ album.user.slug }}" class="text-ellipsis text-xs text-muted">
-                            <span *ngIf="album.user.artist_name">By {{ album.user.artist_name }}</span>
-                            <span *ngIf="! album.user.artist_name">Created by {{ album.user.username }}</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <app-album-item-grid [album]="album" [owner]="album.user"></app-album-item-grid>
         </div>
 
 

@@ -14,11 +14,13 @@ import {SongEditComponent} from './song-edit/song-edit.component';
 import {TestsComponent} from './tests/tests.component';
 import {SongComponent} from './song/song.component';
 import {SettingsComponent} from './settings.component/settings.component';
+import {AlbumCreateComponent} from "./album-create/album-create.component";
+import {AlbumEditComponent} from "./album-edit/album-edit.component";
 
 const appRoutes: Routes = <Routes>[
     {
         path: '',
-        component: HomeComponent
+        component: HomeComponent,
     },
     {
         path: 'settings',
@@ -27,7 +29,7 @@ const appRoutes: Routes = <Routes>[
     },
     {
         path: 'users/:id',
-        component: UserProfileComponent
+        component: UserProfileComponent,
     },
     {
         path: 'songs',
@@ -35,11 +37,11 @@ const appRoutes: Routes = <Routes>[
     },
     {
         path: 'songs/create',
-        component: SongCreateComponent
+        component: SongCreateComponent,
     },
     {
         path: 'songs/:slug',
-        component: SongComponent
+        component: SongComponent,
     },
     {
         path: 'songs/:slug/edit',
@@ -51,8 +53,16 @@ const appRoutes: Routes = <Routes>[
         component: AlbumsComponent,
     },
     {
+        path: 'albums/create',
+        component: AlbumCreateComponent,
+    },
+    {
         path: 'albums/:slug',
-        component: AlbumShowComponent
+        component: AlbumShowComponent,
+    },
+    {
+        path: 'albums/:slug/edit',
+        component: AlbumEditComponent,
     },
     {
         path: 'artists',
@@ -60,7 +70,7 @@ const appRoutes: Routes = <Routes>[
     },
     {
         path: 'artists/:slug',
-        component: ArtistShowComponent
+        component: ArtistShowComponent,
     },
     {
         path: 'genres',

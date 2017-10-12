@@ -19,6 +19,7 @@ export class SongService {
         'Content-Type': 'application/json',
     });
     private SONGS_URL = '//kasivibe.com/api/v1/songs';
+    private USER_URL = '//kasivibe.com/api/v1/user';
     private SONG_LIKE_URL = '//kasivibe.com/api/v1/song/like';
     // URL to web api
 
@@ -39,6 +40,13 @@ export class SongService {
     getSongs(query?: string) {
         query = (query && query.trim() !== '' || query !== undefined) ? '?query=' + query : '';
         return this.authHttp.get(this.SONGS_URL + query)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    getAuthSongs(query?: string) {
+        query = (query && query.trim() !== '' || query !== undefined) ? '?query=' + query : '';
+        return this.authHttp.get(this.USER_URL + '/songs' + query)
             .map(this.extractData)
             .catch(this.handleError);
     }

@@ -2,10 +2,10 @@
     <!--<div class="kv-col-1">{{ song.id }}</div>-->
     <div class="kv-col-2">
         <div class="kv-media-image">
-            <img *ngIf="song.album" style="width: 64px;height: 64px;"
+            <img *ngIf="song.album" width="64" height="64" class="img-rounded"
                  src="{{song.album.image}}" alt="{{song.name}}">
             <div [ngStyle]="{'display': isActiveSong ? 'block':''}"
-                 class="kv-media-image-overlay">
+                 class="kv-media-image-overlay img-rounded">
                 <app-play-button (onStatus)="setAudioStatus($event)" [song]="song"></app-play-button>
             </div>
         </div>

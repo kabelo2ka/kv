@@ -3,7 +3,7 @@ import {Song} from '../songs.component/song';
 
 import {Subject} from 'rxjs/Subject';
 import {AudioAPIWrapper} from './audio-api-wrapper';
-import {UserPreferencesService} from "../UserPreferences/user-preferences.service";
+import {UserPreferencesService} from "../user-preferences/user-preferences.service";
 import {Observable} from "rxjs";
 
 

@@ -91,7 +91,7 @@ export class AuthService {
         return tokenNotExpired('token');
     }
 
-    getAuthUser() {
+    getAuthUser(): User {
         return JSON.parse(localStorage.getItem('authUser'));
     }
 

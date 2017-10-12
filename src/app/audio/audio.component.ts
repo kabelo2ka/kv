@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {SongService} from '../songs.component/song.service';
 import {AudioAPIWrapper} from './audio-api-wrapper';
 import {Song} from '../songs.component/song';
-import {UserPreferencesService} from "../UserPreferences/user-preferences.service";
+import {UserPreferencesService} from "../user-preferences/user-preferences.service";
 
 
 @Component({

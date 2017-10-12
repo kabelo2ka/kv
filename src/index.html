@@ -6,6 +6,26 @@
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Search Engine -->
+    <meta name="description" content="We help local musicians to connect with their fans. We think promoting local songs can truly change the music industry.">
+    <meta name="image" content="http://kasivibe.com/app/assets/images/logo.svg">
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="Kasivibe">
+    <meta itemprop="description" content="We help local musicians to connect with their fans. We think promoting local songs can truly change the music industry.">
+    <meta itemprop="image" content="http://kasivibe.com/app/assets/images/logo.svg">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Kasivibe">
+    <meta name="twitter:description" content="We help local musicians to connect with their fans. We think promoting local songs can truly change the music industry.">
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta name="og:title" content="Kasivibe">
+    <meta name="og:description" content="We help local musicians to connect with their fans. We think promoting local songs can truly change the music industry.">
+    <meta name="og:url" content="http://kasivibe.com">
+    <meta name="og:site_name" content="Kasivibe">
+    <meta name="og:locale" content="en_US">
+    <meta name="fb:admins" content="979730065466440">
+    <meta name="fb:app_id" content="529333364088419">
+    <meta name="og:type" content="website">
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107612387-1"></script>
     <script>
@@ -15,7 +35,25 @@
 
         gtag('config', 'UA-107612387-1');
     </script>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '529333364088419',
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v2.7'
+            });
+            FB.AppEvents.logPageView();
+        };
 
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 </head>
 <body>
 <app-root>

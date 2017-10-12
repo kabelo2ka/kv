@@ -1,0 +1,45 @@
+<div class="item">
+    <div class="pos-rlt">
+        <!--<a routerLink="/albums/{{ album.slug }}">-->
+        <div class="item-overlay opacity">
+            <div class="actions">
+                <div class="btn-group pull-right" dropdown placement="bottom right">
+                    <button dropdownToggle class="btn btn-link dropdown-toggle">
+                        <i class="fa fa-ellipsis-h fa-2x kv-color-default"></i>
+                    </button>
+                    <ul *dropdownMenu class="dropdown-menu" role="menu">
+                        <li role="menuitem"><a class="dropdown-item" [routerLink]="['/albums', album.slug ]"
+                                               [queryParams]="{play: 'true'}">Play</a>
+                        </li>
+                        <li role="menuitem"><a class="dropdown-item" [routerLink]="['/albums', album.slug ]">View</a>
+                        </li>
+                        <li *ngIf="isOwner()" class="divider dropdown-divider"></li>
+                        <li *ngIf="isOwner()" role="menuitem"><a class="dropdown-item text-danger"
+                                                                 [routerLink]="['/albums', album.slug, 'edit']">Edit</a>
+                        </li>
+                        <!--<li role="menuitem"><a class="dropdown-item" href="#">Report</a></li>-->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="center text-center" style="margin-top: -22px;">
+                <a [routerLink]="['/albums', album.slug ]" [queryParams]="{play: 'true'}" title="Play"><i
+                        class="fa fa-play-circle kv-color-default i-4x"></i></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a [routerLink]="['/albums', album.slug ]" title="Browse"><i
+                        class="fa fa-eye kv-color-default i-4x"></i></a>
+            </div>
+        </div>
+        <img src="{{ album.image }}" alt="no album" class="img-responsive img-rounded full-width">
+        <!--</a>-->
+    </div>
+    <div class="padder-v">
+        <div><a [routerLink]="['/albums', album.slug ]" class="text-ellipsis h6"> {{ album.name }} </a></div>
+        <div>
+            <a [routerLink]="['/artists/', owner.slug]" class="text-ellipsis text-xs text-muted">
+                <span *ngIf="owner.artist_name">By {{ owner.artist_name }}</span>
+                <span *ngIf="! owner.artist_name">Created by {{ owner.username }}</span>
+            </a>
+        </div>
+    </div>
+</div>
