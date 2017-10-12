@@ -8,6 +8,7 @@ import {AuthHttp} from 'angular2-jwt';
 export class AlbumService {
 
     ALBUMS_URL = '//kasivibe.com/api/v1/albums';
+    USER_URL = '//kasivibe.com/api/v1/users';
     USER_ALBUMS_URL = '//kasivibe.com/api/v1/user/albums';
 
     private headers = new Headers({
@@ -31,12 +32,25 @@ export class AlbumService {
             .catch(this.handleError);
     }
 
+    getAuthAlbums(query?: string) {
+        query = (query && query.trim() !== '' || query !== undefined) ? '?query=' + query : '';
+        return this.authHttp.get(this.USER_URL + '/albums' + query)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     getAlbum(slug: string) {
         return this.http.get(this.ALBUMS_URL + '/' + slug)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
+    createAlbum(album) {
+        const options = new RequestOptions({headers: this.headers});
+        return this.authHttp.post(this.ALBUMS_URL + '/create', album, options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
 
     private extractData(res: Response) {
         const body = res.json();
