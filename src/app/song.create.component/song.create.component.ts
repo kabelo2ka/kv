@@ -37,7 +37,7 @@ export class SongCreateComponent implements OnInit, OnChanges {
                 private albumService: AlbumService,
                 public authService: AuthService,
                 private appService: AppService,
-                private fb: FormBuilder, ) {
+                private fb: FormBuilder,) {
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
         this.humanizeBytes = humanizeBytes;
     }
@@ -73,7 +73,7 @@ export class SongCreateComponent implements OnInit, OnChanges {
     onUploadOutput(output: UploadOutput): void {
         if (output.type === 'allAddedToQueue') { // when all files added in queue
             // Auto upload files when added
-            if ( ! this.authService.loggedIn()) {
+            if (!this.authService.loggedIn()) {
                 // @todo subscribe to login modal, so if the user logs in, startUpload
                 this.appService.showSignInModal(true);
                 this.authService.is_logged_in$.subscribe(
@@ -83,9 +83,9 @@ export class SongCreateComponent implements OnInit, OnChanges {
                             this.startUpload();
                         }
                     },
-                        error => console.log(error)
-                    );
-            }else {
+                    error => console.log(error)
+                );
+            } else {
                 this.startUpload();
             }
         } else if (output.type === 'addedToQueue' && typeof output.file !== 'undefined') {
@@ -141,17 +141,20 @@ export class SongCreateComponent implements OnInit, OnChanges {
     }
 
     createSong() {
-        this.songService.createSong(this.songForm.value).subscribe( (res: any) => {
-            this.notificationService.success('Yipppie!', 'File Uploaded.');
-        });
+        this.songService.createSong(this.songForm.value).subscribe(
+            (res: any) => {
+                this.notificationService.success('Yipppie!', 'File Uploaded.');
+            },
+            error => this.notificationService.success('Ooops!', 'File not uploaded. Please try again.')
+        );
     }
 
     resetFrom() {
         const c = confirm('Are you sure you want to stop your upload? Any unsaved changes will be lost.');
         if (c === true) {
             this.songForm.reset();
-            this.uploadInput.emit({type: 'remove', id: this.file.id});
             this.uploadInput.emit({type: 'cancel', id: this.file.id});
+            this.uploadInput.emit({type: 'remove', id: this.file.id});
         }
     }
 

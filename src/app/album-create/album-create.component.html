@@ -1,7 +1,6 @@
 <div class="container-fluid">
     <div class="row m-b-lg">
         <div class="col-md-12">
-            <!--<alert type="success">Welcome To Kasivibe! Share, comment and rate music.</alert>-->
             <h3 class="text-center m-t-lg">Share your album</h3>
             <p class="text-center">Share your new albums and connect with your fans.</p>
         </div>
@@ -10,21 +9,30 @@
         <div class="col-md-offset-4 col-md-4">
 
 
-            <form [formGroup]="albumForm" (ngSubmit)="createAlbum()" class="song-create-form" enctype="multipart/form-data">
+            <form [formGroup]="albumForm" (ngSubmit)="createAlbum()" class="song-create-form">
 
                 <div class="form-group required"
-                     [ngClass]="{'has-error has-feedback':!albumForm.controls['name'].valid && albumForm.controls['name'].touched}">
-                    <input type="text" class="form-control" placeholder="Album name"
-                           formControlName="name">
-                    <span *ngIf="!albumForm.controls['name'].valid && albumForm.controls['name'].touched"
+                     [ngClass]="{'has-error has-feedback':(!albumForm.controls['name'].valid && albumForm.controls['name'].touched) || (errors?.name && albumForm.controls['name'].valid)}">
+                    <input type="text" class="form-control" placeholder="Album name" formControlName="name">
+                    <span *ngIf="(!albumForm.controls['name'].valid && albumForm.controls['name'].touched) || (errors?.name && albumForm.controls['name'].valid)"
                           class="glyphicon glyphicon-remove form-control-feedback"></span>
                     <span *ngIf="!albumForm.controls['name'].valid && albumForm.controls['name'].touched"
                           class="help-block">The album name must have at least 3 characters.</span>
+                    <div *ngIf="errors?.name && albumForm.controls['name'].valid" class="help-block">
+                        <ul class="list-unstyled">
+                            <li *ngFor="let error of errors.name">
+                                {{ error }}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div>
-                    <label class="btn btn-default"> <i class="fa fa-file-image-o"></i> Select Cover Picture
-                        <input style="display: none" (change)="fileChange($event)" type="file" formControlName="file">
+                    <img style="height: 38px;" *ngIf="previewImageUrl!==''" src="{{ previewImageUrl }}">
+                    <label class="btn btn-default"> <i class="fa fa-file-image-o"></i>
+                        <span *ngIf="previewImageUrl===''">Select Cover Picture</span>
+                        <span *ngIf="previewImageUrl!==''">Change Cover Picture</span>
+                        <input style="display: none" (change)="fileChange($event)" type="file">
                     </label>
                 </div>
 
@@ -37,7 +45,9 @@
 
                 <div class="clearfix">
                     <div class="pull-right">
-                        <button type="submit" [disabled]="!albumForm.valid" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-success" [disabled]="!albumForm.valid || savingAlbum">
+                            <i *ngIf="savingAlbum" class="fa fa-spinner fa-pulse fa-fw"></i> Save
+                        </button>
                     </div>
                 </div>
 
@@ -47,3 +57,5 @@
         </div>
     </div>
 </div>
+
+<app-notification-toast></app-notification-toast>

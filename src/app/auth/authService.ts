@@ -54,7 +54,7 @@ export class AuthService {
                 const token = response.json().token;
                 const base64Url = token.split('.')[1];
                 const base64 = base64Url.replace('-', '+').replace('_', '/');
-                return {token: token, decoded: JSON.parse(window.atob(base64))};
+                return {token: token, decoded: JSON.parse(atob(base64))};
             }
         ).do(
             tokenData => {
@@ -76,7 +76,6 @@ export class AuthService {
                 if (response.json().status === 401) {
 
                 }
-                //console.log(response.status);
                 this.user.next(response.json().user);
                 this.is_logged_in.next(true); // @todo Check this line
             }

@@ -47,9 +47,20 @@ export class AlbumService {
 
     createAlbum(album) {
         const options = new RequestOptions({headers: this.headers});
-        return this.authHttp.post(this.ALBUMS_URL + '/create', album, options)
-            .map(this.extractData)
-            .catch(this.handleError);
+        return this.authHttp.post(this.ALBUMS_URL, album, options)
+            .map(this.extractData);
+    }
+
+    updateAlbum(slug: string, album) {
+        const options = new RequestOptions({headers: this.headers});
+        return this.authHttp.patch(this.ALBUMS_URL + '/' + slug, album, options)
+            .map(this.extractData);
+    }
+
+    deleteAlbum(slug) {
+        const options = new RequestOptions({headers: this.headers});
+        return this.authHttp.delete(this.ALBUMS_URL + '/' + slug, options)
+            .map(this.extractData);
     }
 
     private extractData(res: Response) {
