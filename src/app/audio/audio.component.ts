@@ -68,9 +68,12 @@ export class AudioComponent implements OnInit, OnDestroy {
 
         // Calculate Progress played
         this.audioApiWrapper.bindAudioEvent('timeupdate').subscribe( () => {
-            const current_time = this.audioApiWrapper._audio.currentTime;
+            let current_time = this.audioApiWrapper._audio.currentTime;
+            let duration = this.audioApiWrapper._audio.duration;
+            console.log('current_time', current_time);
             if (current_time > 0) {
-                const seek_value = (current_time / this.audioApiWrapper._audio.duration) * 100;
+                let seek_value = (current_time / duration) * 100;
+                console.log('seek_value', duration);
                 this.audio_seek_value = this.audio_progress_played = seek_value;
                 this.formatTime(Math.floor(current_time));
             }

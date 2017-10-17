@@ -17,6 +17,10 @@
                         <li *ngIf="isOwner()" role="menuitem"><a class="dropdown-item text-danger"
                                                                  [routerLink]="['/albums', album.slug, 'edit']">Edit</a>
                         </li>
+                        <li *ngIf="isOwner()" role="menuitem"><a class="dropdown-item text-danger"
+                                                                 [routerLink]="['/songs/create']"
+                                                                 [queryParams]="{album: album.slug}">Add song</a>
+                        </li>
                         <!--<li role="menuitem"><a class="dropdown-item" href="#">Report</a></li>-->
                     </ul>
                 </div>

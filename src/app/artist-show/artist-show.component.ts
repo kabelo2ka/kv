@@ -6,6 +6,7 @@ import {AudioService} from '../audio/audio.service';
 import {AppService} from '../app.service';
 import {AuthService} from '../auth/authService';
 import {Title} from "@angular/platform-browser";
+import {User} from "../user.component/user";
 
 @Component({
     selector: 'app-artist-show',
@@ -14,7 +15,7 @@ import {Title} from "@angular/platform-browser";
 })
 export class ArtistShowComponent implements OnInit {
     loading: Subscription;
-    artist: any;
+    artist: User;
     auth_user: any;
 
     constructor(private artistService: ArtistService,

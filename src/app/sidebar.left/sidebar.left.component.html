@@ -9,13 +9,15 @@
                     class="icon-earphones text-warning"></i>
                 Songs</a>
             </li>
-            <li><a routerLink="/albums" routerLinkActive="active"><i class="icon-picture text-primary"></i> Albums</a>
+            <li><a routerLink="/albums" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i
+                    class="icon-picture text-primary"></i> Albums</a>
             </li>
-            <li><a routerLink="/artists" routerLinkActive="active"><i class="icon-microphone text-danger"></i>
+            <li><a routerLink="/artists" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i
+                    class="icon-microphone text-danger"></i>
                 Artists</a>
-            <!--</li>
-            <li><a routerLink="/genres" routerLinkActive="active"><i class="fa fa-music text-success"></i> Genres</a>
-            </li>-->
+                <!--</li>
+                <li><a routerLink="/genres" routerLinkActive="active"><i class="fa fa-music text-success"></i> Genres</a>
+                </li>-->
         </ul>
     </section>
     <!--<br>
@@ -36,12 +38,12 @@
                 Upload Song</a></li>
             <li><a routerLink="/albums/create" routerLinkActive="active"><i class="icon-plus text-success"></i>
                 Create Album</a></li>
-            <li><a routerLink="/my-songs" routerLinkActive="active"><i class="icon-earphones text-warning"></i>
-                My Songs</a>
+            <li *ngIf="authService.loggedIn() && user"><a [routerLink]="['/artists', user?.slug]" routerLinkActive="active"><i class="icon-earphones text-warning"></i>
+                My Uploads</a>
             </li>
-            <li><a routerLink="/my-albums" routerLinkActive="active"><i class="icon-picture text-primary"></i>
+            <!--<li *ngIf="authService.loggedIn()"><a [routerLink]="['/artists', user.slug]"><i class="icon-picture text-primary"></i>
                 My Albums</a>
-            </li>
+            </li>-->
         </ul>
     </section>
 

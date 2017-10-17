@@ -9,6 +9,8 @@ import {AuthService} from '../auth/authService';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {Album} from '../albums/album';
 import {AppService} from '../app.service';
+import {ActivatedRoute, Params} from "@angular/router";
+import {User} from "../user.component/user";
 
 @Component({
     selector: 'app-songs-upload',
@@ -30,9 +32,12 @@ export class SongCreateComponent implements OnInit, OnChanges {
     albums: Album[];
     genres: Genre[];
 
+    user: User;
+
 
     constructor(private genreService: GenreService,
                 private notificationService: NotificationsService,
+                private activatedRoute: ActivatedRoute,
                 private songService: SongService,
                 private albumService: AlbumService,
                 public authService: AuthService,
@@ -46,8 +51,17 @@ export class SongCreateComponent implements OnInit, OnChanges {
         this.genreService.getGenres(null).subscribe(
             (res: any) => this.genres = res.data
         );
-        this.albumService.getUserAlbums().subscribe(
-            (res: any) => this.albums = res.data
+        this.albumService.getAuthAlbums().subscribe(
+            (res: any) => {
+                this.albums = res.data;
+                // @todo: Fix this - If url has album parameter, select the album;
+                this.activatedRoute.queryParams.subscribe((params: Params) => {
+                    const album_slug = params['album'];
+                    if (album_slug) {
+                        this.selectAlbum(album_slug);
+                    }
+                });
+            }
         );
         this.buildForm();
         this.songForm.get('album_id').valueChanges.subscribe(
@@ -152,10 +166,16 @@ export class SongCreateComponent implements OnInit, OnChanges {
     resetFrom() {
         const c = confirm('Are you sure you want to stop your upload? Any unsaved changes will be lost.');
         if (c === true) {
-            this.songForm.reset();
-            this.uploadInput.emit({type: 'cancel', id: this.file.id});
-            this.uploadInput.emit({type: 'remove', id: this.file.id});
+            this.songForm.reset({'genre_id':'','album_id':'','commentable':true});
+            this.uploadInput.emit({type: 'cancelAll'});
+            this.uploadInput.emit({type: 'removeAll'});
         }
+    }
+
+    selectAlbum(slug) {
+        const album: Album = this.albums.find(x => x.slug === slug);
+        this.songForm.controls['album_id'].setValue(album.id, {onlySelf: true});
+        this.songForm.updateValueAndValidity();
     }
 
 }

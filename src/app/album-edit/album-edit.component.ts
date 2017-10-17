@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {AppService} from "../app.service";
 
 @Component({
     selector: 'app-album-edit',
@@ -26,6 +27,7 @@ export class AlbumEditComponent implements OnInit {
         private notificationService: NotificationsService,
         private activatedRoute: ActivatedRoute,
         private albumService: AlbumService,
+        private appService: AppService,
         private router: Router,
         private fb: FormBuilder,
     ) {}
@@ -69,9 +71,23 @@ export class AlbumEditComponent implements OnInit {
         this.previewImageUrl = 'data:image/jpeg;base64,' + this.fileString;
     }
 
+
+    removeImageFile() {
+        const c = confirm('Are you sure you want to remove this picture?');
+        if (c === true) {
+            console.log(this.albumForm.value);
+            this.previewImageUrl = '';
+            this.albumForm.controls['imageData'].reset(null);
+            console.log('image removed',this.albumForm.value);
+        }
+    }
+
     saveAlbum() {
         this.savingAlbum = this.albumService.updateAlbum(this.album.slug, this.albumForm.value).subscribe(
-            (res: any) => this.notificationService.success('Yipppie!', 'Album updated.'),
+            (res: any) => {
+                this.appService.showToastNotification('', 'Album updated.', 'SUCCESS');
+                this.router.navigate(['/albums', this.album.slug]);
+            },
             errors => {
                 this.errors = errors.json();
                 this.savingAlbum = null;
@@ -81,11 +97,11 @@ export class AlbumEditComponent implements OnInit {
     }
 
     deleteAlbum() {
-        const c = confirm('Are you sure you want to delete this album?');
+        const c = confirm('Are you sure you want to delete this album?\n\nAll songs in this album will also be deleted.');
         if (c === true) {
             this.deletingAlbum = this.albumService.deleteAlbum(this.album.slug).subscribe(
                 (res: any) => {
-                    this.notificationService.success('Yipppie!', 'Album deleted.');
+                    this.appService.showToastNotification('', 'Album deleted.', 'SUCCESS');
                     this.router.navigate(['/albums']);
                 },
                 () => {

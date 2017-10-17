@@ -14,7 +14,7 @@
                         <div class="profile-details">
                             <h1>{{ song.name }}</h1>
                             <h6>
-                                <span> By <a routerLink="/artists/{{ song.user.slug }}">{{ song?.user.artist_name }}</a></span>
+                                <span> By <a routerLink="/artists/{{ song.user?.slug }}">{{ song?.user.artist_name }}</a></span>
                                 <span title="Genre" class="text-muted genre"> &middot; {{ song.genre?.name }}</span>
                                 <!--<button class="btn btn-xs btn-default">
                                     <span class="hidden"><i class="icon-user-following"></i> Following</span>
@@ -25,7 +25,9 @@
                         <ul class="list-inline hidden-xs">
                             <li title="Likes"><i class="icon-like"></i> {{ song.likes_count }}</li>
                             <li title="Plays"><i class="icon-earphones"></i> {{ song.plays_count }}</li>
-                            <li title="Downloads" *ngIf="song.downloadable"><i class="icon-cloud-download"></i> {{ song.downloads_count }}</li>
+                            <li title="Downloads" *ngIf="song.downloadable"><i class="icon-cloud-download"></i> {{
+                                song.downloads_count }}
+                            </li>
                             <li title="Upload date"><i class="icon-cloud-upload"></i> {{ song.created_at_ago }}</li>
                         </ul>
                     </div>
@@ -47,10 +49,11 @@
                                 <span>Comment</span></a>
                         </li>-->
                         <li>
-                            <button (click)="showShareModal()" class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> <span>Share</span>
+                            <button (click)="showShareModal()" class="btn btn-sm btn-inverse"><i
+                                    class="icon-share-alt"></i> <span>Share</span>
                             </button>
                         </li>
-                        <li *ngIf="song.downloadable" >
+                        <li *ngIf="song.downloadable">
                             <a href="{{ song.download_link }}" class="btn btn-sm btn-primary">
                                 <i class="icon-cloud-download"></i>
                                 <span>Download</span>
@@ -84,7 +87,8 @@
                                 <span>Comment</span></a>
                         </li>-->
                         <li>
-                            <button (click)="showShareModal()" class="btn btn-sm btn-inverse"><i class="icon-share-alt"></i> <span>Share</span>
+                            <button (click)="showShareModal()" class="btn btn-sm btn-inverse"><i
+                                    class="icon-share-alt"></i> <span>Share</span>
                             </button>
                         </li>
                     </ul>
@@ -96,22 +100,23 @@
             </div>
         </div>
         <div class="row">
+
             <div class="col-md-8 col-lg-offset-2">
                 <div class="row">
-
                     <div class="col-md-8 m-t-lg">
 
                         <tabset #song_tabs class="tabs-lg">
                             <tab heading="Comments">
                                 <div class="add-comment comment-wrapper">
                                     <div class="comment-avatar" *ngIf="loggedIn()">
-                                        <img class="img-rounded" width="50" height="50" *ngIf="user" src="{{ user.avatar }}"
+                                        <img class="img-rounded" width="50" height="50" *ngIf="user"
+                                             src="{{ user.avatar }}"
                                              alt="">
                                     </div>
                                     <div class="comment-content">
                                         <div class="form-group">
-                                <textarea [(ngModel)]="commentBody" class="form-control"
-                                          placeholder='What do you think of {{ song.name }} ?'></textarea>
+                        <textarea [(ngModel)]="commentBody" class="form-control"
+                                  placeholder='What do you think of {{ song.name }} ?'></textarea>
                                         </div>
                                         <div class="comment-actions pull-right">
                                             <button (click)="onComment()" type="submit" class="btn btn-success">Comment
@@ -136,18 +141,15 @@
                         </tabset>
 
 
-
-
-
                     </div>
 
                     <div class="col-md-4">
                         <!--<h2 class="h4">Liked by</h2>-->
                     </div>
 
-
                 </div>
             </div>
+
         </div>
     </section>
 

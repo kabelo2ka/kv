@@ -4,12 +4,14 @@ import {AuthService} from "./auth/authService";
 import {AppService} from "./app.service";
 
 import {ISlimScrollOptions} from "ng2-slimscroll";
+import {NotificationsService} from "angular2-notifications/dist";
+import {User} from "./user.component/user";
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    providers: [],
+    providers: [NotificationsService],
 })
 
 
@@ -23,8 +25,11 @@ export class AppComponent implements OnInit {
 
     login_modal;
     is_logged_in = false;
+    user: User;
 
-    constructor(public authService: AuthService, private appService: AppService) {
+    constructor(public authService: AuthService,
+                private appService: AppService,
+                private notificationService: NotificationsService) {
     }
 
     ngOnInit(): void {
@@ -39,6 +44,11 @@ export class AppComponent implements OnInit {
             this.authService.isAuthenticated().subscribe((res) => {
                 this.is_logged_in = res;
             });
+
+            // Get from cache (local storage) before reloading user data | can delete
+            if (this.authService.loggedIn()) {
+                this.user = this.authService.getAuthUser();
+            }
         }
 
         this.authService.is_logged_in$.subscribe(
@@ -50,17 +60,39 @@ export class AppComponent implements OnInit {
         );
 
         // Right Panel
-        this.appService.right_panel_visible$.subscribe((res:boolean) => {
+        this.appService.right_panel_visible$.subscribe((res: boolean) => {
             this.right_sidebar_visible = res;
         });
 
         // Mobile Menu - Right
-        this.appService.left_mobile_menu_visible$.subscribe((res:boolean) => {
+        this.appService.left_mobile_menu_visible$.subscribe((res: boolean) => {
             this.left_mobile_menu_visible = res;
         });
-        this.appService.mobile_search_visible$.subscribe((res:boolean) => {
+        this.appService.mobile_search_visible$.subscribe((res: boolean) => {
             this.mobile_search_visible = res;
         });
+
+        // Subscribe to notifications
+        this.appService.toastNotification$.subscribe(
+            (res: {title: string, content: string, type: 'SUCCESS' | 'ERROR' | 'INFO' | 'ALERT'}) => {
+                if (res.type === 'SUCCESS') {
+                    if(res.title===''){res.title='Yipppie!'}
+                    this.notificationService.success(res.title, res.content);
+                }
+                else if (res.type === 'ERROR') {
+                    if(res.title===''){res.title='Ooops!'}
+                    this.notificationService.error(res.title, res.content);
+                }
+                else if (res.type === 'INFO') {
+                    if(res.title===''){res.title='Heads Up!'}
+                    this.notificationService.info(res.title, res.content);
+                }
+                else {
+                    if(res.title===''){res.title='Heads Up!'}
+                    this.notificationService.alert(res.title, res.content);
+                }
+            }
+        );
 
         this.opts = {
             barBackground: '#212121',
@@ -80,7 +112,7 @@ export class AppComponent implements OnInit {
         this.appService.setLeftMobileMenuVisible(visible);
     }
 
-    mobileSearch(visible: boolean){
+    mobileSearch(visible: boolean) {
         this.appService.setMobileSearchVisible(visible);
     }
 
@@ -93,7 +125,10 @@ export class AppComponent implements OnInit {
     }
 
     OnLogout() {
-        this.authService.logout();
+        const c = confirm('Are you sure you want to logout?');
+        if (c===true){
+            this.authService.logout();
+        }
     }
 
 

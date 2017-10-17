@@ -18,7 +18,7 @@ export class AlbumService {
     constructor(private http: Http, private authHttp: AuthHttp) {
     }
 
-    getUserAlbums() {
+    getAuthAlbums() {
         const options = new RequestOptions({headers: this.headers});
         return this.authHttp.get(this.USER_ALBUMS_URL, options)
             .map(this.extractData)
@@ -32,15 +32,8 @@ export class AlbumService {
             .catch(this.handleError);
     }
 
-    getAuthAlbums(query?: string) {
-        query = (query && query.trim() !== '' || query !== undefined) ? '?query=' + query : '';
-        return this.authHttp.get(this.USER_URL + '/albums' + query)
-            .map(this.extractData)
-            .catch(this.handleError);
-    }
-
     getAlbum(slug: string) {
-        return this.http.get(this.ALBUMS_URL + '/' + slug)
+        return this.authHttp.get(this.ALBUMS_URL + '/' + slug)
             .map(this.extractData)
             .catch(this.handleError);
     }

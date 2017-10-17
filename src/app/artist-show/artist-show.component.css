@@ -73,6 +73,7 @@ h2.h4.bottom-border {
 }
 
 .header-sidebar img.album-art {
+    border-radius: 0;
     width: 300px;
 }
 
@@ -247,6 +248,11 @@ h2.h4.bottom-border {
         padding: 0;
     }
 
+    .profile-header>div,
+    .header-sidebar {
+        min-height: inherit;
+    }
+
     .profile-header .header-sidebar .album-art {
         width: 100%;
     }
@@ -257,8 +263,10 @@ h2.h4.bottom-border {
         padding-bottom: 15px;
         padding-top: 30px;
         display: table;
-        bottom: 0;
         width: 100%;
+        bottom: 0;
+        right: 0;
+        left: 0;
     }
 
     .profile-header .play-button-wrap {

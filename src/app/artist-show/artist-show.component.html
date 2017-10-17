@@ -1,6 +1,6 @@
 <!--<img src="http://flatfull.com/themes/musik/images/m43.jpg"  class="img-cover-bg">-->
-<div [ngBusy]="loading" style="height: 100%">
-    <div *ngIf="artist" id="profile-body" style="height: 100%">
+<div [ngBusy]="loading" style="height: 100%" >
+    <div *ngIf="artist" id="profile-body" style="height: 100%" class="container-fluid">
 
 
         <div *ngIf="artist" class="row full-header">
@@ -14,10 +14,16 @@
                         <div class="col-md-8 header-content">
                             <div class="profile-details">
                                 <h1>{{ artist.artist_name }}</h1>
+                                <div>
+                                    <ul class="list-inline visible-xs">
+                                        <li><i class="icon-earphones"></i> {{ artist.songs.length }} Songs</li>
+                                        <li><i class="icon-picture"></i> {{ artist.albums.length }} Albums</li>
+                                    </ul>
+                                </div>
                             </div>
                             <ul class="list-inline hidden-xs">
-                                <li><i class="icon-earphones"></i> 201 Songs</li>
-                                <li><i class="icon-picture"></i> 21 Albums</li>
+                                <li><i class="icon-earphones"></i> {{ artist.songs.length }} Songs</li>
+                                <li><i class="icon-picture"></i> {{ artist.albums.length }} Albums</li>
                             </ul>
                         </div>
                     </div>
@@ -47,7 +53,7 @@
             </section>
         </div>
 
-        <div class="container">
+        <div class="content-wrapper">
 
             <div class="row visible-xs">
                 <div class="col-md-12">
@@ -64,36 +70,42 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12 m-t-lg">
-                    <tabset #artist_tabs class="tabs-lg">
-                        <tab heading="Albums">
+                <div class="col-md-8 col-lg-offset-2">
+                    <div class="row">
+                        <div class="col-md-12 m-t-lg">
 
-                            <div *ngIf="artist.albums" class="kv-wrapper">
-                                <div *ngFor="let album of artist.albums; let i = index" class="col-md-3">
+                            <tabset #artist_tabs class="tabs-lg">
+                                <tab heading="Albums">
 
-                                    <app-album-item-grid [album]="album" [owner]="artist"></app-album-item-grid>
+                                    <div *ngIf="artist.albums" class="row kv-wrapper">
 
-                                </div>
-                            </div>
+                                        <div *ngFor="let album of artist.albums; let i = index" class="col-md-3">
+                                            <app-album-item-grid [album]="album" [owner]="artist"></app-album-item-grid>
+                                        </div>
 
-                        </tab>
+                                    </div>
+
+                                </tab>
 
 
-                        <tab heading="All songs">
-                            <div class="wrapper">
-                                <ul *ngIf="artist.songs" class="list-group">
+                                <tab heading="All songs">
+                                    <div class="wrapper">
+                                        <ul *ngIf="artist.songs" class="list-group">
 
-                                    <li *ngFor="let song of artist.songs; let i = index" class="list-group-item">
+                                            <li *ngFor="let song of artist.songs; let i = index" class="list-group-item">
 
-                                        <app-song-item [song]="song"></app-song-item>
+                                                <app-song-item [song]="song"></app-song-item>
 
-                                    </li>
+                                            </li>
 
-                                </ul>
-                            </div>
-                        </tab>
+                                        </ul>
+                                    </div>
+                                </tab>
 
-                    </tabset>
+                            </tabset>
+
+                        </div>
+                    </div>
                 </div>
             </div>
 

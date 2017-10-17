@@ -280,6 +280,19 @@ input:focus, input:active {
     opacity: .6;
 }
 
+.m-lg {
+    margin: 50px;
+}
+.m-md {
+    margin: 30px;
+}
+.m-sm {
+    margin: 20px;
+}
+.m-xs {
+    margin: 10px;
+}
+
 .m-t-lg {
     margin-top: 50px;
 }
@@ -330,6 +343,72 @@ input:focus, input:active {
 }
 .m-l-xs {
     margin-left: 10px;
+}
+.m-t-lg {
+    margin-top: 50px;
+}
+.m-t-md {
+    margin-top: 30px;
+}
+.m-t-sm {
+    margin-top: 20px;
+}
+.m-t-xs {
+    margin-top: 10px;
+}
+
+
+
+.p-lg {
+    padding: 50px;
+}
+.p-md {
+    padding: 30px;
+}
+.p-sm {
+    padding: 20px;
+}
+.p-xs {
+    padding: 10px;
+}
+
+.p-b-lg {
+    padding-bottom: 50px;
+}
+.p-b-md {
+    padding-bottom: 30px;
+}
+.p-b-sm {
+    padding-bottom: 20px;
+}
+.p-b-xs {
+    padding-bottom: 10px;
+}
+
+.p-r-lg {
+    padding-right: 50px;
+}
+.p-r-md {
+    padding-right: 30px;
+}
+.p-r-sm {
+    padding-right: 20px;
+}
+.p-r-xs {
+    padding-right: 10px;
+}
+
+.p-l-lg {
+    padding-left: 50px;
+}
+.p-l-md {
+    padding-left: 30px;
+}
+.p-l-sm {
+    padding-left: 20px;
+}
+.p-l-xs {
+    padding-left: 10px;
 }
 
 
@@ -406,3 +485,20 @@ typeahead-container.dropdown, typeahead-container.dropdown .dropdown-menu {
 }
 
 /**-End Type Ahead -**/
+
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| MOBILE
+|--------------------------------------------------------------------------
+*/
+@media screen and (max-width: 479px) {
+    body {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+}

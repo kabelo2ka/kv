@@ -77,9 +77,9 @@ export class SongService {
             .catch(this.handleError);
     }
 
-    deleteSong(id: number) {
+    deleteSong(slug: number) {
         const options = new RequestOptions({headers: this.headers});
-        return this.http.delete(this.SONGS_URL + '/' + id, options)
+        return this.authHttp.delete(this.SONGS_URL + '/' + slug, options)
             .map(this.extractData)
             .catch(this.handleError);
     }

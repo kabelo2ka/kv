@@ -30,7 +30,10 @@ export class SettingsComponent implements OnInit {
     saveUser() {
         this.savingProfile = this.userService.updateUser(this.user).subscribe(
             (res: any) => this.notificationService.success('Success', 'Profile updated!'),
-            (error) => this.notificationService.error('Error', error),
+            (error) => {
+                this.notificationService.error('Error', error);
+                this.savingProfile = null;
+            },
             () => this.savingProfile = null
         );
     }

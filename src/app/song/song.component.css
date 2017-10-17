@@ -173,7 +173,16 @@ h2.h4.bottom-border {
         padding: 0;
     }
 
+    .profile-header>div{
+        min-height: inherit;
+    }
+
+    .profile-header, .profile-header-inner {
+        min-height: 0 !important;
+    }
+
     .profile-header .header-sidebar .album-art {
+        border-radius: 0;
         width: 100%;
     }
 
@@ -183,8 +192,10 @@ h2.h4.bottom-border {
         padding-bottom: 15px;
         padding-top: 30px;
         display: table;
-        bottom: 0;
         width: 100%;
+        bottom: 0;
+        right: 0;
+        left: 0;
     }
 
     .profile-header .play-button-wrap {

@@ -2,7 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {AlbumService} from '../albums/album.service.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NotificationsService} from 'angular2-notifications/dist';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
+import {AppService} from '../app.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-album-create',
@@ -20,6 +22,8 @@ export class AlbumCreateComponent implements OnInit {
     constructor(
         private albumService: AlbumService,
         private notificationService: NotificationsService,
+        private appService: AppService,
+        private router: Router,
         private fb: FormBuilder,
         ) {}
 
@@ -43,6 +47,16 @@ export class AlbumCreateComponent implements OnInit {
         }
     }
 
+    removeImageFile() {
+        const c = confirm('Are you sure you want to remove this picture?');
+        if (c === true) {
+            console.log(this.albumForm.value);
+            this.previewImageUrl = '';
+            this.albumForm.controls['imageData'].reset(null);
+            console.log('image removed',this.albumForm.value);
+        }
+    }
+
     protected _handleReaderLoaded(readerEvt) {
         const binaryString = readerEvt.target.result;
         this.fileString = btoa(binaryString);  // Converting binary string data
@@ -52,7 +66,8 @@ export class AlbumCreateComponent implements OnInit {
 
     createAlbum() {
         this.savingAlbum = this.albumService.createAlbum(this.albumForm.value).subscribe((res: any) => {
-                this.notificationService.success('Yipppie!', 'Album created.');
+                this.appService.showToastNotification('', 'Album created.', 'SUCCESS');
+                this.router.navigate(['/albums', res.data.slug]);
             },
             errors => {
                 this.errors = errors.json();

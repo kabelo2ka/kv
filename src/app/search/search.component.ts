@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit, ViewChild, ElementRef} from "@angular/core";
 import {AppService} from "../app.service";
 import {Observable} from "rxjs";
 import {TypeaheadMatch} from "ngx-bootstrap";
@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
     styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit, OnDestroy {
-
+    @ViewChild('searchInput') searchInputEl: ElementRef;
     mobile_search_visible = false;
 
     public typeheadModel: string;
@@ -32,8 +32,11 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         // Mobile Search
-        this.appService.mobile_search_visible$.subscribe(res => {
+        this.appService.mobile_search_visible$.subscribe((res:boolean) => {
             this.mobile_search_visible = res;
+            if(res) {
+                this.focusInput();
+            }
         });
     }
 
@@ -53,7 +56,13 @@ export class SearchComponent implements OnInit, OnDestroy {
     public typeaheadOnSelect(e: TypeaheadMatch): void {
         const url = '/songs/' + e.item.slug;
         this.router.navigate([url]);
+        this.mobileSearch(false);
         // console.log('Selected value: ', e);
+    }
+
+    // @todo: Fix this - Must auto focus when the user clicks the search button
+    focusInput() {
+        this.searchInputEl.nativeElement.focus();
     }
 
 

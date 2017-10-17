@@ -29,6 +29,8 @@
 
                 <div>
                     <img style="height: 38px;" *ngIf="previewImageUrl!==''" src="{{ previewImageUrl }}">
+                    <span *ngIf="previewImageUrl!==''" (click)="removeImageFile()" class="btn btn-danger"
+                          title="Remove picture."> <i class="fa fa-remove"></i></span>
                     <label class="btn btn-default"> <i class="fa fa-file-image-o"></i>
                         <span *ngIf="previewImageUrl===''">Select Cover Picture</span>
                         <span *ngIf="previewImageUrl!==''">Change Cover Picture</span>
@@ -51,8 +53,9 @@
                         </button>
                     </div>
                     <div class="pull-right">
-                        <button type="button" class="btn btn-danger" (click)="deleteAlbum()" [disabled]="deletingAlbum || savingAlbum">
-                            <i *ngIf="deletingAlbum" class="fa fa-spinner fa-pulse fa-fw"></i> Delete
+                        <button type="button" class="btn btn-danger" (click)="deleteAlbum()"
+                                [disabled]="deletingAlbum || savingAlbum">
+                            <i *ngIf="deletingAlbum" class="fa fa-spinner fa-pulse fa-fw"></i> Delete Album
                         </button>
                     </div>
                 </div>

@@ -29,6 +29,8 @@
 
                 <div>
                     <img style="height: 38px;" *ngIf="previewImageUrl!==''" src="{{ previewImageUrl }}">
+                    <span *ngIf="previewImageUrl!==''" (click)="removeImageFile()" class="btn btn-danger"
+                          title="Remove picture."> <i class="fa fa-remove"></i></span>
                     <label class="btn btn-default"> <i class="fa fa-file-image-o"></i>
                         <span *ngIf="previewImageUrl===''">Select Cover Picture</span>
                         <span *ngIf="previewImageUrl!==''">Change Cover Picture</span>
@@ -45,7 +47,7 @@
 
                 <div class="clearfix">
                     <div class="pull-right">
-                        <button type="submit" class="btn btn-success" [disabled]="!albumForm.valid || savingAlbum">
+                        <button type="submit" class="btn btn-success" [disabled]="!albumForm.valid || !!savingAlbum">
                             <i *ngIf="savingAlbum" class="fa fa-spinner fa-pulse fa-fw"></i> Save
                         </button>
                     </div>

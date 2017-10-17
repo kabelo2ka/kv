@@ -4,13 +4,11 @@ import {NgForm} from '@angular/forms';
 import {AuthService} from '../auth/authService';
 import {AppService} from '../app.service';
 import {Subscription} from 'rxjs';
-import {NotificationsService} from 'angular2-notifications/dist';
 
 @Component({
     selector: 'app-signin',
     templateUrl: './signin.component.html',
     styleUrls: ['./signin.component.css'],
-    providers: [NotificationsService]
 })
 export class SigninComponent implements OnInit {
     @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
@@ -22,7 +20,6 @@ export class SigninComponent implements OnInit {
 
     constructor(private authService: AuthService,
                 private appService: AppService,
-                private notificationService: NotificationsService,
                 ) {
         this.errors = {
             error: null,
@@ -53,7 +50,7 @@ export class SigninComponent implements OnInit {
         this.signingIn = this.authService.signIn(form.value.email, form.value.password).subscribe(
             () => {
                 this.autoShownModal.hide();
-                this.notificationService.success('Hello :-)', 'You are logged in.');
+                this.appService.showToastNotification('Hello :-)', 'You are logged in.', 'SUCCESS');
             },
             errors => {
                 this.errors = errors.json();

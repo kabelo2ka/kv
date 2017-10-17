@@ -14,6 +14,7 @@ export class AppService {
     private sign_in_modal = new Subject<boolean>();
     private sign_up_modal = new Subject<boolean>();
     private share_modal = new Subject<boolean>();
+    private toastNotification = new Subject<any>();
 
     // Observable string streams
     left_mobile_menu_visible$ = this.left_mobile_menu_visible.asObservable();
@@ -22,6 +23,7 @@ export class AppService {
     sign_in_modal$ = this.sign_in_modal.asObservable();
     sign_up_modal$ = this.sign_up_modal.asObservable();
     share_modal$ = this.share_modal.asObservable();
+    toastNotification$ = this.toastNotification.asObservable();
 
 
     setLeftMobileMenuVisible(visible: boolean) {
@@ -46,6 +48,10 @@ export class AppService {
 
     showShareModal(visible: boolean) {
         this.share_modal.next(visible);
+    }
+
+    showToastNotification(title: string, content: string, type?: 'SUCCESS' | 'ERROR' | 'INFO' | 'ALERT') {
+        this.toastNotification.next({title: title, content: content, type: type});
     }
 
 }

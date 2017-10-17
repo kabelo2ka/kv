@@ -10,13 +10,15 @@
                typeaheadOptionField="name"
                typeaheadWaitMs="300"
                [typeaheadItemTemplate]="customItemTemplate"
+               #searchInput
                type="text" name="query" class="search-input form-control" placeholder="Search for songs" autocomplete="off">
-        <span class="input-group-btn">
+        <span class="input-group-btn hidden-xs">
             <button class="btn btn-default" type="button">
                 <i *ngIf="typeaheadLoading" class="fa fa-spinner fa-pulse"></i>
                 <i *ngIf="!typeaheadLoading" class="fa fa-search"></i>
             </button>
         </span>
+        <i *ngIf="typeaheadLoading" class="fa fa-spinner fa-pulse mobile-search-spinner visible-xs"></i>
     </div>
     <span (click)="mobileSearch(false)" class="close-search visible-xs"><i class="fa fa-close"></i></span>
 </form>

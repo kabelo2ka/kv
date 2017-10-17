@@ -19,19 +19,51 @@
                         <option *ngFor="let genre of genres" [ngValue]="genre.id">{{ genre.name }}</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group required">
+                    <label for="song_album" class="control-label">Album</label>
+                    <select id="song_album" class="form-control" name="album_id" [(ngModel)]="song.album_id" required>
+                        <option *ngFor="let album of albums" [ngValue]="album.id">{{ album.name }}</option>
+                    </select>
+                </div>
+                <!--<div class="form-group">
                     <label for="song_name" class="control-label">Upload Audio File</label>
                     <input #fileInput type="file" accept=".mp3,.wav,.ogg" name="file">
-                    <!--<p class="help-block text-muted">Only mp3, wav and ogg file formats are allowed.</p>-->
-                </div>
+                    &lt;!&ndash;<p class="help-block text-muted">Only mp3, wav and ogg file formats are allowed.</p>&ndash;&gt;
+                </div>-->
                 <div class="form-group">
                     <label for="song_lyrics">Lyrics</label>
                     <textarea id="song_lyrics" rows="10" class="form-control" name="lyrics"
                               [(ngModel)]="song.lyrics"></textarea>
                 </div>
-                <button type="submit" class="btn btn-success" [disabled]="!songEditForm.valid || savingSong">
-                    <i *ngIf="savingSong" class="fa fa-spinner fa-pulse fa-fw"></i> Save
-                </button>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="downloadable" [(ngModel)]="song.downloadable"> Enable downloads
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="commentable" [(ngModel)]="song.commentable"> Enable comments
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="private" [(ngModel)]="song.private"> Private
+                    </label>
+                </div>
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <button type="submit" class="btn btn-success" [disabled]="!songEditForm.valid || savingSong || deletingSong">
+                            <i *ngIf="savingSong" class="fa fa-spinner fa-pulse fa-fw"></i> Save
+                        </button>
+                    </div>
+
+                    <div class="pull-right">
+                        <button type="button" (click)="deleteSong()" class="btn btn-danger" [disabled]="deletingSong || savingSong">
+                            <i *ngIf="deletingSong" class="fa fa-spinner fa-pulse fa-fw"></i> Delete Song
+                        </button>
+                    </div>
+                </div>
+
             </form>
         </div>
     </div>

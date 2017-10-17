@@ -7,10 +7,10 @@ import {Injectable, NgZone} from '@angular/core';
 import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
 
-declare const AudioContext: any;
+/*declare const AudioContext: any;
 declare const webkitAudioContext: any;
 // TODO Abstract visualizer to separate class
-declare const d3: any;
+declare const d3: any;*/
 
 @Injectable()
 export class AudioAPIWrapper {
@@ -18,14 +18,14 @@ export class AudioAPIWrapper {
     _audio: any;
     _audioSrc: any;
     _analyser: any;
-    _audioCtx = new (AudioContext || webkitAudioContext)();
+    //_audioCtx = new (AudioContext || webkitAudioContext)();
     _svg: any;
 
     constructor(private _zone: NgZone) {
         this._createAudio();
     }
 
-    visualize() {
+    /*visualize() {
         const self = this;
         const frequencyData = new Uint8Array(200);
         const svgHeight = 300;
@@ -73,7 +73,7 @@ export class AudioAPIWrapper {
 
         // Run the loop
         renderChart();
-    }
+    }*/
 
     play() {
         if (!this._audio.src) { alert('Select song'); return; }
@@ -126,11 +126,11 @@ export class AudioAPIWrapper {
         if (!this._audio) {
             this._audio = new Audio();
             this._audio.autoplay = false;
-            this._audio.preload = 'auto';
+            this._audio.preload = 'none';
             this._audio.autobuffer = true;
         }
 
-        if (!this._audioSrc) {
+        /*if (!this._audioSrc) {
             this._audioSrc = this._audioCtx.createMediaElementSource(this._audio);
         }
 
@@ -139,7 +139,7 @@ export class AudioAPIWrapper {
             this._analyser = this._audioCtx.createAnalyser();
             this._audioSrc.connect(this._analyser);
             this._audioSrc.connect(this._audioCtx.destination);
-        }
+        }*/
     }
 
     _destroyAudio(): void {

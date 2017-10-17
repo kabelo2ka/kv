@@ -1,24 +1,35 @@
 <nav id="mobile-menu" class="visible-xs" [ngClass]="{'active': left_mobile_menu_visible}">
     <div class="header">
+        <div *ngIf="authService.loggedIn() && user" class="user-profile p-l-xs">
+            <img width="30px" class="img-circle" src="{{ user.avatar }}" alt="Avatar of {{ user.username }} "> &nbsp;
+            <span *ngIf="user?.artist_name"><strong>{{ user?.artist_name }}</strong></span>
+            <span *ngIf="!user?.artist_name"><strong>{{ user.username }}</strong></span>
+        </div>
         <div class="pull-right">
-            <div (click)="mobileMenu(false)" class="btn-close-menu js-nav-main">CLOSE</div>
+            <div (click)="mobileMenu(false)" class="btn-close-menu">CLOSE</div>
         </div>
     </div>
     <ul (click)="mobileMenu(false);" class="list-unstyled">
-        <li *ngIf="!is_logged_in"><a (click)="showSignInModal()"><i class="fa fa-sign-in"></i> <span>Login</span></a></li>
-        <li *ngIf="is_logged_in"><a (click)="OnLogout()"><i class="fa fa-sign-out"></i> <span>Logout</span></a></li>
-        <li *ngIf="!is_logged_in"><a (click)="showSignUpModal()"><i class="fa fa-pencil-square-o"></i> <span>Sign Up</span></a></li>
+        <li *ngIf="!authService.loggedIn()"><a (click)="showSignInModal()"><i class="fa fa-sign-in"></i> <span>Login</span></a>
+        </li>
+        <li *ngIf="!authService.loggedIn()"><a (click)="showSignUpModal()"><i class="fa fa-pencil-square-o"></i>
+            <span>Sign Up</span></a></li>
 
-        <li><a routerLink="/"><i class="fa fa-home"></i> <span>Home</span></a></li>
-        <li><a routerLink="/songs"><i class="fa fa-music"></i> <span>All Songs</span></a></li>
-        <li><a routerLink="/albums"><i class="fa fa-play-circle"></i> <span>Albums</span></a></li>
-        <li><a routerLink="/artists"><i class="fa fa-microphone"></i> <span>Artists</span></a></li>
-        <li class="bg-success"><a routerLink="/songs/create"><i class="fa fa-cloud-upload"></i> <span>Upload Song</span></a></li>
+        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="icon-home text-info"></i> <span>Home</span></a></li>
+        <li><a routerLink="/songs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="icon-earphones text-warning"></i> <span>All Songs</span></a></li>
+        <li><a routerLink="/albums" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="icon-picture text-primary"></i> <span>Albums</span></a></li>
+        <li><a routerLink="/artists" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="icon-microphone text-danger"></i> <span>Artists</span></a></li>
+        <li class="bg-success"><a routerLink="/songs/create" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="icon-cloud-upload text-success"></i> <span>Upload Song</span></a>
+        </li>
+        <li *ngIf="authService.loggedIn() && user"><a [routerLink]="['/artists', user?.slug]" routerLinkActive="active"><i class="icon-earphones text-warning"></i><span>My Songs</span></a></li>
+        <li *ngIf="authService.loggedIn()"><a routerLink="/settings" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
+        <li *ngIf="authService.loggedIn()"><a (click)="OnLogout()"><i class="fa fa-sign-out"></i> <span>Logout</span></a></li>
     </ul>
 </nav>
 <div class="visible-xs">
-    <div (click)=" mobileMenu(false); mobileSearch(false)" id="mobile-overlay" [ngClass]="{'active': mobile_search_visible || left_mobile_menu_visible}">
-</div>
+    <div (click)=" mobileMenu(false); mobileSearch(false)" id="mobile-overlay"
+         [ngClass]="{'active': mobile_search_visible || left_mobile_menu_visible}">
+    </div>
     <!--<div class="spinner"></div>-->
 </div>
 
@@ -48,6 +59,7 @@
     </div>
 </div>
 
-<app-signup></app-signup>
-<app-signin></app-signin>
+<app-signup *ngIf="!authService.loggedIn()"></app-signup>
+<app-signin *ngIf="!authService.loggedIn()"></app-signin>
 <app-share></app-share>
+<app-notification-toast></app-notification-toast>
