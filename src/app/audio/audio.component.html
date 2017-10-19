@@ -24,6 +24,9 @@
                     <em>Uploaded by {{ song?.user.username }}</em>
                 </p>
             </div>
+            <div *ngIf="!song" class="audio-info">
+                <p>No song selected</p>
+            </div>
         </div>
 
     </div>
