@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {SongService} from '../songs.component/song.service';
 import {AudioAPIWrapper} from './audio-api-wrapper';
 import {Song} from '../songs.component/song';
-import {UserPreferencesService} from "../user-preferences/user-preferences.service";
+import {UserPreferencesService} from '../user-preferences/user-preferences.service';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class AudioComponent implements OnInit, OnDestroy {
     audio_progress_played = 0;
     audio_buffered_value = 0;
     audio_seek_value = 0;
-    audio_volume_value = 80;
+    audio_volume_value = 100;
     repeatMode: 'REPEAT_ONE'|'NO_REPEAT'|'REPEAT_ALL';
     muted = false;
     info_panel_visible = false;
@@ -40,8 +40,8 @@ export class AudioComponent implements OnInit, OnDestroy {
                 private userPreferencesService: UserPreferencesService
     ) {
         this.muted = this.userPreferencesService.getPreference(UserPreferencesService.MUTED);
-        if(this.muted){
-            this.audio_volume_value=0;
+        if (this.muted){
+            this.audio_volume_value = 0;
         }else{
             this.audio_volume_value = this.userPreferencesService.getPreference(UserPreferencesService.VOLUME);
         }
@@ -61,21 +61,19 @@ export class AudioComponent implements OnInit, OnDestroy {
         // Get audio status play | pause | stop
         this.audioService.status$.subscribe( (status: number) => {
             this.audioStatus = status;
-            if( this.isLoading() ){
+            if ( this.isLoading() ){
                 this.reset();
             }
         });
 
         // Calculate Progress played
         this.audioApiWrapper.bindAudioEvent('timeupdate').subscribe( () => {
-            let current_time = this.audioApiWrapper._audio.currentTime;
-            let duration = this.audioApiWrapper._audio.duration;
-            console.log('current_time', current_time);
+            const current_time = this.audioApiWrapper._audio.currentTime;
+            const duration = this.audioApiWrapper._audio.duration;
             if (current_time > 0) {
-                let seek_value = (current_time / duration) * 100;
-                console.log('seek_value', duration);
+                const seek_value = (current_time / duration) * 100;
                 this.audio_seek_value = this.audio_progress_played = seek_value;
-                this.formatTime(Math.floor(current_time));
+                this.formatTime(Math.floor(duration - current_time));
             }
         });
 
@@ -180,7 +178,7 @@ export class AudioComponent implements OnInit, OnDestroy {
      * Set volume value
      */
     setVolume(val): void {
-        if(this.muted){
+        if (this.muted){
             this.toggleMute();
         }
         this.audioApiWrapper._audio.volume = val / 100;
@@ -193,7 +191,7 @@ export class AudioComponent implements OnInit, OnDestroy {
     toggleMute(): void {
         this.muted = !this.muted;
         this.userPreferencesService.setPreference(UserPreferencesService.MUTED, this.muted);
-        if(this.muted){
+        if (this.muted){
             this.audio_volume_value = 0;
             this.audioApiWrapper._audio.volume = 0;
         }else{
