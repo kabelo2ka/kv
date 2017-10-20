@@ -10,13 +10,16 @@ import {Observable} from "rxjs";
 @Injectable()
 export class AudioService {
 
+    static readonly CURRENT_SONG_KEY = 'kv.local::currentSong';
+
     AUDIO_LOADING = 0;
     AUDIO_PLAYING = 1;
     AUDIO_PAUSED = 2;
     AUDIO_STOPPED = 3;
     AUDIO_ENDED = 4;
 
-    private loadedAudio: Song;
+    loadedSong: Song;
+    loadedSongStatus = 3;
 
     // Observable string sources
     private currentSong = new Subject<Song>();
@@ -43,20 +46,26 @@ export class AudioService {
             this.setStatus(this.AUDIO_STOPPED);
             this.setStatus(this.AUDIO_ENDED);
         });
+
     }
 
     playSong(song: Song) {
 
-        if (this.loadedAudio && this.loadedAudio.id === song.id) {
+        if (this.loadedSong && this.loadedSong.id === song.id) {
             this.audioApiWrapper.play();
         }else {
             // Set Active Song
             this.setSong(song);
             this.audioApiWrapper.load(song.url);
             this.setStatus(this.AUDIO_LOADING);
-            this.loadedAudio = song;
-            localStorage.setItem('currentSong', JSON.stringify(song));
+            this.loadedSong = song;
+            localStorage.setItem(AudioService.CURRENT_SONG_KEY, JSON.stringify(song));
         }
+    }
+
+    pauseSong() {
+        this.audioApiWrapper.pause();
+        this.setStatus(this.AUDIO_PAUSED)
     }
 
 
@@ -64,7 +73,7 @@ export class AudioService {
      * Set active song
      * @param song
      */
-    protected setSong(song: Song) {
+    setSong(song: Song) {
         this.currentSong.next(song);
     }
 
@@ -72,7 +81,8 @@ export class AudioService {
      * Set Audio Status
      * @param status pause | play | stop | loading
      */
-    protected setStatus(status: number) {
+    setStatus(status: number) {
+        this.loadedSongStatus = status;
         this.status.next(status);
     }
 

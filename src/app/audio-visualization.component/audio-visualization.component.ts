@@ -1,6 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Input} from '@angular/core';
 import {AudioService} from "../audio/audio.service";
-import {forEach} from "@angular/router/src/utils/collection";
 import {AudioAPIWrapper} from "../audio/audio-api-wrapper";
 
 @Component({
@@ -15,30 +14,22 @@ import {AudioAPIWrapper} from "../audio/audio-api-wrapper";
         </span>
     `,
     styleUrls: ['./audio-visualization.component.css'],
-    providers: []
 })
 
 export class AudioVisualizationComponent implements OnInit {
+    @Input() status;
+
     @ViewChild('music_bars_cont') music_bars_cont;
     music_bars: any = [];
     audio_visualisation;
     animation;
-    constructor(private audioService: AudioService,private audioApiWrapper: AudioAPIWrapper) {
-    }
+
+    constructor(
+        private audioApiWrapper: AudioAPIWrapper
+    ) {}
 
     ngOnInit() {
         this.music_bars = this.music_bars_cont.nativeElement.children;
-        /*this.audioService.status$.subscribe(
-            status => {
-                if(status === 'play'){
-                    this.startAudioVisualization();
-                }else if(status === 'pause'){
-                    this.pauseAudioVisualisation();
-                }else if(status === 'stop'){
-                    this.stopAudioVisualisation();
-                }
-            }
-        );*/
         this.audioApiWrapper.bindAudioEvent('play').subscribe(
             ()=> this.startAudioVisualization()
         );
@@ -64,11 +55,11 @@ export class AudioVisualizationComponent implements OnInit {
 
     pauseAudioVisualisation() {
         clearInterval(this.animation);
-        this.audio_visualisation = 0;
+        this.audio_visualisation = 1;
     }
 
     stopAudioVisualisation() {
-        this.animation = clearInterval(this.audio_visualisation);
+        this.animation = clearInterval(this.animation);
         for (let i = 0; i < this.music_bars.length; i++) {
             this.music_bars[i].style.height = 2 + '%';
         }

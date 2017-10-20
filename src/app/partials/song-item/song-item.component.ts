@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {Song} from '../../songs.component/song';
 import {AudioService} from '../../audio/audio.service';
 import {AudioAPIWrapper} from '../../audio/audio-api-wrapper';
@@ -18,6 +18,7 @@ export class SongItemComponent implements OnInit {
 
     constructor(
         protected audioService: AudioService,
+        private cdr: ChangeDetectorRef,
     ) {}
 
     ngOnInit() {
@@ -28,6 +29,11 @@ export class SongItemComponent implements OnInit {
 
     setAudioStatus(status: number) {
         this.audioStatus = status;
+    }
+
+    setActiveSong(status: boolean) {
+        this.isActiveSong = status;
+        this.cdr.detectChanges();
     }
 
     isLoading() {

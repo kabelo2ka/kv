@@ -7,6 +7,7 @@ import {SongService} from '../songs.component/song.service';
 import {AudioAPIWrapper} from './audio-api-wrapper';
 import {Song} from '../songs.component/song';
 import {UserPreferencesService} from '../user-preferences/user-preferences.service';
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -17,7 +18,7 @@ import {UserPreferencesService} from '../user-preferences/user-preferences.servi
 
 export class AudioComponent implements OnInit, OnDestroy {
     song: Song;
-    songCopy: any;
+    songCopy: Song;
     src = '';
 
     audioStatus: number;
@@ -30,6 +31,8 @@ export class AudioComponent implements OnInit, OnDestroy {
     repeatMode: 'REPEAT_ONE'|'NO_REPEAT'|'REPEAT_ALL';
     muted = false;
     info_panel_visible = false;
+
+    play_recorded = false;
 
     subscription: Subscription;
 
@@ -56,6 +59,7 @@ export class AudioComponent implements OnInit, OnDestroy {
         this.audioService.currentSong$.subscribe( currentSong => {
             this.songCopy = this.song;
             this.song = currentSong;
+            this.play_recorded = false;
         });
 
         // Get audio status play | pause | stop
@@ -74,6 +78,14 @@ export class AudioComponent implements OnInit, OnDestroy {
                 const seek_value = (current_time / duration) * 100;
                 this.audio_seek_value = this.audio_progress_played = seek_value;
                 this.formatTime(Math.floor(duration - current_time));
+                if (!this.play_recorded && current_time >= 5) {
+                    // Post play to server after 5 seconds
+                    this.play_recorded = true;
+                    this.songService.postPlay(this.song.id).subscribe(
+                        res => this.play_recorded = true,
+                        () => this.play_recorded = false
+                    );
+                }
             }
         });
 
@@ -82,26 +94,32 @@ export class AudioComponent implements OnInit, OnDestroy {
             () => this.audio_volume_value = this.audioApiWrapper._audio.volume * 100
         );
 
-        // Post play to server after 5 seconds
-        this.audioApiWrapper.bindAudioEvent('play').subscribe(
-            () => setTimeout(() => this.songService.postPlay(this.song.id).subscribe(), 5000)
-        );
+
+        this.audioApiWrapper.bindAudioEvent('play').subscribe( () => {
+
+        });
 
         // Calculate Buffered/Loaded percentage
-        setInterval(() => {
-            const audioElem = this.audioApiWrapper._audio;
-            const buffered = audioElem.buffered;
-            let loaded;
-            if (buffered.length) {
-                loaded = 100 * buffered.end(0) / audioElem.duration;
-                this.audio_buffered_value = loaded.toFixed(2);
-            }
-        }, 50);
+        Observable
+            .interval(50)
+            .subscribe(val => {
+                const audioElem = this.audioApiWrapper._audio;
+                const buffered = audioElem.buffered;
+                let loaded;
+                if (buffered.length) {
+                    loaded = 100 * buffered.end(0) / audioElem.duration;
+                    this.audio_buffered_value = loaded.toFixed(2);
+                }
+            });
 
         // Check if right panel is closed or opened
         this.appService.right_panel_visible$.subscribe(
             res => this.info_panel_visible = res
         );
+
+        setTimeout(() => this.audioService.setSong( JSON.parse(localStorage.getItem(AudioService.CURRENT_SONG_KEY)) ), 2000)
+
+
     }
 
     /*
