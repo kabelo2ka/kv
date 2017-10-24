@@ -12,19 +12,30 @@
                         Upload Song</a>
                 </div>
             </div>
-
-            <div *ngIf="trendingSongs" class="trending-songs m-t-lg">
-                <h2 class="h4 text-center">Trending Songs</h2>
+        </div>
+    </div>
+    <div *ngIf="trendingSongs || loadingTrendingSongs" class="row trending-songs m-t-lg">
+        <div class="col-md-6 col-md-offset-3">
+            <div *ngIf="loadingTrendingSongs" class="text-center">
+                <i class="fa fa-spinner fa-pulse fa-fw"></i> Getting trending songs...
+            </div>
+            <div *ngIf="trendingSongs">
+                <h2 class="h4 text-center"><i class="icon-chart text-muted"></i> Trending Songs</h2>
                 <ul class="list-group">
+                    <li *ngFor="let song of trendingSongs; index as i; even as isEven; odd as isOdd; first as isFirst; last as isLast;" [ngClass]="{'kv-active':activeSongId === song.id}"
+                        class="list-group-item">
 
-                    <li *ngFor="let song of trendingSongs" [ngClass]="{'kv-active':activeSongId === song.id}" class="list-group-item">
-
-                        <app-song-item [song]="song" (onSetActiveSongId)="setActiveSongId($event)"></app-song-item>
+                        <div style="display: flex">
+                            <div style="width: 20px; line-height: 60px; font-size: 120%;"><strong>{{ i+1 }}</strong></div>
+                            <div style="flex: 1">
+                                <app-song-item [song]="song" (onSetActiveSongId)="setActiveSongId($event)"></app-song-item>
+                            </div>
+                        </div>
 
                     </li>
-
-                </ul>            </div>
-
+                </ul>
+                <a class="btn btn-default btn-block" routerLink="songs">See More</a>
+            </div>
         </div>
     </div>
 </div>

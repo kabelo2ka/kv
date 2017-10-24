@@ -16,8 +16,13 @@
                     <app-audio-visualization *ngIf="isActiveSong" [status]="audioStatus" class="m-l-xs" [ngStyle]="{'display':isPlaying()?'inline':'none'}"></app-audio-visualization>
                 </h6>
                 <div>
-                    <small *ngIf="song.user.artist_name"><i class="icon-cloud-upload" title="Uploaded by {{ song.user.username }}"></i> {{ song.user.artist_name }}</small>
-                    <small *ngIf="! song.user.artist_name && !song.is_admin"><i class="icon-cloud-upload" title="Uploaded by {{ song.user.username }}"></i> {{ song.user.username }}
+                    <small *ngIf="song.user.artist_name">
+                        <i class="icon-cloud-upload" title="Uploaded by {{ song.user.username }}"></i>
+                        <a style="color:#888888" [routerLink]="['artists', song.user.slug]">{{ song.user.username }}</a>
+                    </small>
+                    <small *ngIf="! song.user.artist_name && !song.is_admin" title="Uploaded by {{ song.user.username }}">
+                        <i class="icon-cloud-upload"></i>
+                        <a style="color:#888888" [routerLink]="['artists', song.user.slug]">{{ song.user.username }}</a>
                     </small>
                     <small *ngIf="! song.user.artist_name && song.is_admin">Uploaded by You</small>
                 </div>

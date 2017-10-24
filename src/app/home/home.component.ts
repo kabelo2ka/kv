@@ -44,7 +44,10 @@ export class HomeComponent implements OnInit, OnDestroy{
         this.loadingTrendingSongs = this.songService.getTrendingSongs(3).subscribe(
             (res: any) => {
                 this.trendingSongs = res.data;
+                this.loadingTrendingSongs = null;
             },
+            () => {},
+            () => this.loadingTrendingSongs = null
         );
     }
 
