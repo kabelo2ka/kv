@@ -1,15 +1,12 @@
-import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
+import {Component, OnInit} from '@angular/core';
 
 
-import {SongService} from "./song.service";
-import {Song} from "./song";
-import {Meta} from "../meta";
-import {AudioService} from "../audio/audio.service";
-import {AppService} from "../app.service";
+import {SongService} from './song.service';
+import {Song} from './song';
+import {Meta} from '../meta';
 
-import {Observable, Subscription} from "rxjs";
-import {AudioAPIWrapper} from "../audio/audio-api-wrapper";
-import * as io from "socket.io-client";
+import {Observable, Subscription} from 'rxjs';
+import * as io from 'socket.io-client';
 
 @Component({
     templateUrl: './songs.component.html',
@@ -76,7 +73,7 @@ export class SongsComponent implements OnInit {
         );
     }
 
-    setActiveSongId(songId: number){
+    setActiveSongId(songId: number) {
         this.activeSongId = songId;
     }
 

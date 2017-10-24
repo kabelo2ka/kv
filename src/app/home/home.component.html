@@ -1,23 +1,29 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-
-            <br><br><br>
-
-            <h3 class="text-center" *ngIf="authService.loggedIn()">Welcome, {{ user?.username }}</h3>
-            <h3 class="text-center" *ngIf="!authService.loggedIn()">Welcome!</h3>
-            <br>
+            <h3 class="text-center m-t-lg" *ngIf="authService.loggedIn()">Welcome, {{ user?.username }}</h3>
+            <h4 class="text-center m-t-lg" *ngIf="!authService.loggedIn()">Welcome!</h4>
             <p class="text-center">Join your friends & listen to the best local music.</p>
 
-            <br><br><br>
-
-            <div class="text-center">
+            <div class="text-center m-t-md">
                 <div class="btn-group" role="group">
                     <a class="btn btn-primary btn-md" routerLink="songs"><i class="fa fa-play"></i> Start listening</a>
                     <a class="btn btn-success btn-md" routerLink="songs/create"><i class="fa fa-cloud-upload"></i>
                         Upload Song</a>
                 </div>
             </div>
+
+            <div *ngIf="trendingSongs" class="trending-songs m-t-lg">
+                <h2 class="h4 text-center">Trending Songs</h2>
+                <ul class="list-group">
+
+                    <li *ngFor="let song of trendingSongs" [ngClass]="{'kv-active':activeSongId === song.id}" class="list-group-item">
+
+                        <app-song-item [song]="song" (onSetActiveSongId)="setActiveSongId($event)"></app-song-item>
+
+                    </li>
+
+                </ul>            </div>
 
         </div>
     </div>

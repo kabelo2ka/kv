@@ -1,15 +1,15 @@
-import {Injectable} from "@angular/core";
-import {Headers, Http, RequestOptions, Response} from "@angular/http";
-import {AuthHttp} from "angular2-jwt";
+import {Injectable} from '@angular/core';
+import {Headers, Http, RequestOptions, Response} from '@angular/http';
+import {AuthHttp} from 'angular2-jwt';
 
-import "rxjs/add/operator/toPromise";
+import 'rxjs/add/operator/toPromise';
 
-import {Observable} from "rxjs/Observable";
-import "rxjs/add/operator/catch";
-import "rxjs/add/operator/map";
-import {AuthService} from "../auth/authService";
-import {Subject} from "rxjs";
-import {AppService} from "../app.service";
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+import {AuthService} from '../auth/authService';
+import {Subject} from 'rxjs';
+import {AppService} from '../app.service';
 
 
 @Injectable()
@@ -19,6 +19,7 @@ export class SongService {
         'Content-Type': 'application/json',
     });
     private SONGS_URL = '//kasivibe.com/api/v1/songs';
+    private SONGS_TRENDING_URL = '//kasivibe.com/api/v1/trending-songs';
     private USER_URL = '//kasivibe.com/api/v1/user';
     private SONG_LIKE_URL = '//kasivibe.com/api/v1/song/like';
     // URL to web api
@@ -40,6 +41,12 @@ export class SongService {
     getSongs(query?: string) {
         query = (query && query.trim() !== '' || query !== undefined) ? '?query=' + query : '';
         return this.authHttp.get(this.SONGS_URL + query)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    getTrendingSongs(limit= 3) {
+        return this.authHttp.get(this.SONGS_TRENDING_URL + '?limit=' + limit)
             .map(this.extractData)
             .catch(this.handleError);
     }

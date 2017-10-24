@@ -1,7 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {Song} from '../../songs.component/song';
 import {AudioService} from '../../audio/audio.service';
-import {AudioAPIWrapper} from '../../audio/audio-api-wrapper';
 
 @Component({
     selector: 'app-song-item',
