@@ -22,7 +22,10 @@ export class SongItemComponent implements OnInit {
 
     ngOnInit() {
         this.audioService.currentSong$.subscribe((song: Song) => {
-            this.isActiveSong = song.id === this.song.id;
+            if (song && song.id) {
+                this.isActiveSong = song.id === this.song.id;
+            }
+
         });
     }
 

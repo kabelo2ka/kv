@@ -23,7 +23,8 @@
                    [uploadInput]="uploadInput">
 
 
-            <div *ngIf="file && authService.loggedIn()" class="progress-container">
+            <!--<div *ngIf="file && authService.loggedIn()" class="progress-container">-->
+            <div class="progress-container">
                 <div>
                     Uploading <span class="filename">{{ file.name }}</span>
                     <span class="progress-data">{{ file.progress.data.percentage }}% at {{ file.progress.data.speedHuman }} eta {{ file.progress.data.eta }}</span>
@@ -34,7 +35,8 @@
                 </div>
             </div>
 
-            <div *ngIf="file && authService.loggedIn()" class="m-t-md">
+            <!--<div *ngIf="file && authService.loggedIn()" class="m-t-md">-->
+            <div class="m-t-md">
                 <!--<div class="m-t-md">-->
                 <form [formGroup]="songForm" (ngSubmit)="createSong()" class="song-create-form">
                     <tabset>
@@ -117,7 +119,9 @@
                     <div class="clearfix">
                         <div class="pull-right">
                             <button (click)="resetFrom()" type="button" class="btn btn-link">Cancel</button>
-                            <button type="submit" [disabled]="!songForm.valid" class="btn btn-primary">Save</button>
+                            <button type="submit" [disabled]="!songForm.valid || !savingSong" class="btn btn-primary">
+                                <i *ngIf="savingSong" class="fa fa-spinner fa-pulse fa-fw"></i> Save
+                            </button>
                         </div>
                     </div>
                 </form>

@@ -11,6 +11,7 @@ import {Album} from '../albums/album';
 import {AppService} from '../app.service';
 import {ActivatedRoute, Params} from "@angular/router";
 import {User} from "../user.component/user";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-songs-upload',
@@ -23,6 +24,7 @@ import {User} from "../user.component/user";
 export class SongCreateComponent implements OnInit, OnChanges {
 
     songForm: FormGroup;
+    savingSong: Subscription;
 
     file: UploadFile;
     uploadInput: EventEmitter<UploadInput>;
@@ -155,11 +157,17 @@ export class SongCreateComponent implements OnInit, OnChanges {
     }
 
     createSong() {
-        this.songService.createSong(this.songForm.value).subscribe(
+        this.savingSong = this.songService.createSong(this.songForm.value).subscribe(
             (res: any) => {
-                this.notificationService.success('Yipppie!', 'File Uploaded.');
+                this.appService.showToastNotification('', 'Song Saved.', 'SUCCESS');
+                this.songForm.reset({'genre_id':'','album_id':'','commentable':true});
+                this.savingSong = null;
             },
-            error => this.notificationService.success('Ooops!', 'File not uploaded. Please try again.')
+            error => {
+                this.appService.showToastNotification('', 'Song not saved. Please try again.', 'ERROR');
+                this.savingSong = null;
+            },
+            () => this.savingSong = null
         );
     }
 
