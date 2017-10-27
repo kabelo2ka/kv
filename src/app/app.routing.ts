@@ -16,11 +16,21 @@ import {SongComponent} from './song/song.component';
 import {SettingsComponent} from './settings.component/settings.component';
 import {AlbumCreateComponent} from "./album-create/album-create.component";
 import {AlbumEditComponent} from "./album-edit/album-edit.component";
+import {PrivacyComponent} from "./policies/privacy/privacy.component";
+import {TermsComponent} from "./policies/terms/terms.component";
 
 const appRoutes: Routes = <Routes>[
     {
         path: '',
         component: HomeComponent,
+    },
+    {
+        path: 'policies/terms',
+        component: TermsComponent,
+    },
+    {
+        path: 'policies/privacy',
+        component: PrivacyComponent,
     },
     {
         path: 'settings',

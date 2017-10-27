@@ -70,6 +70,8 @@ import {UserPreferencesService} from './user-preferences/user-preferences.servic
 import { AlbumCreateComponent } from './album-create/album-create.component';
 import { AlbumEditComponent } from './album-edit/album-edit.component';
 import { AlbumItemGridComponent } from './partials/album-item-grid/album-item-grid.component';
+import { TermsComponent } from './policies/terms/terms.component';
+import { PrivacyComponent } from './policies/privacy/privacy.component';
 
 
 @NgModule({
@@ -108,6 +110,8 @@ import { AlbumItemGridComponent } from './partials/album-item-grid/album-item-gr
         AlbumCreateComponent,
         AlbumEditComponent,
         AlbumItemGridComponent,
+        TermsComponent,
+        PrivacyComponent,
     ],
     imports: [
         BrowserAnimationsModule,
