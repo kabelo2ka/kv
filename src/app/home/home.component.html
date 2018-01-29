@@ -20,7 +20,7 @@
                 <i class="fa fa-spinner fa-pulse fa-fw"></i> Getting trending songs...
             </div>
             <div *ngIf="trendingSongs">
-                <h2 class="h4 text-center"><i class="icon-chart text-muted"></i> Trending Songs</h2>
+                <h2 class="h4 text-center"><i class="icon-chart text-muted"></i> Top Tracks</h2>
                 <ul class="list-group">
                     <li *ngFor="let song of trendingSongs; index as i; even as isEven; odd as isOdd; first as isFirst; last as isLast;" [ngClass]="{'kv-active':activeSongId === song.id}"
                         class="list-group-item">

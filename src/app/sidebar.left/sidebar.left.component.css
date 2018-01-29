@@ -14,13 +14,17 @@
     padding: 15px;
     border-bottom: 1px solid #282828;
     display: block;
-    color: #888888;
+    color: #cccccc;
 }
 
 .side-nav section ul.side-menu li a:hover, .side-nav section ul.side-menu li a.active {
-    background: #2b2b2b;
     color: #ffffff;
+    background: #2b2b2b;
     text-decoration: none;
+}
+
+.side-nav section ul.side-menu li a.active {
+    border-left: 2px solid #888;
 }
 
 .side-nav section ul.side-menu li a i {

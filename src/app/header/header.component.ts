@@ -26,6 +26,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
 
+    confirmationEmailSent = false;
+
     user: User;
 
     constructor(public authService: AuthService,
@@ -77,6 +79,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     OnLogout() {
         this.authService.logout();
+    }
+
+    sendConfirmationEmail() {
+        this.authService.sendConfirmationEmail().subscribe(
+            () => this.confirmationEmailSent = true
+        );
     }
 
     ngOnDestroy(): void {

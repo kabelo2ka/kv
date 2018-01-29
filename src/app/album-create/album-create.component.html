@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row m-b-lg">
         <div class="col-md-12">
-            <h3 class="text-center m-t-lg">Share your album</h3>
+            <h3 class="text-center m-t-lg">Create an album</h3>
             <p class="text-center">Share your new albums and connect with your fans.</p>
         </div>
     </div>
@@ -34,7 +34,7 @@
                     <label class="btn btn-default"> <i class="fa fa-file-image-o"></i>
                         <span *ngIf="previewImageUrl===''">Select Cover Picture</span>
                         <span *ngIf="previewImageUrl!==''">Change Cover Picture</span>
-                        <input style="display: none" (change)="fileChange($event)" type="file">
+                        <input style="display: none" (change)="fileChange($event)" type="file" accept="image/jpeg,image/png,image/jpg">
                     </label>
                 </div>
 

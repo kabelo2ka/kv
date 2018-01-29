@@ -4,7 +4,12 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <alert [type]="'warning'" dismissible="true">
-                        Please confirm your email.
+                        <div *ngIf="!confirmationEmailSent">
+                            Please confirm your email. <a (click)="sendConfirmationEmail()">Resend Confirmation Email</a>
+                        </div>
+                        <div *ngIf="confirmationEmailSent">
+                            <i class="fa fa-check text-success"></i>Confirmation Email sent. Please check your email's inbox. <a (click)="sendConfirmationEmail()">Resend Confirmation Email</a>
+                        </div>
                     </alert>
                 </div>
             </div>
@@ -16,7 +21,7 @@
             <span (click)="mobileMenu(true)" class="toggle-menu visible-xs"><i class="fa fa-bars"></i></span>
             <span class="main-logo">
                 <a routerLink="/"><img src="assets\images\logo.svg" alt="Kasivibe logo"></a>
-                <span class="release_status">Alpha</span>
+                <span class="release_status">BETA</span>
             </span>
             <app-search></app-search>
         </div>

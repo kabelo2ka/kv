@@ -12,6 +12,7 @@ export class AuthService {
 
     USER_SIGN_UP_URL = '//kasivibe.com/api/v1/user';
     USER_SIGN_IN_URL = '//kasivibe.com/api/v1/user/authenticate';
+    USER_SEND_CORNFIRMATIRON_EMAIL_URL = '//kasivibe.com/api/v1/register/confirm/send';
     AUTHORIZE_URL = '//kasivibe.com/api/v1/user/authorize';
     REFRESH_TOCKEN_URL = '//kasivibe.com/api/v1/user/token/refresh';
 
@@ -24,6 +25,20 @@ export class AuthService {
     user$ = this.user.asObservable();
 
     constructor(private http: Http, private authHttp: AuthHttp, private jwtHelper: JwtHelper) {
+    }
+
+    sendConfirmationEmail() {
+        return this.authHttp.get(this.USER_SEND_CORNFIRMATIRON_EMAIL_URL, {
+            headers: new Headers({
+                'X-Requested-With': 'XMLHttpRequest'
+            })
+        }).map(
+            (response: Response) => {
+                this.user.next(response.json().user);
+                this.saveAuthUserToLocalStorage(response.json().user);
+                return response;
+            }
+        );
     }
 
     signUp(username: string, email: string, password: string) {

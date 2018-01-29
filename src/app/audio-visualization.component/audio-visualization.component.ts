@@ -1,46 +1,49 @@
-import {Component, OnInit, ViewChild, Input} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {AudioService} from "../audio/audio.service";
-import {AudioAPIWrapper} from "../audio/audio-api-wrapper";
 
 @Component({
     selector: 'app-audio-visualization',
     template: `
         <span #music_bars_cont class="kv_music_bars" style="width: 20px;height: 14px;">
-            <span class="kv_music_bar bg-primary" style="height: 40%"></span>
-            <span class="kv_music_bar bg-info" style="height: 60%"></span>
-            <span class="kv_music_bar bg-success" style="height: 90%"></span>
-            <span class="kv_music_bar bg-warning" style="height: 50%"></span>
-            <span class="kv_music_bar bg-danger" style="height: 10%"></span>
+            <span class="kv_music_bar bg-primary"></span>
+            <span class="kv_music_bar bg-info"></span>
+            <span class="kv_music_bar bg-success"></span>
+            <span class="kv_music_bar bg-warning"></span>
+            <span class="kv_music_bar bg-danger"></span>
         </span>
     `,
     styleUrls: ['./audio-visualization.component.css'],
 })
 
-export class AudioVisualizationComponent implements OnInit {
+export class AudioVisualizationComponent implements OnInit, OnChanges {
     @Input() status;
 
     @ViewChild('music_bars_cont') music_bars_cont;
     music_bars: any = [];
     audio_visualisation;
     animation;
+    audioStatus: number = this.audioService.AUDIO_STOPPED;
 
-    constructor(
-        private audioApiWrapper: AudioAPIWrapper
-    ) {}
+    constructor(private audioService: AudioService,) {
+    }
 
     ngOnInit() {
         this.music_bars = this.music_bars_cont.nativeElement.children;
-        this.audioApiWrapper.bindAudioEvent('play').subscribe(
-            ()=> this.startAudioVisualization()
-        );
-        this.audioApiWrapper.bindAudioEvent('pause').subscribe(
-            ()=> this.pauseAudioVisualisation()
-        );
-        this.audioApiWrapper.bindAudioEvent('ended').subscribe(
-            ()=>{
-                this.stopAudioVisualisation()
-            }
-        );
+        this.startAudioVisualization();
+        // Subscribe to audio status
+        this.audioService.status$.subscribe((status: number) => {
+            this.audioStatus = status;
+        });
+    }
+
+    ngOnChanges() {
+        if (this.isPlaying()) {
+            this.startAudioVisualization();
+        } else if (this.isPaused()) {
+            this.pauseAudioVisualisation();
+        } else {
+            this.stopAudioVisualisation();
+        }
     }
 
     startAudioVisualization() {
@@ -66,5 +69,11 @@ export class AudioVisualizationComponent implements OnInit {
         this.audio_visualisation = 0;
     }
 
+    isPlaying() {
+        return this.audioStatus === this.audioService.AUDIO_PLAYING;
+    }
 
+    isPaused() {
+        return this.audioStatus === this.audioService.AUDIO_PAUSED;
+    }
 }

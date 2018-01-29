@@ -1,9 +1,7 @@
-import {Component, OnInit, Input, Output, EventEmitter, OnChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Song} from '../../songs.component/song';
-import {AudioAPIWrapper} from '../../audio/audio-api-wrapper';
 import {AudioService} from '../../audio/audio.service';
 import {Subscription} from 'rxjs/Subscription';
-import {SongService} from "../../songs.component/song.service";
 
 @Component({
     selector: 'app-play-button',
@@ -21,17 +19,15 @@ export class PlayButtonComponent implements OnInit, OnChanges {
 
     subscription: Subscription;
 
-    constructor(
-        private audioService: AudioService,
-        private audioApiWrapper: AudioAPIWrapper
-    ) {}
+    constructor(private audioService: AudioService,) {
+    }
 
     ngOnInit() {
-        this.audioService.currentSong$.subscribe( (song: Song) => {
+        this.audioService.currentSong$.subscribe((song: Song) => {
             // If @input song is not set, set currentSong as @input song - For main Audio Player
-            if(!this.song){
+            if (!this.song) {
                 this.song = song;
-                this.audioService.status$.subscribe( (status: number) => {
+                this.audioService.status$.subscribe((status: number) => {
                     this.audioStatus = status;
                     this.onStatus.emit(status);
                 });
@@ -41,11 +37,11 @@ export class PlayButtonComponent implements OnInit, OnChanges {
                     this.selected = true;
                     this.onActive.emit(this.selected);
                     // Get audio status play | pause | stop
-                    this.audioService.status$.takeWhile(() => this.selected).subscribe( (status: number) => {
+                    this.audioService.status$.takeWhile(() => this.selected).subscribe((status: number) => {
                         this.audioStatus = status;
                         this.onStatus.emit(status);
                     });
-                }else {
+                } else {
                     this.reset();
                 }
             }
@@ -60,7 +56,7 @@ export class PlayButtonComponent implements OnInit, OnChanges {
             this.selected = true;
             this.onActive.emit(this.selected);
             // Subscribe to audio status
-            this.audioService.status$.takeWhile(() => this.selected).subscribe( (status: number) => {
+            this.audioService.status$.takeWhile(() => this.selected).subscribe((status: number) => {
                 this.audioStatus = status;
                 this.onStatus.emit(status);
             });
@@ -103,7 +99,7 @@ export class PlayButtonComponent implements OnInit, OnChanges {
     }
 
     private reset() {
-        if (this.selected ) {
+        if (this.selected) {
             this.selected = false;
             this.onActive.emit(this.selected);
             this.audioStatus = this.audioService.AUDIO_STOPPED;
