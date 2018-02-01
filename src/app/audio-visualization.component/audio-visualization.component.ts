@@ -1,49 +1,65 @@
-import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AudioService} from "../audio/audio.service";
 
 @Component({
     selector: 'app-audio-visualization',
     template: `
-        <span #music_bars_cont class="kv_music_bars" style="width: 20px;height: 14px;">
-            <span class="kv_music_bar bg-primary"></span>
-            <span class="kv_music_bar bg-info"></span>
-            <span class="kv_music_bar bg-success"></span>
-            <span class="kv_music_bar bg-warning"></span>
-            <span class="kv_music_bar bg-danger"></span>
+        <span class="kv_music_bars" [ngStyle]="{'width':width, 'height':height}">
+            <span class="kv_music_bar" *ngFor="let bar of music_bars"
+                  [ngStyle]="{'height': bar.height}"
+                  [ngClass]="bar.className"></span>
         </span>
     `,
     styleUrls: ['./audio-visualization.component.css'],
 })
 
-export class AudioVisualizationComponent implements OnInit, OnChanges {
-    @Input() status;
+export class AudioVisualizationComponent implements OnInit {
+    @Input() width: string = '20px';
+    @Input() height: string = '14px';
 
-    @ViewChild('music_bars_cont') music_bars_cont;
-    music_bars: any = [];
+    music_bars: any;
     audio_visualisation;
     animation;
     audioStatus: number = this.audioService.AUDIO_STOPPED;
 
     constructor(private audioService: AudioService,) {
+        this.music_bars = [
+            {
+                height: '0%',
+                className: 'bg-primary'
+            },
+            {
+                height: '0%',
+                className: 'bg-info'
+            },
+            {
+                height: '0%',
+                className: 'bg-success'
+            },
+            {
+                height: '0%',
+                className: 'bg-warning'
+            },
+            {
+                height: '0%',
+                className: 'bg-danger'
+            }
+        ];
     }
 
     ngOnInit() {
-        this.music_bars = this.music_bars_cont.nativeElement.children;
         this.startAudioVisualization();
         // Subscribe to audio status
         this.audioService.status$.subscribe((status: number) => {
             this.audioStatus = status;
+            if (this.isPlaying()) {
+                this.startAudioVisualization();
+            } else if (this.isPaused()) {
+                this.pauseAudioVisualisation();
+            } else {
+                this.stopAudioVisualisation();
+            }
         });
-    }
-
-    ngOnChanges() {
-        if (this.isPlaying()) {
-            this.startAudioVisualization();
-        } else if (this.isPaused()) {
-            this.pauseAudioVisualisation();
-        } else {
-            this.stopAudioVisualisation();
-        }
     }
 
     startAudioVisualization() {
@@ -51,9 +67,9 @@ export class AudioVisualizationComponent implements OnInit, OnChanges {
         this.animation = setInterval(() => {
             for (let i = 0; i < count; i++) {
                 let number = Math.floor((Math.random() * 100) + 1);
-                this.music_bars[i].style.height = number + '%';
+                this.music_bars[i].height = number + '%';
             }
-        }, 300);
+        }, 200);
     }
 
     pauseAudioVisualisation() {
@@ -62,9 +78,9 @@ export class AudioVisualizationComponent implements OnInit, OnChanges {
     }
 
     stopAudioVisualisation() {
-        this.animation = clearInterval(this.animation);
+        clearInterval(this.animation);
         for (let i = 0; i < this.music_bars.length; i++) {
-            this.music_bars[i].style.height = 2 + '%';
+            this.music_bars[i].height = 2 + '%';
         }
         this.audio_visualisation = 0;
     }

@@ -14,6 +14,22 @@ h2.h4.bottom-border {
     max-height: 140px;
 }
 
+
+.profile-header .music-bars {
+    opacity: 0.2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    mix-blend-mode: multiply;
+    filter: sepia(100%) hue-rotate(90deg) saturate(400%) grayscale(1);
+}
+
+
+
+
+
 /*--Global--*/
 
 .full-header {

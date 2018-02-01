@@ -13,7 +13,7 @@
             <div>
                 <h6>
                     <a routerLink="/songs/{{ song.slug }}" class="kv-color-default">{{ song.name }}</a>
-                    <app-audio-visualization *ngIf="isActiveSong" [status]="audioStatus" class="m-l-xs" [ngStyle]="{'display':isPlaying()?'inline':'none'}"></app-audio-visualization>
+                    <app-audio-visualization *ngIf="isActiveSong" [width]="'20px'" [height]="'14px'" class="m-l-xs" [ngStyle]="{'display':isPlaying()?'inline':'none'}"></app-audio-visualization>
                 </h6>
                 <div>
                     <small *ngIf="song.user.artist_name">

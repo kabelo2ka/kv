@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Song} from '../songs.component/song';
 import {Subscription} from 'rxjs';
 import {SongService} from '../songs.component/song.service';

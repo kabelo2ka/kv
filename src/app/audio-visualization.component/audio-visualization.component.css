@@ -4,12 +4,12 @@
 }
 
 .kv_music_bars .kv_music_bar {
-    width: 15%;
+    width: 20%;
     position: absolute;
     bottom: 0;
     display: inline-block;
     box-sizing: border-box;
-    transition: all .3s linear 0s;
+    transition: all .2s ease-in 0s;
 }
 
 .kv_music_bars .kv_music_bar:first-of-type {
